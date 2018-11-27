@@ -23,3 +23,12 @@ SFTPなどでアップロードをして、rootユーザーもしくはsudo権�
 * apache2.4.6のインストール
 * mod_sslのインストール
 * firewallのポート許可(80番、443番)
+
+## [apache_php72.sh](https://github.com/site-lab/apache/blob/master/apache_php72.sh)
+* epelインストール
+* gitのインストール
+* システム更新
+* apache2.4.6のインストール
+* mod_sslのインストール
+* php7.2のインストール
+* firewallのポート許可(80番、443番)
