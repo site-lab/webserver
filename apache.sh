@@ -79,6 +79,25 @@ echo "apacheのステータス確認"
 systemctl status httpd.service
 end_message
 
+#firewallのポート許可
+echo "http(80番)とhttps(443番)の許可をする"
+start_message
+firewall-cmd --permanent --add-service=http
+firewall-cmd --permanent --add-service=https
+echo ""
+echo "保存して有効化"
+echo ""
+firewall-cmd --reload
+
+echo ""
+echo "設定を表示"
+echo ""
+firewall-cmd --list-all
+end_message
+
 echo "http://IPアドレス"
 echo "https://IPアドレス"
 echo "で確認してみてください"
+echo ""
+echo "これにて終了です"
+echo ""
