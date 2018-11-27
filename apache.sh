@@ -79,4 +79,6 @@ echo "apacheのステータス確認"
 systemctl status httpd.service
 end_message
 
-# IPアドレスの表示
+echo "http://IPアドレス"
+echo "https://IPアドレス"
+echo "で確認してみてください"
