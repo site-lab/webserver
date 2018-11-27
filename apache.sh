@@ -80,7 +80,7 @@ systemctl status httpd.service
 end_message
 
 #firewallのポート許可
-echo "http(80番)とhttps(443番)の許可をする"
+echo "http(80番)とhttps(443番)の許可をしてます"
 start_message
 firewall-cmd --permanent --add-service=http
 firewall-cmd --permanent --add-service=https
