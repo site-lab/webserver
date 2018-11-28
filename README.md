@@ -12,6 +12,7 @@ Apache+PHPなどの環境構築シェルスクリプトです
 ### 実行方法
 SFTPなどでアップロードをして、rootユーザーもしくはsudo権限で実行
 wgetを使用する場合は[環境構築スクリプトを公開してます](https://www.logw.jp/cloudserver/8886.html)を閲覧してください。
+wgetがない場合は **yum -y install wget** でインストールしてください
 
 **sh ファイル名.sh** ←同じ階層にある場合
 
