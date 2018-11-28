@@ -23,11 +23,14 @@ wgetを使用する場合は[環境構築スクリプトを公開してます](h
 * システム更新
 * apache2.4.6のインストール
 * mod_sslのインストール
+* HTTP2の有効可
 * firewallのポート許可(80番、443番)
 * gzip圧縮の設定
 
 Apacheはドキュメントルートのみhtaccessの有効化された状態となります。
 gzipは/etc/httpd/conf.d/gzip.conf　にて設定が記述されています
+HTTP2については、モジュールの有効可をしてあるため、各々でconfファイルに追記をしてください
+参考サイト：https://www.logw.jp/server/8359.html
 
 ## [apache_php72.sh](https://github.com/site-lab/apache/blob/master/apache_php72.sh)
 * epelインストール
