@@ -18,6 +18,7 @@ wgetを使用する場合は[環境構築スクリプトを公開してます](h
 **sh /home/ユーザー名/ファイル名.sh** ユーザー階層にある場合（rootユーザー実行時）
 
 ## [apache.sh](https://github.com/site-lab/apache/blob/master/apache.sh)
+### 実行内容
 * epelインストール
 * gitのインストール
 * システム更新
@@ -33,6 +34,7 @@ HTTP2については、モジュールの有効可をしてあるため、各々
 参考サイト：https://www.logw.jp/server/8359.html
 
 ## [apache_php72.sh](https://github.com/site-lab/apache/blob/master/apache_php72.sh)
+### 実行内容
 * epelインストール
 * gitのインストール
 * システム更新
