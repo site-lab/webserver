@@ -33,6 +33,7 @@ echo ""
 
 #EPELリポジトリのインストール
 start_message
+yum remove -y epel-release
 yum -y install epel-release
 end_message
 
