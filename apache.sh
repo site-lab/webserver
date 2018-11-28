@@ -457,8 +457,6 @@ echo ""
 firewall-cmd --list-all
 end_message
 
-echo "http://IPアドレス"
-echo "https://IPアドレス"
 cat <<EOF
 http://IPアドレス
 https://IPアドレス
@@ -468,5 +466,17 @@ https://IPアドレス
 /var/www/html
 となります。
 
-htaccessはドキュメントルートのみ有効かしています
+htaccessはドキュメントルートのみ有効化しています
+
+有効化の確認
+
+https://www.logw.jp/server/7452.html
+vi /var/www/html/.htaccess
+-----------------
+AuthType Basic
+AuthName hoge
+Require valid-user
+-----------------
+
+ダイアログがでればhtaccessが有効かされた状態となります。
 EOF
