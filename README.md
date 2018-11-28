@@ -24,8 +24,10 @@ wgetを使用する場合は[環境構築スクリプトを公開してます](h
 * apache2.4.6のインストール
 * mod_sslのインストール
 * firewallのポート許可(80番、443番)
+* gzip圧縮の設定
 
 Apacheはドキュメントルートのみhtaccessの有効化された状態となります。
+gzipは/etc/httpd/conf.d/gzip.conf　にて設定が記述されています
 
 ## [apache_php72.sh](https://github.com/site-lab/apache/blob/master/apache_php72.sh)
 * epelインストール
@@ -34,4 +36,5 @@ Apacheはドキュメントルートのみhtaccessの有効化された状態と
 * apache2.4.6のインストール
 * mod_sslのインストール
 * php7.2のインストール
+* php7.2の必要モジュールインストール
 * firewallのポート許可(80番、443番)

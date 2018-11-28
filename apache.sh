@@ -432,6 +432,16 @@ httpd -v
 echo ""
 end_message
 
+#gzip圧縮の設定
+cat >/etc/httpd/conf.d/gzip.conf <<'EOF'
+SetOutputFilter DEFLATE
+BrowserMatch ^Mozilla/4 gzip-only-text/html
+BrowserMatch ^Mozilla/4\.0[678] no-gzip
+BrowserMatch \bMSI[E] !no-gzip !gzip-only-text/html
+SetEnvIfNoCase Request_URI\.(?:gif|jpe?g|png)$ no-gzip dont-vary
+Header append Vary User-Agent env=!dont-var
+EOF
+
 # apacheの起動
 echo "apacheを起動します"
 start_message
