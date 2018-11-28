@@ -14,7 +14,7 @@ SFTPなどでアップロードをして、rootユーザーもしくはsudo権�
 
 **sh start.sh** ←同じ階層にある場合
 
-**sh /home/ユーザー名/start.sh** ユーザー階層にある場合（rootユーザー実行時）
+**sh /home/ユーザー名/ファイル名.sh** ユーザー階層にある場合（rootユーザー実行時）
 
 ## [apache.sh](https://github.com/site-lab/apache/blob/master/apache.sh)
 * epelインストール
