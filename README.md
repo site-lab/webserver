@@ -38,3 +38,7 @@ gzipは/etc/httpd/conf.d/gzip.conf　にて設定が記述されています
 * php7.2のインストール
 * php7.2の必要モジュールインストール
 * firewallのポート許可(80番、443番)
+* gzip圧縮の設定
+
+Apacheはドキュメントルートのみhtaccessの有効化された状態となります。
+gzipは/etc/httpd/conf.d/gzip.conf　にて設定が記述されています
