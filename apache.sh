@@ -436,7 +436,7 @@ cat >/etc/httpd/conf.modules.d/00-mpm.conf <<'EOF'
 
 # prefork MPM: Implements a non-threaded, pre-forking web server
 # See: http://httpd.apache.org/docs/2.4/mod/prefork.html
-#LoadModule mpm_prefork_module modules/mod_mpm_prefork.so ←コメントアウトして無効化
+#LoadModule mpm_prefork_module modules/mod_mpm_prefork.so
 
 # worker MPM: Multi-Processing Module implementing a hybrid
 # multi-threaded multi-process web server
@@ -518,6 +518,8 @@ Require valid-user
 
 ●HTTP2について
 SSLのconfファイルに｢Protocols h2 http/1.1｣と追記してください
+https://www.logw.jp/server/8359.html
+
 例）
 <VirtualHost *:443>
     ServerName logw.jp
@@ -533,5 +535,4 @@ SSLのconfファイルに｢Protocols h2 http/1.1｣と追記してください
 </Directory>
 
 </VirtualHost>
-https://www.logw.jp/server/8359.html
 EOF
