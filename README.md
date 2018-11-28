@@ -24,6 +24,8 @@ SFTPなどでアップロードをして、rootユーザーもしくはsudo権�
 * mod_sslのインストール
 * firewallのポート許可(80番、443番)
 
+Apacheはドキュメントルートのみhtaccessの有効化された状態となります。
+
 ## [apache_php72.sh](https://github.com/site-lab/apache/blob/master/apache_php72.sh)
 * epelインストール
 * gitのインストール
