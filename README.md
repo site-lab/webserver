@@ -53,6 +53,24 @@ gzipは/etc/httpd/conf.d/gzip.conf　にて設定が記述されています
 PHP7はモジュール版となります。
 データベースは自分でインストールしていただく形になります。データベースも含めてインストールしたい場合は[LAMP](https://github.com/site-lab/lamp)リポジトリからインストールしてください。
 
+## [apache_php72_fcgid.sh](https://github.com/site-lab/apache/blob/master/apache_php72_fcgid.sh)
+### 実行内容
+* epelインストール
+* gitのインストール
+* システム更新
+* apache2.4.6のインストール
+* mod_sslのインストール
+* php7.2のインストール
+* php7.2の必要モジュールインストール
+* firewallのポート許可(80番、443番)
+* gzip圧縮の設定
+
+Apacheはドキュメントルートのみhtaccessの有効化された状態となります。
+gzipは/etc/httpd/conf.d/gzip.conf　にて設定が記述されています
+PHP7はFastCGI版となります。
+データベースは自分でインストールしていただく形になります。データベースも含めてインストールしたい場合は[LAMP](https://github.com/site-lab/lamp)リポジトリからインストールしてください。
+
+
 ## [nginx.sh](https://github.com/site-lab/apache/blob/master/nginx.sh)
 ### 実行内容
 * epelインストール
