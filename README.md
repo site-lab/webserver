@@ -48,3 +48,13 @@ HTTP2については、モジュールの有効可をしてあるため、各々
 
 Apacheはドキュメントルートのみhtaccessの有効化された状態となります。
 gzipは/etc/httpd/conf.d/gzip.conf　にて設定が記述されています
+
+## [nginx.sh](https://github.com/site-lab/apache/blob/master/nginx.sh)
+### 実行内容
+* epelインストール
+* gitのインストール
+* システム更新
+* nginxのインストール
+* mod_sslのインストール
+* HTTP2の有効可
+* firewallのポート許可(80番、443番)
