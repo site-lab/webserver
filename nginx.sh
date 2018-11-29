@@ -52,7 +52,7 @@ echo "yum updateを実行します"
 echo ""
 
 start_message
-#yum -y update
+yum -y update
 end_message
 
 #nginxの設定ファイルを作成
@@ -69,7 +69,7 @@ end_message
 
 #nginxのインストール
 start_message
-yum  --enablerepo=nginx install nginx
+yum  -y --enablerepo=nginx install nginx
 end_message
 
 #SSLの設定ファイルに変更
@@ -187,7 +187,7 @@ start_message
 echo "nginxの起動"
 echo ""
 systemctl start nginx
-systemctl ststus nginx
+systemctl status nginx
 end_message
 
 #自動起動の設定
