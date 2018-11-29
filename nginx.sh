@@ -182,7 +182,19 @@ server {
 EOF
 end_message
 
+#nginxの起動
+start_message
+echo "nginxの起動"
+echo ""
+systemctl start nginx
+systemctl ststus nginx
+end_message
 
+#自動起動の設定
+start_message
+systemctl enable nginx
+systemctl list-unit-files --type=service | grep nginx
+end_message
 
 #firewallのポート許可
 echo "http(80番)とhttps(443番)の許可をしてます"
