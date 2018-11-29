@@ -86,6 +86,15 @@ cat >/etc/nginx/conf.d/default.conf <<'EOF'
 server {
     listen       80;
     server_name  localhost;
+    #return 301 https://$http_host$request_uri;
+
+    #gzip
+       gzip on;
+       gzip_types image/png image/gif image/jpeg text/javascript text/css;
+       gzip_min_length 1000;
+       gzip_proxied any;
+       gunzip on;
+
 
     #charset koi8-r;
     #access_log  /var/log/nginx/host.access.log  main;
@@ -141,6 +150,18 @@ server {
     ssl_certificate_key /etc/nginx/localhost.key;
     ssl_protocols TLSv1 TLSv1.1 TLSv1.2;
     ssl_ciphers HIGH:!aNULL:!MD5;
+    ssl_prefer_server_ciphers on;
+    ssl_ciphers 'kEECDH+ECDSA+AES128 kEECDH+ECDSA+AES256 kEECDH+AES128 kEECDH+AES256 kEDH+AES128 kEDH+AES256 DES-CBC3-SHA +SHA !DH !aNULL !eNULL !LOW !kECDH !DSS !MD5 !EXP !PSK !SRP !CAMELLIA !SEED';
+    ssl_session_cache    shared:SSL:10m;
+    ssl_session_timeout  10m;
+
+    #gzip
+       gzip on;
+       gzip_types image/png image/gif image/jpeg text/javascript text/css;
+       gzip_min_length 1000;
+       gzip_proxied any;
+       gunzip on;
+
 
     location / {
         root   /usr/share/nginx/html;
@@ -221,5 +242,11 @@ https://IPアドレス
 /usr/share/nginx/html;
 となります。
 
-
+---------------------------------------
+httpsリダイレクトについて
+/etc/nginx/conf.d/default.conf
+#return 301 https://$http_host$request_uri;
+↑
+コメントを外せばそのままリダイレクトになります。
+---------------------------------------
 EOF
