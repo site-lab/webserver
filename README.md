@@ -34,6 +34,8 @@ gzipは/etc/httpd/conf.d/gzip.conf　にて設定が記述されています
 HTTP2については、モジュールの有効可をしてあるため、各々でconfファイルに追記をしてください
 参考サイト：https://www.logw.jp/server/8359.html
 
+Apacheのみのインストールとなります。PHPをfast_cgiで使いたいとか、HHVMを使いたいなどの場合はこれを選択してください
+
 ## [apache_php72.sh](https://github.com/site-lab/apache/blob/master/apache_php72.sh)
 ### 実行内容
 * epelインストール
@@ -48,6 +50,8 @@ HTTP2については、モジュールの有効可をしてあるため、各々
 
 Apacheはドキュメントルートのみhtaccessの有効化された状態となります。
 gzipは/etc/httpd/conf.d/gzip.conf　にて設定が記述されています
+PHP7はモジュール版となります。
+データベースは自分でインストールしていただく形になります。データベースも含めてインストールしたい場合は[LAMP](https://github.com/site-lab/lamp)リポジトリからインストールしてください。
 
 ## [nginx.sh](https://github.com/site-lab/apache/blob/master/nginx.sh)
 ### 実行内容
