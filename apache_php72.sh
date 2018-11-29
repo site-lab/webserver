@@ -504,6 +504,13 @@ echo "apacheのステータス確認"
 systemctl status httpd.service
 end_message
 
+#自動起動の設定
+start_message
+systemctl enable httpd
+systemctl list-unit-files --type=service | grep httpd
+end_message
+
+
 #firewallのポート許可
 echo "http(80番)とhttps(443番)の許可をしてます"
 start_message
