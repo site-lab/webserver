@@ -25,7 +25,7 @@ wgetがない場合は **yum -y install wget** でインストールしてくだ
 * システム更新
 * apache2.4.6のインストール
 * mod_sslのインストール
-* HTTP2の有効可
+* HTTP2の有効化
 * firewallのポート許可(80番、443番)
 * gzip圧縮の設定
 
@@ -56,5 +56,7 @@ gzipは/etc/httpd/conf.d/gzip.conf　にて設定が記述されています
 * システム更新
 * nginxのインストール
 * mod_sslのインストール
-* HTTP2の有効可
+* HTTP2の有効化
+* HTTPSへのリダイレクト設定可（一部ファイル編集してください）
 * firewallのポート許可(80番、443番)
+* gzip圧縮の設定
