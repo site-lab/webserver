@@ -82,3 +82,20 @@ PHP7は **FastCGI版** となります。
 * HTTPSへのリダイレクト設定可（一部ファイル編集してください）
 * firewallのポート許可(80番、443番)
 * gzip圧縮の設定
+
+## [nginx.sh](https://github.com/site-lab/apache/blob/master/nginx_php72.sh)
+### 実行内容
+* epelインストール
+* gitのインストール
+* システム更新
+* nginxのインストール
+* mod_sslのインストール
+* php7.2のインストール
+* php7.2の必要モジュールインストール
+* HTTP2の有効化
+* HTTPSへのリダイレクト設定可（一部ファイル編集してください）
+* firewallのポート許可(80番、443番)
+* gzip圧縮の設定
+
+PHP7は **FastCGI版** となります。
+データベースは自分でインストールしていただく形になります。データベースも含めてインストールしたい場合は[LAMP](https://github.com/site-lab/lamp)リポジトリからインストールしてください。

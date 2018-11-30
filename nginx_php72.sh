@@ -695,6 +695,7 @@ start_message
 systemctl enable nginx
 systemctl enable php-fpm
 systemctl list-unit-files --type=service | grep nginx
+systemctl list-unit-files --type=service | grep php-fpm
 end_message
 
 #firewallのポート許可
