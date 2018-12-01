@@ -71,7 +71,7 @@ PHP7は **FastCGI版** となります。
 データベースは自分でインストールしていただく形になります。データベースも含めてインストールしたい場合は[LAMP](https://github.com/site-lab/lamp)リポジトリからインストールしてください。
 
 
-## [nginx_php72.sh](https://github.com/site-lab/apache/blob/master/nginx.sh)
+## [nginx.sh](https://github.com/site-lab/apache/blob/master/nginx.sh)
 ### 実行内容
 * epelインストール
 * gitのインストール
@@ -83,7 +83,7 @@ PHP7は **FastCGI版** となります。
 * firewallのポート許可(80番、443番)
 * gzip圧縮の設定
 
-## [nginx.sh](https://github.com/site-lab/apache/blob/master/nginx_php72.sh)
+## [nginx_php72.sh](https://github.com/site-lab/apache/blob/master/nginx_php72.sh)
 ### 実行内容
 * epelインストール
 * gitのインストール
