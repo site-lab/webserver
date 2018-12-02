@@ -227,6 +227,7 @@ cp -R node_modules/ /usr/share/nginx/html
 end_message
 
 
+
 #node.jsのファイル作成
 cat >/usr/share/nginx/html/app.js <<'EOF'
 var express = require('express');
@@ -240,6 +241,16 @@ var express = require('express');
         console.log("Web server start of port 3000");
         });
 EOF
+
+#foreverのインストールのインストール
+start_message
+echo "foreversのインストール"
+npm install -g forever
+
+echo "node.jsを永続起動"
+forever start /usr/share/nginx/html/app.js
+end_message
+
 
 #nginxの起動
 start_message
@@ -292,5 +303,4 @@ node.jsの起動方法は
 node /usr/share/nginx/html/app.js
 
 としてください
-
 EOF
