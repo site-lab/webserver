@@ -314,7 +314,7 @@ echo "設定を表示"
 echo ""
 firewall-cmd --list-all
 end_message
-exec $SHELL -l
+
 
 
 cat <<EOF
@@ -341,3 +341,5 @@ httpsリダイレクトについて
 コメントを外せばそのままリダイレクトになります。
 ---------------------------------------
 EOF
+
+exec $SHELL -l
