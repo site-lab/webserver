@@ -3,7 +3,6 @@
 #rootユーザーで実行 or sudo権限ユーザー
 
 <<COMMENT
-作成中
 作成者：サイトラボ
 URL：https://www.site-lab.jp/
 URL：https://www.logw.jp/
@@ -90,7 +89,7 @@ echo "yum updateを実行します"
 echo ""
 
 start_message
-#yum -y update
+yum -y update
 end_message
 
 #Nghttp2のインストール
@@ -111,7 +110,7 @@ echo "apacheをインストールします"
 echo ""
 
 start_message
-yum -y --enablerepo=ius install httpd
+yum -y --enablerepo=ius install httpd24u
 yum -y install openldap-devel expat-devel
 yum -y --enablerepo=ius install httpd24u-devel httpd24u-mod_ssl
 
