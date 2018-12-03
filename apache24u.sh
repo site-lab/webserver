@@ -44,6 +44,39 @@ echo "IUSリポジトリをインストールします"
 yum -y install https://centos7.iuscommunity.org/ius-release.rpm
 end_message
 
+#IUSリポジトリをデフォルトから外す
+start_message
+echo "IUSリポジトリをデフォルトから外します"
+cat >/etc/yum.repos.d/ius.repo <<'EOF'
+[ius]
+name=IUS Community Packages for Enterprise Linux 7 - $basearch
+#baseurl=https://dl.iuscommunity.org/pub/ius/stable/CentOS/7/$basearch
+mirrorlist=https://mirrors.iuscommunity.org/mirrorlist?repo=ius-centos7&arch=$basearch&protocol=http
+failovermethod=priority
+enabled=0
+gpgcheck=1
+gpgkey=file:///etc/pki/rpm-gpg/IUS-COMMUNITY-GPG-KEY
+
+[ius-debuginfo]
+name=IUS Community Packages for Enterprise Linux 7 - $basearch - Debug
+#baseurl=https://dl.iuscommunity.org/pub/ius/stable/CentOS/7/$basearch/debuginfo
+mirrorlist=https://mirrors.iuscommunity.org/mirrorlist?repo=ius-centos7-debuginfo&arch=$basearch&protocol=http
+failovermethod=priority
+enabled=0
+gpgcheck=1
+gpgkey=file:///etc/pki/rpm-gpg/IUS-COMMUNITY-GPG-KEY
+
+[ius-source]
+name=IUS Community Packages for Enterprise Linux 7 - $basearch - Source
+#baseurl=https://dl.iuscommunity.org/pub/ius/stable/CentOS/7/SRPMS
+mirrorlist=https://mirrors.iuscommunity.org/mirrorlist?repo=ius-centos7-source&arch=source&protocol=http
+failovermethod=priority
+enabled=0
+gpgcheck=1
+gpgkey=file:///etc/pki/rpm-gpg/IUS-COMMUNITY-GPG-KEY
+EOF
+end_message
+
 #gitリポジトリのインストール
 start_message
 yum -y install git
@@ -60,14 +93,27 @@ start_message
 #yum -y update
 end_message
 
+#Nghttp2のインストール
+start_message
+echo "Nghttp2のインストール"
+yum --enablerepo=epel -y install nghttp2
+end_message
+
+#mailcapのインストール
+start_message
+echo "Nghttp2のインストール"
+yum -y install mailcap
+end_message
+
+
 # apacheのインストール
 echo "apacheをインストールします"
 echo ""
 
 start_message
-yum -y install httpd
+yum -y --enablerepo=ius install httpd
 yum -y install openldap-devel expat-devel
-yum -y install httpd-devel mod_ssl
+yum -y --enablerepo=ius install httpd24u-devel httpd24u-mod_ssl
 
 echo "ファイルのバックアップ"
 echo ""
