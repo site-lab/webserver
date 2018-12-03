@@ -316,7 +316,6 @@ echo "設定を表示"
 echo ""
 firewall-cmd --list-all
 end_message
-
 exec $SHELL -l
 
 
