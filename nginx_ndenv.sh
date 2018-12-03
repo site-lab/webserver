@@ -284,10 +284,6 @@ start_message
 echo "foreversのインストール"
 npm install -g forever
 
-echo "node.jsを永続起動"
-forever start /usr/share/nginx/html/app.js
-end_message
-
 #nginxの起動
 start_message
 echo "nginxの起動"
@@ -321,6 +317,13 @@ exec $SHELL -l
 
 
 cat <<EOF
+node.jsの起動方法は
+node /usr/share/nginx/html/app.js
+
+永続起動する場合は
+forever start /usr/share/nginx/html/app.js
+を実行してください。その後IPアドレスで確認してください
+
 http://IPアドレス
 https://IPアドレス
 で確認してみてください
