@@ -3,6 +3,7 @@
 #rootユーザーで実行 or sudo権限ユーザー
 
 <<COMMENT
+現在テスト用のため、シェルを実行しても上手くいきません。
 作成者：サイトラボ
 URL：https://www.site-lab.jp/
 URL：https://www.logw.jp/
