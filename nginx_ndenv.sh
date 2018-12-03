@@ -3,16 +3,17 @@
 #rootユーザーで実行 or sudo権限ユーザー
 
 <<COMMENT
-現在テスト用のため、シェルを実行しても上手くいきません。
 作成者：サイトラボ
 URL：https://www.site-lab.jp/
 URL：https://www.logw.jp/
 
 注意点：conohaのポートは全て許可前提となります。もしくは80番、443番の許可をしておいてください。システムのfirewallはオン状態となります
 
-目的：システム更新+nginxのインストール
+目的：システム更新+nginxのインストール、リバースプロキシの設定をしてます
 ・nginx
 ・mod_sslのインストール
+・ndenvのインストール
+・nodejsはv11.3.0となります。
 
 COMMENT
 
