@@ -303,4 +303,6 @@ node.jsの起動方法は
 node /usr/share/nginx/html/app.js
 
 としてください
+
+ドキュメントルートの所有者：グループは｢root｣になっているため、ユーザー名とグループを変更してください
 EOF

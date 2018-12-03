@@ -542,4 +542,6 @@ https://www.logw.jp/server/8359.html
 </Directory>
 
 </VirtualHost>
+
+ドキュメントルートの所有者：グループは｢root｣になっているため、ユーザー名とグループを変更してください
 EOF
