@@ -115,3 +115,19 @@ PHP7は **FastCGI版** となります。
 * gzip圧縮の設定
 
 nginx+node.jsです。nginxでリバースプロキシをしてます。
+
+## [nginx_ndenv.sh](https://github.com/site-lab/apache/blob/master/nginx_ndenv.sh)
+### 実行内容
+* epelインストール
+* gitのインストール
+* システム更新
+* nginxのインストール
+* mod_sslのインストール
+* node.jsのインストール
+* Expressのインストール
+* HTTP2の有効化
+* HTTPSへのリダイレクト設定可（一部ファイル編集してください）
+* firewallのポート許可(80番、443番)
+* gzip圧縮の設定
+
+nginx+node.jsです。nginxでリバースプロキシをしてます。ndenvで動かします
