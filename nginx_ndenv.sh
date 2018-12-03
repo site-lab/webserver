@@ -82,7 +82,7 @@ EOF
 echo "設定反映"
 echo ""
 echo "source /etc/profile.d/ndenv.sh"
-#source /etc/profile.d/ndenv.sh
+source /etc/profile.d/ndenv.sh
 
 #パス確認
 echo "パス確認"
