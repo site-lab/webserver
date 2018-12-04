@@ -34,7 +34,26 @@ gzipは/etc/httpd/conf.d/gzip.conf　にて設定が記述されています
 HTTP2については、モジュールの有効可をしてあるため、各々でconfファイルに追記をしてください
 参考サイト：https://www.logw.jp/server/8359.html
 
-Apacheのみのインストールとなります。PHPをfast_cgiで使いたいとか、HHVMを使いたいなどの場合はこれを選択してください
+Apacheのみのインストールとなります。HHVMを使いたいなどの場合はこれを選択してください
+
+## [apache24u.sh](https://github.com/site-lab/apache/blob/master/apache24u.sh)
+### 実行内容
+* epelインストール
+* iusリポジトリインストール
+* gitのインストール
+* システム更新
+* apache2.4.xのインストール
+* mod_sslのインストール
+* HTTP2の有効化
+* firewallのポート許可(80番、443番)
+* gzip圧縮の設定
+
+Apacheはドキュメントルートのみhtaccessの有効化された状態となります。
+gzipは/etc/httpd/conf.d/gzip.conf　にて設定が記述されています
+HTTP2については、モジュールの有効可をしてあるため、各々でconfファイルに追記をしてください
+参考サイト：https://www.logw.jp/server/8359.html
+
+Apacheのみのインストールとなります。HHVMを使いたいなどの場合はこれを選択してください
 
 ## [apache_php72.sh](https://github.com/site-lab/apache/blob/master/apache_php72.sh)
 ### 実行内容
