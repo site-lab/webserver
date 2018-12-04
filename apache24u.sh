@@ -10,7 +10,7 @@ URL：https://www.logw.jp/
 注意点：conohaのポートは全て許可前提となります。もしくは80番、443番の許可をしておいてください。システムのfirewallはオン状態となります
 
 目的：システム更新+apache2.4系のインストール
-・apache2.4
+・apache2.4.x
 ・mod_sslのインストール
 
 COMMENT
