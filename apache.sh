@@ -526,7 +526,6 @@ firewall-cmd --list-all
 end_message
 
 umask 0002
-echo "centosユーザーのパスワードは"${PASSWORD}"です。"
 
 cat <<EOF
 http://IPアドレス
@@ -575,3 +574,5 @@ https://www.logw.jp/server/8359.html
 グループ：apache
 になっているため、ユーザー名とグループの変更が必要な場合は変更してください
 EOF
+
+echo "centosユーザーのパスワードは"${PASSWORD}"です。"
