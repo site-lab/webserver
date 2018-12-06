@@ -28,11 +28,14 @@ wgetがない場合は **yum -y install wget** でインストールしてくだ
 * HTTP2の有効化
 * firewallのポート許可(80番、443番)
 * gzip圧縮の設定
+* centosユーザーの作成
 
 Apacheはドキュメントルートのみhtaccessの有効化された状態となります。
 gzipは/etc/httpd/conf.d/gzip.conf　にて設定が記述されています
 HTTP2については、モジュールの有効可をしてあるため、各々でconfファイルに追記をしてください
 参考サイト：https://www.logw.jp/server/8359.html
+
+**centosユーザーのパスワードはランダム生成になります。** centosユーザーで作成、アップロードするファイルは **644** 、ディレクトリは **775** となります
 
 Apacheのみのインストールとなります。HHVMを使いたいなどの場合はこれを選択してください
 
