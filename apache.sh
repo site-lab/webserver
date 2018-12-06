@@ -472,6 +472,27 @@ SetEnvIfNoCase Request_URI\.(?:gif|jpe?g|png)$ no-gzip dont-vary
 Header append Vary User-Agent env=!dont-var
 EOF
 
+#ユーザー作成
+start_message
+echo "centosユーザーを作成します"
+USERNAME='centos'
+PASSWORD=$(more /dev/urandom  | tr -d -c '[:alnum:]' | fold -w 10 | head -1)
+
+useradd -m -G apache -s /bin/bash "${USERNAME}"
+echo "${PASSWORD}" | passwd --stdin "${USERNAME}"
+echo "パスワードは"${PASSWORD}"です。"
+
+#所属グループ表示
+echo "所属グループを表示します"
+getent group apache
+end_message
+
+#所有者の変更
+start_message
+echo "ドキュメントルートの所有者をcentos、グループをapacheにします"
+chown -R centos:apache /var/www/html
+end_message
+
 # apacheの起動
 echo "apacheを起動します"
 start_message
@@ -503,6 +524,9 @@ echo "設定を表示"
 echo ""
 firewall-cmd --list-all
 end_message
+
+umask 0002
+echo "centosユーザーのパスワードは"${PASSWORD}"です。"
 
 cat <<EOF
 http://IPアドレス
@@ -547,5 +571,7 @@ https://www.logw.jp/server/8359.html
 
 </VirtualHost>
 
-ドキュメントルートの所有者：グループは｢root｣になっているため、ユーザー名とグループを変更してください
+ドキュメントルートの所有者：centos
+グループ：apache
+になっているため、ユーザー名とグループの変更が必要な場合は変更してください
 EOF
