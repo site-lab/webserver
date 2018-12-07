@@ -7,11 +7,12 @@
 URL：https://www.site-lab.jp/
 URL：https://www.logw.jp/
 
-注意点：conohaのポートは全て許可前提となります。もしくは80番、443番の許可をしておいてください。システムのfirewallはオン状態となります
+注意点：conohaのポートは全て許可前提となります。もしくは80番、443番の許可をしておいてください。システムのfirewallはオン状態となります。centosユーザーのパスワードはランダム生成となります。最後に表示されます
 
 目的：システム更新+nginxのインストール
 ・nginx
 ・mod_sslのインストール
+・centosユーザーの作成
 
 COMMENT
 
@@ -238,6 +239,28 @@ server {
 }
 EOF
 end_message
+
+#ユーザー作成
+start_message
+echo "centosユーザーを作成します"
+USERNAME='centos'
+PASSWORD=$(more /dev/urandom  | tr -d -c '[:alnum:]' | fold -w 10 | head -1)
+
+useradd -m -G apache -s /bin/bash "${USERNAME}"
+echo "${PASSWORD}" | passwd --stdin "${USERNAME}"
+echo "パスワードは"${PASSWORD}"です。"
+
+#所属グループ表示
+echo "所属グループを表示します"
+getent group nginx
+end_message
+
+#所有者の変更
+start_message
+echo "ドキュメントルートの所有者をcentos、グループをapacheにします"
+chown -R centos:nginx /usr/share/nginx/html
+end_message
+
 
 #nginxの起動
 start_message
