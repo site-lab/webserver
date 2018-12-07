@@ -9,6 +9,11 @@ Apache+PHPなどの環境構築シェルスクリプトです
 * CPU：1コア
 * SSD：20GB
 
+* さくらのVPS
+* メモリ：512MB
+* CPU：1コア
+* SSD：20GB
+
 ### 実行方法
 SFTPなどでアップロードをして、rootユーザーもしくはsudo権限で実行
 wgetを使用する場合は[環境構築スクリプトを公開してます](https://www.logw.jp/cloudserver/8886.html)を閲覧してください。
