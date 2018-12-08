@@ -9,7 +9,7 @@ Apache+PHPなどの環境構築シェルスクリプトです
 * CPU：1コア
 * SSD：20GB
 
-###さくらのVPS
+### さくらのVPS
 * メモリ：512MB
 * CPU：1コア
 * SSD：20GB
