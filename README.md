@@ -4,12 +4,12 @@ Apache+PHPなどの環境構築シェルスクリプトです
 ※自己責任で実行してください
 
 ## テスト環境
-* conohaのVPS
+### conohaのVPS
 * メモリ：512MB
 * CPU：1コア
 * SSD：20GB
 
-* さくらのVPS
+###さくらのVPS
 * メモリ：512MB
 * CPU：1コア
 * SSD：20GB
@@ -143,6 +143,22 @@ PHP7は **FastCGI版** となります。
 * HTTPSへのリダイレクト設定可（一部ファイル編集してください）
 * firewallのポート許可(80番、443番)
 * gzip圧縮の設定
+
+## [nginx_apache.sh](https://github.com/site-lab/apache/blob/master/nginx_apache.sh)
+### 実行内容
+* epelインストール
+* gitのインストール
+* システム更新
+* nginxのインストール
+* mod_sslのインストール
+* apache2.4.6のインストール
+* HTTP2の有効化
+* HTTPSへのリダイレクト設定可（一部ファイル編集してください）
+* firewallのポート許可(80番、443番)
+* gzip圧縮の設定
+* リバースプロキシ設定済み
+
+
 
 ## [nginx_php72.sh](https://github.com/site-lab/apache/blob/master/nginx_php72.sh)
 ### 実行内容
