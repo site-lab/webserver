@@ -711,7 +711,7 @@ echo '<?php phpinfo(); ?>' >> /usr/share/nginx/html/info.php
 cat /usr/share/nginx/html/info.php
 end_message
 
-ユーザー作成
+#ユーザー作成
 start_message
 echo "centosユーザーを作成します"
 USERNAME='centos'
