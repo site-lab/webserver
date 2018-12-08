@@ -7,11 +7,14 @@
 URL：https://www.site-lab.jp/
 URL：https://www.logw.jp/
 
-注意点：conohaのポートは全て許可前提となります。もしくは80番、443番の許可をしておいてください。システムのfirewallはオン状態となります
+注意点：conohaのポートは全て許可前提となります。もしくは80番、443番の許可をしておいてください。システムのfirewallはオン状態となります。centosユーザーのパスワードはランダム生成となります。最後に表示されます
 
 目的：システム更新+nginxのインストール
 ・nginx
 ・mod_sslのインストール
+・php7系のインストール
+・centosユーザーの作成
+
 
 COMMENT
 
@@ -751,6 +754,8 @@ echo ""
 firewall-cmd --list-all
 end_message
 
+umask 0002
+
 cat <<EOF
 http://IPアドレス/info.php
 https://IPアドレス/info.php
@@ -768,5 +773,10 @@ httpsリダイレクトについて
 コメントを外せばそのままリダイレクトになります。
 ---------------------------------------
 
-ドキュメントルートの所有者：グループは｢root｣になっているため、ユーザー名とグループを変更してください
+ドキュメントルートの所有者：centos
+グループ：nginx
+になっているため、ユーザー名とグループの変更が必要な場合は変更してください
 EOF
+
+echo "centosユーザーのパスワードは"${PASSWORD}"です。"
+exec $SHELL -l
