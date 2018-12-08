@@ -875,9 +875,16 @@ end_message
 #所有者の変更
 start_message
 echo "ドキュメントルートの所有者をcentos、グループをapacheにします"
-chown -R centos:nginx /usr/share/nginx/html
+chown -R centos:apache /var/www/html
 end_message
 
+#apacheの起動
+start_message
+echo "apacheの起動"
+echo ""
+systemctl start httpd
+systemctl status httpd
+end_message
 
 #nginxの起動
 start_message
@@ -890,7 +897,9 @@ end_message
 #自動起動の設定
 start_message
 systemctl enable nginx
+systemctl enable httpd
 systemctl list-unit-files --type=service | grep nginx
+systemctl list-unit-files --type=service | grep httpd
 end_message
 
 #firewallのポート許可
