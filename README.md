@@ -23,17 +23,19 @@ wgetがない場合は **yum -y install wget** でインストールしてくだ
 
 **sh /home/ユーザー名/ファイル名.sh** ユーザー階層にある場合（rootユーザー実行時）
 
-## [apache.sh](https://github.com/site-lab/apache/blob/master/apache.sh)
-### 実行内容
+## 共通内容
 * epelインストール
 * gitのインストール
 * システム更新
-* apache2.4.6のインストール
 * mod_sslのインストール
 * HTTP2の有効化
 * firewallのポート許可(80番、443番)
 * gzip圧縮の設定
 * centosユーザーの作成
+
+## [apache.sh](https://github.com/site-lab/apache/blob/master/apache.sh)
+### 実行内容
+* apache2.4.6のインストール
 
 Apacheはドキュメントルートのみhtaccessの有効化された状態となります。
 gzipは/etc/httpd/conf.d/gzip.conf　にて設定が記述されています
@@ -46,15 +48,8 @@ Apacheのみのインストールとなります。HHVMを使いたいなどの�
 
 ## [apache24u.sh](https://github.com/site-lab/apache/blob/master/apache24u.sh)
 ### 実行内容
-* epelインストール
 * iusリポジトリインストール
-* gitのインストール
-* システム更新
 * apache2.4.xのインストール
-* mod_sslのインストール
-* HTTP2の有効化
-* firewallのポート許可(80番、443番)
-* gzip圧縮の設定
 
 Apacheはドキュメントルートのみhtaccessの有効化された状態となります。
 gzipは/etc/httpd/conf.d/gzip.conf　にて設定が記述されています
@@ -65,15 +60,9 @@ Apacheのみのインストールとなります。HHVMを使いたいなどの�
 
 ## [apache_php72.sh](https://github.com/site-lab/apache/blob/master/apache_php72.sh)
 ### 実行内容
-* epelインストール
-* gitのインストール
-* システム更新
 * apache2.4.6のインストール
-* mod_sslのインストール
 * php7.2のインストール
 * php7.2の必要モジュールインストール
-* firewallのポート許可(80番、443番)
-* gzip圧縮の設定
 
 Apacheはドキュメントルートのみhtaccessの有効化された状態となります。
 gzipは/etc/httpd/conf.d/gzip.conf　にて設定が記述されています
@@ -82,15 +71,10 @@ PHP7は **モジュール版** となります。
 
 ## [apache_php73.sh](https://github.com/site-lab/apache/blob/master/apache_php73.sh)
 ### 実行内容
-* epelインストール
-* gitのインストール
-* システム更新
 * apache2.4.6のインストール
 * mod_sslのインストール
 * php7.3のインストール
 * php7.3の必要モジュールインストール
-* firewallのポート許可(80番、443番)
-* gzip圧縮の設定
 
 Apacheはドキュメントルートのみhtaccessの有効化された状態となります。
 gzipは/etc/httpd/conf.d/gzip.conf　にて設定が記述されています
@@ -99,15 +83,10 @@ PHP7は **モジュール版** となります。
 
 ## [apache_php72_fcgid.sh](https://github.com/site-lab/apache/blob/master/apache_php72_fcgid.sh)
 ### 実行内容
-* epelインストール
-* gitのインストール
-* システム更新
 * apache2.4.6のインストール
 * mod_sslのインストール
 * php7.2のインストール
 * php7.2の必要モジュールインストール
-* firewallのポート許可(80番、443番)
-* gzip圧縮の設定
 
 Apacheはドキュメントルートのみhtaccessの有効化された状態となります。
 gzipは/etc/httpd/conf.d/gzip.conf　にて設定が記述されています
@@ -116,15 +95,11 @@ PHP7は **FastCGI版** となります。
 
 ## [apache_php73_fcgid.sh](https://github.com/site-lab/apache/blob/master/apache_php73_fcgid.sh)
 ### 実行内容
-* epelインストール
-* gitのインストール
-* システム更新
 * apache2.4.6のインストール
 * mod_sslのインストール
 * php7.3のインストール
 * php7.3の必要モジュールインストール
-* firewallのポート許可(80番、443番)
-* gzip圧縮の設定
+
 
 Apacheはドキュメントルートのみhtaccessの有効化された状態となります。
 gzipは/etc/httpd/conf.d/gzip.conf　にて設定が記述されています
@@ -134,62 +109,31 @@ PHP7は **FastCGI版** となります。
 
 ## [nginx.sh](https://github.com/site-lab/apache/blob/master/nginx.sh)
 ### 実行内容
-* epelインストール
-* gitのインストール
-* システム更新
 * nginxのインストール
-* mod_sslのインストール
-* HTTP2の有効化
-* HTTPSへのリダイレクト設定可（一部ファイル編集してください）
-* firewallのポート許可(80番、443番)
-* gzip圧縮の設定
 
 ## [nginx_apache.sh](https://github.com/site-lab/apache/blob/master/nginx_apache.sh)
 ### 実行内容
-* epelインストール
-* gitのインストール
-* システム更新
 * nginxのインストール
-* mod_sslのインストール
 * apache2.4.6のインストール
-* HTTP2の有効化
 * HTTPSへのリダイレクト設定可（一部ファイル編集してください）
-* firewallのポート許可(80番、443番)
-* gzip圧縮の設定
 * リバースプロキシ設定済み
 
 
 
 ## [nginx_php72.sh](https://github.com/site-lab/apache/blob/master/nginx_php72.sh)
 ### 実行内容
-* epelインストール
-* gitのインストール
-* システム更新
 * nginxのインストール
-* mod_sslのインストール
 * php7.2のインストール
 * php7.2の必要モジュールインストール
-* HTTP2の有効化
-* HTTPSへのリダイレクト設定可（一部ファイル編集してください）
-* firewallのポート許可(80番、443番)
-* gzip圧縮の設定
 
 PHP7は **FastCGI版** となります。
 データベースは自分でインストールしていただく形になります。データベースも含めてインストールしたい場合は[LAMP](https://github.com/site-lab/lamp)リポジトリからインストールしてください。
 
 ## [nginx_php72_socket.sh](https://github.com/site-lab/apache/blob/master/nginx_php72_socket.sh)
 ### 実行内容
-* epelインストール
-* gitのインストール
-* システム更新
 * nginxのインストール
-* mod_sslのインストール
-* php7.2のインストール
 * php7.2の必要モジュールインストール
-* HTTP2の有効化
 * HTTPSへのリダイレクト設定可（一部ファイル編集してください）
-* firewallのポート許可(80番、443番)
-* gzip圧縮の設定
 
 PHP7は **FastCGI版** となります。
 データベースは自分でインストールしていただく形になります。データベースも含めてインストールしたい場合は[LAMP](https://github.com/site-lab/lamp)リポジトリからインストールしてください。
@@ -197,34 +141,20 @@ PHP7は **FastCGI版** となります。
 
 ## [nginx_php73.sh](https://github.com/site-lab/apache/blob/master/nginx_php73.sh)
 ### 実行内容
-* epelインストール
-* gitのインストール
-* システム更新
 * nginxのインストール
-* mod_sslのインストール
 * php7.3のインストール
 * php7.3の必要モジュールインストール
-* HTTP2の有効化
 * HTTPSへのリダイレクト設定可（一部ファイル編集してください）
-* firewallのポート許可(80番、443番)
-* gzip圧縮の設定
 
 PHP7は **FastCGI版** となります。
 データベースは自分でインストールしていただく形になります。データベースも含めてインストールしたい場合は[LAMP](https://github.com/site-lab/lamp)リポジトリからインストールしてください。
 
 ## [nginx_php73_socket.sh](https://github.com/site-lab/apache/blob/master/nginx_php73_socket.sh)
 ### 実行内容
-* epelインストール
-* gitのインストール
-* システム更新
 * nginxのインストール
-* mod_sslのインストール
 * php7.3のインストール
 * php7.3の必要モジュールインストール
-* HTTP2の有効化
 * HTTPSへのリダイレクト設定可（一部ファイル編集してください）
-* firewallのポート許可(80番、443番)
-* gzip圧縮の設定
 
 PHP7は **FastCGI版** となります。
 データベースは自分でインストールしていただく形になります。データベースも含めてインストールしたい場合は[LAMP](https://github.com/site-lab/lamp)リポジトリからインストールしてください。
@@ -233,32 +163,18 @@ PHP7は **FastCGI版** となります。
 
 ## [nginx_nodejs.sh](https://github.com/site-lab/apache/blob/master/nginx_nodejs.sh)
 ### 実行内容
-* epelインストール
-* gitのインストール
-* システム更新
 * nginxのインストール
-* mod_sslのインストール
 * node.jsのインストール
 * Expressのインストール
-* HTTP2の有効化
 * HTTPSへのリダイレクト設定可（一部ファイル編集してください）
-* firewallのポート許可(80番、443番)
-* gzip圧縮の設定
 
 nginx+node.jsです。nginxでリバースプロキシをしてます。
 
 ## [nginx_ndenv.sh](https://github.com/site-lab/apache/blob/master/nginx_ndenv.sh)
 ### 実行内容
-* epelインストール
-* gitのインストール
-* システム更新
 * nginxのインストール
-* mod_sslのインストール
 * node.jsのインストール
 * Expressのインストール
-* HTTP2の有効化
 * HTTPSへのリダイレクト設定可（一部ファイル編集してください）
-* firewallのポート許可(80番、443番)
-* gzip圧縮の設定
 
 nginx+node.jsです。nginxでリバースプロキシをしてます。ndenvで動かします
