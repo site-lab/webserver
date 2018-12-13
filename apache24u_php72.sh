@@ -544,6 +544,14 @@ php -v
 echo ""
 end_message
 
+#php.iniの設定変更
+start_message
+echo "phpのバージョンを非表示にします"
+sed -i -e "s|expose_php = On|expose_php = Off|" /etc/php.ini
+echo "phpのタイムゾーンを変更"
+sed -i -e "s|;date.timezone =|date.timezone = Asia/Tokyo|" /etc/php.ini
+end_message
+
 # phpinfoの作成
 start_message
 touch /var/www/html/info.php
