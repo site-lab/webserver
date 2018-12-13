@@ -533,6 +533,25 @@ SetEnvIfNoCase Request_URI\.(?:gif|jpe?g|png)$ no-gzip dont-vary
 Header append Vary User-Agent env=!dont-var
 EOF
 
+# php7系のインストール
+echo "phpをインストールします"
+echo ""
+start_message
+yum -y install --enablerepo=remi,remi-php72 php php-mbstring php-xml php-xmlrpc php-gd php-pdo php-pecl-mcrypt php-mysqlnd php-pecl-mysql
+echo "phpのバージョン確認"
+echo ""
+php -v
+echo ""
+end_message
+
+# phpinfoの作成
+start_message
+touch /var/www/html/info.php
+echo '<?php phpinfo(); ?>' >> /var/www/html/info.php
+cat /var/www/html/info.php
+end_message
+
+
 #ユーザー作成
 start_message
 echo "centosユーザーを作成します"
