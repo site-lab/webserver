@@ -750,7 +750,7 @@ server {
     proxy_set_header X-Forwarded-Server $host;
     proxy_set_header X-Real-IP $remote_addr;
     location / {
-      proxy_pass http://127.0.0.1:8080;  # tornado(アプリケーション・サーバー)が8080でlistenしているとする
+      proxy_pass http://127.0.0.1:8080;  # apacheが8080でlistenしている
       break;
       root /var/www/html;
     }
@@ -821,7 +821,7 @@ server {
        proxy_set_header X-Real-IP $remote_addr;
        proxy_set_header X-Forwarded-Proto https; #WordPressのリダイレクトエラー回避
        location / {
-         proxy_pass http://127.0.0.1:8080;  # tornado(アプリケーション・サーバー)が8080でlistenしているとする
+         proxy_pass http://127.0.0.1:8080;  # apacheが8080でlistenしている
          break;
          root /var/www/html;
          ssi  on;
