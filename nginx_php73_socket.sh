@@ -704,6 +704,17 @@ cp /etc/php-fpm.d/www.conf /etc/php-fpm.d/www.conf.bk
 
 end_message
 
+#php.iniの設定変更
+start_message
+echo "phpのバージョンを非表示にします"
+echo "sed -i -e s|expose_php = On|expose_php = Off| /etc/php.ini"
+sed -i -e "s|expose_php = On|expose_php = Off|" /etc/php.ini
+echo "phpのタイムゾーンを変更"
+echo "sed -i -e s|;date.timezone =|date.timezone = Asia/Tokyo| /etc/php.ini"
+sed -i -e "s|;date.timezone =|date.timezone = Asia/Tokyo|" /etc/php.ini
+end_message
+
+
 # phpinfoの作成
 start_message
 echo "phpinfoを作成します"
