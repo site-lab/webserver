@@ -18,7 +18,7 @@ URL：https://www.logw.jp/
 COMMENT
 
 echo "インストールスクリプトを開始します"
-echo "このスクリプトのインストール対象はCentOS7です。."
+echo "このスクリプトのインストール対象はCentOS7です。"
 echo ""
 
 start_message(){
