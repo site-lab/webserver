@@ -1,6 +1,7 @@
 # WebServer
 WebServer関連のシェルスクリプト置き場、CentOS7専用となります。**centos7 minimal インストール** した状態で何もはいっていない状態で必要なファイルを実行してください
-Apache+PHPなどの環境構築シェルスクリプトです
+Apache+PHP、nginx+phpなどの環境構築シェルスクリプトです
+
 ※自己責任で実行してください
 
 ## テスト環境
