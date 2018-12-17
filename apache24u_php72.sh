@@ -17,9 +17,6 @@ URL：https://www.logw.jp/
 
 COMMENT
 
-echo "インストールスクリプトを開始します"
-echo "このスクリプトのインストール対象はCentOS7です。"
-echo ""
 
 start_message(){
 echo ""
@@ -33,28 +30,35 @@ echo "======================完了======================"
 echo ""
 }
 
-#EPELリポジトリのインストール
-start_message
-yum remove -y epel-release
-yum -y install epel-release
-end_message
+#CentOS7か確認
+if [ -e /etc/redhat-release ]; then
+    DIST="redhat"
+    DIST_VER=`cat /etc/redhat-release | sed -e "s/.*\s\([0-9]\)\..*/\1/"`
 
-#Remiリポジトリのインストール
-start_message
-yum -y install http://rpms.famillecollet.com/enterprise/remi-release-7.rpm
-end_message
+    if [ $DIST = "redhat" ];then
+      if [ $DIST_VER = "7" ];then
+        #EPELリポジトリのインストール
+        start_message
+        yum remove -y epel-release
+        yum -y install epel-release
+        end_message
+
+        #Remiリポジトリのインストール
+        start_message
+        yum -y install http://rpms.famillecollet.com/enterprise/remi-release-7.rpm
+        end_message
 
 
-#IUSリポジトリのインストール
-start_message
-echo "IUSリポジトリをインストールします"
-yum -y install https://centos7.iuscommunity.org/ius-release.rpm
-end_message
+        #IUSリポジトリのインストール
+        start_message
+        echo "IUSリポジトリをインストールします"
+        yum -y install https://centos7.iuscommunity.org/ius-release.rpm
+        end_message
 
-#IUSリポジトリをデフォルトから外す
-start_message
-echo "IUSリポジトリをデフォルトから外します"
-cat >/etc/yum.repos.d/ius.repo <<'EOF'
+        #IUSリポジトリをデフォルトから外す
+        start_message
+        echo "IUSリポジトリをデフォルトから外します"
+        cat >/etc/yum.repos.d/ius.repo <<'EOF'
 [ius]
 name=IUS Community Packages for Enterprise Linux 7 - $basearch
 #baseurl=https://dl.iuscommunity.org/pub/ius/stable/CentOS/7/$basearch
@@ -82,54 +86,54 @@ enabled=0
 gpgcheck=1
 gpgkey=file:///etc/pki/rpm-gpg/IUS-COMMUNITY-GPG-KEY
 EOF
-end_message
+        end_message
 
-#gitリポジトリのインストール
-start_message
-yum -y install git
-end_message
-
-
+        #gitリポジトリのインストール
+        start_message
+        yum -y install git
+        end_message
 
 
-# yum updateを実行
-echo "yum updateを実行します"
-echo ""
-
-start_message
-yum -y update
-end_message
-
-#Nghttp2のインストール
-start_message
-echo "Nghttp2のインストール"
-yum --enablerepo=epel -y install nghttp2
-end_message
-
-#mailcapのインストール
-start_message
-echo "Nghttp2のインストール"
-yum -y install mailcap
-end_message
 
 
-# apacheのインストール
-echo "apacheをインストールします"
-echo ""
+        # yum updateを実行
+        echo "yum updateを実行します"
+        echo ""
 
-start_message
-yum -y --enablerepo=ius install httpd24u
-yum -y install openldap-devel expat-devel
-yum -y --enablerepo=ius install httpd24u-devel httpd24u-mod_ssl
+        start_message
+        yum -y update
+        end_message
 
-echo "ファイルのバックアップ"
-echo ""
-mv /etc/httpd/conf/httpd.conf /etc/httpd/conf/httpd.conf.bk
+        #Nghttp2のインストール
+        start_message
+        echo "Nghttp2のインストール"
+        yum --enablerepo=epel -y install nghttp2
+        end_message
 
-echo "htaccess有効化した状態のconfファイルを作成します"
-echo ""
+        #mailcapのインストール
+        start_message
+        echo "Nghttp2のインストール"
+        yum -y install mailcap
+        end_message
 
-cat >/etc/httpd/conf/httpd.conf <<'EOF'
+
+        # apacheのインストール
+        echo "apacheをインストールします"
+        echo ""
+
+        start_message
+        yum -y --enablerepo=ius install httpd24u
+        yum -y install openldap-devel expat-devel
+        yum -y --enablerepo=ius install httpd24u-devel httpd24u-mod_ssl
+
+        echo "ファイルのバックアップ"
+        echo ""
+        mv /etc/httpd/conf/httpd.conf /etc/httpd/conf/httpd.conf.bk
+
+        echo "htaccess有効化した状態のconfファイルを作成します"
+        echo ""
+
+        cat >/etc/httpd/conf/httpd.conf <<'EOF'
 #
 # This is the main Apache HTTP server configuration file.  It contains the
 # configuration directives that give the server its instructions.
@@ -490,12 +494,12 @@ IncludeOptional conf.d/*.conf
 
 EOF
 
-#SSLの設定変更（http2を有効化）
-echo "ファイルのバックアップ"
-echo ""
-mv /etc/httpd/conf.modules.d/00-mpm.conf /etc/httpd/conf.modules.d/00-mpm.conf.bk
+        #SSLの設定変更（http2を有効化）
+        echo "ファイルのバックアップ"
+        echo ""
+        mv /etc/httpd/conf.modules.d/00-mpm.conf /etc/httpd/conf.modules.d/00-mpm.conf.bk
 
-cat >/etc/httpd/conf.modules.d/00-mpm.conf <<'EOF'
+        cat >/etc/httpd/conf.modules.d/00-mpm.conf <<'EOF'
 # Select the MPM module which should be used by uncommenting exactly
 # one of the following LoadModule lines:
 
@@ -516,15 +520,15 @@ cat >/etc/httpd/conf.modules.d/00-mpm.conf <<'EOF'
 LoadModule mpm_event_module modules/mod_mpm_event.so
 EOF
 
-ls /etc/httpd/conf/
-echo "Apacheのバージョン確認"
-echo ""
-httpd -v
-echo ""
-end_message
+        ls /etc/httpd/conf/
+        echo "Apacheのバージョン確認"
+        echo ""
+        httpd -v
+        echo ""
+        end_message
 
-#gzip圧縮の設定
-cat >/etc/httpd/conf.d/gzip.conf <<'EOF'
+        #gzip圧縮の設定
+        cat >/etc/httpd/conf.d/gzip.conf <<'EOF'
 SetOutputFilter DEFLATE
 BrowserMatch ^Mozilla/4 gzip-only-text/html
 BrowserMatch ^Mozilla/4\.0[678] no-gzip
@@ -533,136 +537,149 @@ SetEnvIfNoCase Request_URI\.(?:gif|jpe?g|png)$ no-gzip dont-vary
 Header append Vary User-Agent env=!dont-var
 EOF
 
-# php7系のインストール
-echo "phpをインストールします"
-echo ""
-start_message
-yum -y install --enablerepo=remi,remi-php72 php php-mbstring php-xml php-xmlrpc php-gd php-pdo php-pecl-mcrypt php-mysqlnd php-pecl-mysql
-echo "phpのバージョン確認"
-echo ""
-php -v
-echo ""
-end_message
+        # php7系のインストール
+        echo "phpをインストールします"
+        echo ""
+        start_message
+        yum -y install --enablerepo=remi,remi-php72 php php-mbstring php-xml php-xmlrpc php-gd php-pdo php-pecl-mcrypt php-mysqlnd php-pecl-mysql
+        echo "phpのバージョン確認"
+        echo ""
+        php -v
+        echo ""
+        end_message
 
-#php.iniの設定変更
-start_message
-echo "phpのバージョンを非表示にします"
-echo "sed -i -e s|expose_php = On|expose_php = Off| /etc/php.ini"
-sed -i -e "s|expose_php = On|expose_php = Off|" /etc/php.ini
-echo "phpのタイムゾーンを変更"
-echo "sed -i -e s|;date.timezone =|date.timezone = Asia/Tokyo| /etc/php.ini"
-sed -i -e "s|;date.timezone =|date.timezone = Asia/Tokyo|" /etc/php.ini
-end_message
+        #php.iniの設定変更
+        start_message
+        echo "phpのバージョンを非表示にします"
+        echo "sed -i -e s|expose_php = On|expose_php = Off| /etc/php.ini"
+        sed -i -e "s|expose_php = On|expose_php = Off|" /etc/php.ini
+        echo "phpのタイムゾーンを変更"
+        echo "sed -i -e s|;date.timezone =|date.timezone = Asia/Tokyo| /etc/php.ini"
+        sed -i -e "s|;date.timezone =|date.timezone = Asia/Tokyo|" /etc/php.ini
+        end_message
 
-# phpinfoの作成
-start_message
-touch /var/www/html/info.php
-echo '<?php phpinfo(); ?>' >> /var/www/html/info.php
-cat /var/www/html/info.php
-end_message
-
-
-#ユーザー作成
-start_message
-echo "centosユーザーを作成します"
-USERNAME='centos'
-PASSWORD=$(more /dev/urandom  | tr -d -c '[:alnum:]' | fold -w 10 | head -1)
-
-useradd -m -G apache -s /bin/bash "${USERNAME}"
-echo "${PASSWORD}" | passwd --stdin "${USERNAME}"
-echo "パスワードは"${PASSWORD}"です。"
-
-#所属グループ表示
-echo "所属グループを表示します"
-getent group apache
-end_message
-
-#所有者の変更
-start_message
-echo "ドキュメントルートの所有者をcentos、グループをapacheにします"
-chown -R centos:apache /var/www/html
-end_message
+        # phpinfoの作成
+        start_message
+        touch /var/www/html/info.php
+        echo '<?php phpinfo(); ?>' >> /var/www/html/info.php
+        cat /var/www/html/info.php
+        end_message
 
 
-# apacheの起動
-echo "apacheを起動します"
-start_message
-systemctl start httpd.service
+        #ユーザー作成
+        start_message
+        echo "centosユーザーを作成します"
+        USERNAME='centos'
+        PASSWORD=$(more /dev/urandom  | tr -d -c '[:alnum:]' | fold -w 10 | head -1)
 
-echo "apacheのステータス確認"
-systemctl status httpd.service
-end_message
+        useradd -m -G apache -s /bin/bash "${USERNAME}"
+        echo "${PASSWORD}" | passwd --stdin "${USERNAME}"
+        echo "パスワードは"${PASSWORD}"です。"
 
-#自動起動の設定
-start_message
-systemctl enable httpd
-systemctl list-unit-files --type=service | grep httpd
-end_message
+        #所属グループ表示
+        echo "所属グループを表示します"
+        getent group apache
+        end_message
 
-
-#firewallのポート許可
-echo "http(80番)とhttps(443番)の許可をしてます"
-start_message
-firewall-cmd --permanent --add-service=http
-firewall-cmd --permanent --add-service=https
-echo ""
-echo "保存して有効化"
-echo ""
-firewall-cmd --reload
-
-echo ""
-echo "設定を表示"
-echo ""
-firewall-cmd --list-all
-end_message
-
-cat <<EOF
-http://IPアドレス
-https://IPアドレス
-で確認してみてください
-
-ドキュメントルート(DR)は
-/var/www/html
-となります。
-
-htaccessはドキュメントルートのみ有効化しています
-
-有効化の確認
-
-https://www.logw.jp/server/7452.html
-vi /var/www/html/.htaccess
------------------
-AuthType Basic
-AuthName hoge
-Require valid-user
------------------
-ダイアログがでればhtaccessが有効かされた状態となります。
+        #所有者の変更
+        start_message
+        echo "ドキュメントルートの所有者をcentos、グループをapacheにします"
+        chown -R centos:apache /var/www/html
+        end_message
 
 
-●HTTP2について
-SSLのconfファイルに｢Protocols h2 http/1.1｣と追記してください
-https://www.logw.jp/server/8359.html
+        # apacheの起動
+        echo "apacheを起動します"
+        start_message
+        systemctl start httpd.service
 
-例）
-<VirtualHost *:443>
-    ServerName logw.jp
-    ServerAlias www.logw.jp
+        echo "apacheのステータス確認"
+        systemctl status httpd.service
+        end_message
 
-    Protocols h2 http/1.1　←追加
-    DocumentRoot /var/www/html
+        #自動起動の設定
+        start_message
+        systemctl enable httpd
+        systemctl list-unit-files --type=service | grep httpd
+        end_message
 
 
-<Directory /var/www/html/>
-    AllowOverride All
-    Require all granted
-</Directory>
+        #firewallのポート許可
+        echo "http(80番)とhttps(443番)の許可をしてます"
+        start_message
+        firewall-cmd --permanent --add-service=http
+        firewall-cmd --permanent --add-service=https
+        echo ""
+        echo "保存して有効化"
+        echo ""
+        firewall-cmd --reload
 
-</VirtualHost>
+        echo ""
+        echo "設定を表示"
+        echo ""
+        firewall-cmd --list-all
+        end_message
 
-ドキュメントルートの所有者：centos
-グループ：apache
-になっているため、ユーザー名とグループの変更が必要な場合は変更してください
+        cat <<EOF
+        http://IPアドレス
+        https://IPアドレス
+        で確認してみてください
+
+        ドキュメントルート(DR)は
+        /var/www/html
+        となります。
+
+        htaccessはドキュメントルートのみ有効化しています
+
+        有効化の確認
+
+        https://www.logw.jp/server/7452.html
+        vi /var/www/html/.htaccess
+        -----------------
+        AuthType Basic
+        AuthName hoge
+        Require valid-user
+        -----------------
+        ダイアログがでればhtaccessが有効かされた状態となります。
+
+
+        ●HTTP2について
+        SSLのconfファイルに｢Protocols h2 http/1.1｣と追記してください
+        https://www.logw.jp/server/8359.html
+
+        例）
+        <VirtualHost *:443>
+            ServerName logw.jp
+            ServerAlias www.logw.jp
+
+            Protocols h2 http/1.1　←追加
+            DocumentRoot /var/www/html
+
+
+        <Directory /var/www/html/>
+            AllowOverride All
+            Require all granted
+        </Directory>
+
+        </VirtualHost>
+
+        ドキュメントルートの所有者：centos
+        グループ：apache
+        になっているため、ユーザー名とグループの変更が必要な場合は変更してください
 EOF
 
-echo "centosユーザーのパスワードは"${PASSWORD}"です。"
+        echo "centosユーザーのパスワードは"${PASSWORD}"です。"
+      else
+        echo "CentOS7ではないため、このスクリプトは使えません。このスクリプトのインストール対象はCentOS7です。"
+      fi
+    fi
+
+else
+  echo "このスクリプトのインストール対象はCentOS7です。CentOS7以外は動きません。"
+  cat <<EOF
+  検証LinuxディストリビューションはDebian・Ubuntu・Fedora・Arch Linux（アーチ・リナックス）となります。
+EOF
+fi
+
+
 exec $SHELL -l
