@@ -18,10 +18,6 @@ URL：https://www.logw.jp/
 
 COMMENT
 
-echo "インストールスクリプトを開始します"
-echo "このスクリプトのインストール対象はCentOS7です。"
-echo ""
-
 start_message(){
 echo ""
 echo "======================開始======================"
@@ -34,102 +30,109 @@ echo "======================完了======================"
 echo ""
 }
 
-#EPELリポジトリのインストール
-start_message
-yum remove -y epel-release
-yum -y install epel-release
-end_message
+#CentOS7か確認
+if [ -e /etc/redhat-release ]; then
+    DIST="redhat"
+    DIST_VER=`cat /etc/redhat-release | sed -e "s/.*\s\([0-9]\)\..*/\1/"`
 
-#gitなど必要な物をインストール
-start_message
-yum install -y gcc gcc-c++ make git openssl-devel zlib-devel readline-devel sqlite-devel bzip2-devel
-end_message
+    if [ $DIST = "redhat" ];then
+      if [ $DIST_VER = "7" ];then
+        #EPELリポジトリのインストール
+        start_message
+        yum remove -y epel-release
+        yum -y install epel-release
+        end_message
 
-#mod_sslのインストール
-start_message
-yum -y install mod_ssl
-end_message
+        #gitなど必要な物をインストール
+        start_message
+        yum install -y gcc gcc-c++ make git openssl-devel zlib-devel readline-devel sqlite-devel bzip2-devel
+        end_message
 
-# yum updateを実行
-echo "yum updateを実行します"
-echo ""
+        #mod_sslのインストール
+        start_message
+        yum -y install mod_ssl
+        end_message
 
-start_message
-yum clean all && yum -y update
-end_message
+        # yum updateを実行
+        echo "yum updateを実行します"
+        echo ""
 
-#nodeのインストール
-start_message
-echo "gitからndenvをダウンロード"
-echo "git clone https://github.com/riywo/ndenv.git"
-git clone https://github.com/riywo/ndenv.git
-echo "/usr/local/へコピー"
-echo ""
-cp -R ndenv/ /usr/local/
-ls /usr/local/
-echo "プラグインディレクトリの作成とインストール"
-echo ""
-echo "/usr/local/ndenv/plugins"
-mkdir /usr/local/ndenv/plugins
-echo "git clone https://github.com/riywo/node-build.git"
-git clone https://github.com/riywo/node-build.git
-cp -R node-build/ /usr/local/ndenv/plugins/node-build
+        start_message
+        yum clean all && yum -y update
+        end_message
 
-cat >/etc/profile.d/ndenv.sh <<'EOF'
+        #nodeのインストール
+        start_message
+        echo "gitからndenvをダウンロード"
+        echo "git clone https://github.com/riywo/ndenv.git"
+        git clone https://github.com/riywo/ndenv.git
+        echo "/usr/local/へコピー"
+        echo ""
+        cp -R ndenv/ /usr/local/
+        ls /usr/local/
+        echo "プラグインディレクトリの作成とインストール"
+        echo ""
+        echo "/usr/local/ndenv/plugins"
+        mkdir /usr/local/ndenv/plugins
+        echo "git clone https://github.com/riywo/node-build.git"
+        git clone https://github.com/riywo/node-build.git
+        cp -R node-build/ /usr/local/ndenv/plugins/node-build
+
+        cat >/etc/profile.d/ndenv.sh <<'EOF'
 export NDENV_ROOT=/usr/local/ndenv
 export PATH="$NDENV_ROOT/bin:$PATH"
 eval "$(ndenv init -)"
 EOF
 
-echo "設定反映"
-echo ""
-echo "source /etc/profile.d/ndenv.sh"
-source /etc/profile.d/ndenv.sh
+        echo "設定反映"
+        echo ""
+        echo "source /etc/profile.d/ndenv.sh"
+        source /etc/profile.d/ndenv.sh
 
-#パス確認
-echo "パス確認"
-which ndenv
-end_message
+        #パス確認
+        echo "パス確認"
+        which ndenv
+        end_message
 
-#nodejsのインストール
-start_message
-echo "インストールできるバージョンの一覧を確認"
-ndenv install -l
-echo "v11.3.0をインストール"
-echo ""
-ndenv install v11.3.0
-echo "グローバル環境を11.3.0に設定"
-echo ""
-ndenv global v11.3.0
-echo "バージョン表示"
-echo ""
-node -v
-end_message
+        #nodejsのインストール
+        start_message
+        echo "インストールできるバージョンの一覧を確認"
+        ndenv install -l
+        echo "v11.3.0をインストール"
+        echo ""
+        ndenv install v11.3.0
+        echo "グローバル環境を11.3.0に設定"
+        echo ""
+        ndenv global v11.3.0
+        echo "バージョン表示"
+        echo ""
+        node -v
+        end_message
 
-#nginxの設定ファイルを作成
-start_message
-echo "nginxのインストールファイルを作成します"
-cat >/etc/yum.repos.d/nginx.repo <<'EOF'
+        #nginxの設定ファイルを作成
+        start_message
+        echo "nginxのインストールファイルを作成します"
+        cat >/etc/yum.repos.d/nginx.repo <<'EOF'
 [nginx]
 name=nginx repo
 baseurl=http://nginx.org/packages/mainline/centos/7/$basearch/
 gpgcheck=0
 enabled=1
 EOF
-end_message
+        end_message
 
-#nginxのインストール
-start_message
-yum  -y --enablerepo=nginx install nginx
-end_message
+        #nginxのインストール
+        start_message
+        yum  -y --enablerepo=nginx install nginx
+        end_message
 
-#SSLの設定ファイルに変更
-start_message
-echo "ファイルのコピー"
-cp -p /etc/pki/tls/certs/localhost.crt /etc/nginx
-cp -p /etc/pki/tls/private/localhost.key /etc/nginx/
+        #SSLの設定ファイルに変更
+        start_message
+        echo "ファイルのコピー"
+        cp -p /etc/pki/tls/certs/localhost.crt /etc/nginx
+        cp -p /etc/pki/tls/private/localhost.key /etc/nginx/
 
-cat >/etc/nginx/nginx.conf <<'EOF'
+        cat >/etc/nginx/nginx.conf <<'EOF'
 user  nginx;
 worker_processes  1;
 
@@ -166,10 +169,10 @@ http {
 }
 EOF
 
-echo "ファイルを変更"
-mv /etc/nginx/conf.d/default.conf /etc/nginx/conf.d/default.conf.bk
+        echo "ファイルを変更"
+        mv /etc/nginx/conf.d/default.conf /etc/nginx/conf.d/default.conf.bk
 
-cat >/etc/nginx/conf.d/default.conf <<'EOF'
+        cat >/etc/nginx/conf.d/default.conf <<'EOF'
 server {
     listen       80;
     server_name  localhost;
@@ -290,21 +293,21 @@ server {
     #}
 }
 EOF
-end_message
+        end_message
 
-#Expressのインストールのインストール
-start_message
-echo "Expressのインストールとドキュメントルートへのコピー"
-npm install express
+        #Expressのインストールのインストール
+        start_message
+        echo "Expressのインストールとドキュメントルートへのコピー"
+        npm install express
 
-echo "Expressをドキュメントルートへコピー"
-cp -R node_modules/ /usr/share/nginx/html
-end_message
+        echo "Expressをドキュメントルートへコピー"
+        cp -R node_modules/ /usr/share/nginx/html
+        end_message
 
 
 
-#node.jsのファイル作成
-cat >/usr/share/nginx/html/app.js <<'EOF'
+        #node.jsのファイル作成
+        cat >/usr/share/nginx/html/app.js <<'EOF'
 var express = require('express');
         var app = express();
 
@@ -317,93 +320,106 @@ var express = require('express');
         });
 EOF
 
-#foreverのインストールのインストール
-start_message
-echo "foreversのインストール"
-npm install -g forever
+        #foreverのインストールのインストール
+        start_message
+        echo "foreversのインストール"
+        npm install -g forever
 
-#ユーザー作成
-start_message
-echo "centosユーザーを作成します"
-USERNAME='centos'
-PASSWORD=$(more /dev/urandom  | tr -d -c '[:alnum:]' | fold -w 10 | head -1)
+        #ユーザー作成
+        start_message
+        echo "centosユーザーを作成します"
+        USERNAME='centos'
+        PASSWORD=$(more /dev/urandom  | tr -d -c '[:alnum:]' | fold -w 10 | head -1)
 
-useradd -m -G apache -s /bin/bash "${USERNAME}"
-echo "${PASSWORD}" | passwd --stdin "${USERNAME}"
-echo "パスワードは"${PASSWORD}"です。"
+        useradd -m -G apache -s /bin/bash "${USERNAME}"
+        echo "${PASSWORD}" | passwd --stdin "${USERNAME}"
+        echo "パスワードは"${PASSWORD}"です。"
 
-#所属グループ表示
-echo "所属グループを表示します"
-getent group nginx
-end_message
+        #所属グループ表示
+        echo "所属グループを表示します"
+        getent group nginx
+        end_message
 
-#所有者の変更
-start_message
-echo "ドキュメントルートの所有者をcentos、グループをapacheにします"
-chown -R centos:nginx /usr/share/nginx/html
-end_message
+        #所有者の変更
+        start_message
+        echo "ドキュメントルートの所有者をcentos、グループをapacheにします"
+        chown -R centos:nginx /usr/share/nginx/html
+        end_message
 
 
-#nginxの起動
-start_message
-echo "nginxの起動"
-echo ""
-systemctl start nginx
-systemctl status nginx
-end_message
+        #nginxの起動
+        start_message
+        echo "nginxの起動"
+        echo ""
+        systemctl start nginx
+        systemctl status nginx
+        end_message
 
-#自動起動の設定
-start_message
-systemctl enable nginx
-systemctl list-unit-files --type=service | grep nginx
-end_message
+        #自動起動の設定
+        start_message
+        systemctl enable nginx
+        systemctl list-unit-files --type=service | grep nginx
+        end_message
 
-#firewallのポート許可
-echo "http(80番)とhttps(443番)の許可をしてます"
-start_message
-firewall-cmd --permanent --add-service=http
-firewall-cmd --permanent --add-service=https
-echo ""
-echo "保存して有効化"
-echo ""
-firewall-cmd --reload
+        #firewallのポート許可
+        echo "http(80番)とhttps(443番)の許可をしてます"
+        start_message
+        firewall-cmd --permanent --add-service=http
+        firewall-cmd --permanent --add-service=https
+        echo ""
+        echo "保存して有効化"
+        echo ""
+        firewall-cmd --reload
 
-echo ""
-echo "設定を表示"
-echo ""
-firewall-cmd --list-all
-end_message
+        echo ""
+        echo "設定を表示"
+        echo ""
+        firewall-cmd --list-all
+        end_message
 
-umask 0002
+        umask 0002
 
-cat <<EOF
-node.jsの起動方法は
-node /usr/share/nginx/html/app.js
+        cat <<EOF
+        node.jsの起動方法は
+        node /usr/share/nginx/html/app.js
 
-永続起動する場合は
-forever start /usr/share/nginx/html/app.js
-を実行してください。その後IPアドレスで確認してください
+        永続起動する場合は
+        forever start /usr/share/nginx/html/app.js
+        を実行してください。その後IPアドレスで確認してください
 
-http://IPアドレス
-https://IPアドレス
-で確認してみてください
+        http://IPアドレス
+        https://IPアドレス
+        で確認してみてください
 
-ドキュメントルート(DR)は
-/usr/share/nginx/html;
-となります。
+        ドキュメントルート(DR)は
+        /usr/share/nginx/html;
+        となります。
 
----------------------------------------
-httpsリダイレクトについて
-/etc/nginx/conf.d/default.conf
-#return 301 https://$http_host$request_uri;
-↑
-コメントを外せばそのままリダイレクトになります。
----------------------------------------
+        ---------------------------------------
+        httpsリダイレクトについて
+        /etc/nginx/conf.d/default.conf
+        #return 301 https://$http_host$request_uri;
+        ↑
+        コメントを外せばそのままリダイレクトになります。
+        ---------------------------------------
 
-ドキュメントルートの所有者：centos
-グループ：nginx
-になっているため、ユーザー名とグループの変更が必要な場合は変更してください
+        ドキュメントルートの所有者：centos
+        グループ：nginx
+        になっているため、ユーザー名とグループの変更が必要な場合は変更してください
 EOF
 
-echo "centosユーザーのパスワードは"${PASSWORD}"です。"
+        echo "centosユーザーのパスワードは"${PASSWORD}"です。"
+      else
+        echo "CentOS7ではないため、このスクリプトは使えません。このスクリプトのインストール対象はCentOS7です。"
+      fi
+    fi
+
+else
+  echo "このスクリプトのインストール対象はCentOS7です。CentOS7以外は動きません。"
+  cat <<EOF
+  検証LinuxディストリビューションはDebian・Ubuntu・Fedora・Arch Linux（アーチ・リナックス）となります。
+EOF
+fi
+
+
 exec $SHELL -l

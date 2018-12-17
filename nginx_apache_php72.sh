@@ -18,9 +18,6 @@ URL：https://www.logw.jp/
 
 COMMENT
 
-echo "インストールスクリプトを開始します"
-echo "このスクリプトのインストール対象はCentOS7です。"
-echo ""
 
 start_message(){
 echo ""
@@ -34,53 +31,61 @@ echo "======================完了======================"
 echo ""
 }
 
-#EPELリポジトリのインストール
-start_message
-yum remove -y epel-release
-yum -y install epel-release
-end_message
+#CentOS7か確認
+if [ -e /etc/redhat-release ]; then
+    DIST="redhat"
+    DIST_VER=`cat /etc/redhat-release | sed -e "s/.*\s\([0-9]\)\..*/\1/"`
 
-#Remiリポジトリのインストール
-start_message
-yum -y install http://rpms.famillecollet.com/enterprise/remi-release-7.rpm
-end_message
+    if [ $DIST = "redhat" ];then
+      if [ $DIST_VER = "7" ];then
+
+        #EPELリポジトリのインストール
+        start_message
+        yum remove -y epel-release
+        yum -y install epel-release
+        end_message
+
+        #Remiリポジトリのインストール
+        start_message
+        yum -y install http://rpms.famillecollet.com/enterprise/remi-release-7.rpm
+        end_message
 
 
-#gitリポジトリのインストール
-start_message
-yum -y install git
-end_message
+        #gitリポジトリのインストール
+        start_message
+        yum -y install git
+        end_message
 
-#mod_sslのインストール
-start_message
-yum -y install mod_ssl
-end_message
+        #mod_sslのインストール
+        start_message
+        yum -y install mod_ssl
+        end_message
 
-# yum updateを実行
-echo "yum updateを実行します"
-echo ""
+        # yum updateを実行
+        echo "yum updateを実行します"
+        echo ""
 
-start_message
-yum -y update
-end_message
+        start_message
+        yum -y update
+        end_message
 
-# apacheのインストール
-echo "apacheをインストールします"
-echo ""
+        # apacheのインストール
+        echo "apacheをインストールします"
+        echo ""
 
-start_message
-yum -y install httpd
-yum -y install openldap-devel expat-devel
-yum -y install httpd-devel mod_ssl
+        start_message
+        yum -y install httpd
+        yum -y install openldap-devel expat-devel
+        yum -y install httpd-devel mod_ssl
 
-echo "ファイルのバックアップ"
-echo ""
-mv /etc/httpd/conf/httpd.conf /etc/httpd/conf/httpd.conf.bk
+        echo "ファイルのバックアップ"
+        echo ""
+        mv /etc/httpd/conf/httpd.conf /etc/httpd/conf/httpd.conf.bk
 
-echo "htaccess有効化した状態のconfファイルを作成します"
-echo ""
+        echo "htaccess有効化した状態のconfファイルを作成します"
+        echo ""
 
-cat >/etc/httpd/conf/httpd.conf <<'EOF'
+        cat >/etc/httpd/conf/httpd.conf <<'EOF'
 #
 # This is the main Apache HTTP server configuration file.  It contains the
 # configuration directives that give the server its instructions.
@@ -439,12 +444,12 @@ ServerSignature off
 # Load config files in the "/etc/httpd/conf.d" directory, if any.
 IncludeOptional conf.d/*.conf
 EOF
-end_message
+        end_message
 
-#SSLをリバースプロキシに対応するためポート変更
-start_message
-echo "SSLのファイルを作成します"
-cat >/etc/httpd/conf.d/ssl.conf <<'EOF'
+        #SSLをリバースプロキシに対応するためポート変更
+        start_message
+        echo "SSLのファイルを作成します"
+        cat >/etc/httpd/conf.d/ssl.conf <<'EOF'
 #
 # When we also provide SSL we have to listen to the
 # the HTTPS port in addition.
@@ -662,32 +667,32 @@ CustomLog logs/ssl_request_log \
 
 </VirtualHost>
 EOF
-end_message
+        end_message
 
-#nginxの設定ファイルを作成
-start_message
-echo "nginxのインストールファイルを作成します"
-cat >/etc/yum.repos.d/nginx.repo <<'EOF'
+        #nginxの設定ファイルを作成
+        start_message
+        echo "nginxのインストールファイルを作成します"
+        cat >/etc/yum.repos.d/nginx.repo <<'EOF'
 [nginx]
 name=nginx repo
 baseurl=http://nginx.org/packages/mainline/centos/7/$basearch/
 gpgcheck=0
 enabled=1
 EOF
-end_message
+        end_message
 
-#nginxのインストール
-start_message
-yum  -y --enablerepo=nginx install nginx
-end_message
+        #nginxのインストール
+        start_message
+        yum  -y --enablerepo=nginx install nginx
+        end_message
 
-#SSLの設定ファイルに変更
-start_message
-echo "ファイルのコピー"
-cp -p /etc/pki/tls/certs/localhost.crt /etc/nginx
-cp -p /etc/pki/tls/private/localhost.key /etc/nginx/
+        #SSLの設定ファイルに変更
+        start_message
+        echo "ファイルのコピー"
+        cp -p /etc/pki/tls/certs/localhost.crt /etc/nginx
+        cp -p /etc/pki/tls/private/localhost.key /etc/nginx/
 
-cat >/etc/nginx/nginx.conf <<'EOF'
+        cat >/etc/nginx/nginx.conf <<'EOF'
 user  nginx;
 worker_processes  1;
 
@@ -724,10 +729,10 @@ http {
 }
 EOF
 
-echo "ファイルを変更"
-mv /etc/nginx/conf.d/default.conf /etc/nginx/conf.d/default.conf.bk
+        echo "ファイルを変更"
+        mv /etc/nginx/conf.d/default.conf /etc/nginx/conf.d/default.conf.bk
 
-cat >/etc/nginx/conf.d/default.conf <<'EOF'
+        cat >/etc/nginx/conf.d/default.conf <<'EOF'
 server {
     listen       80;
     server_name  localhost;
@@ -862,122 +867,134 @@ server {
     #}
 }
 EOF
-end_message
+        end_message
 
-# php7系のインストール
-echo "phpをインストールします"
-echo ""
-start_message
-yum -y install --enablerepo=remi,remi-php72 php php-mbstring php-xml php-xmlrpc php-gd php-pdo php-pecl-mcrypt php-mysqlnd php-pecl-mysql
-echo "phpのバージョン確認"
-echo ""
-php -v
-echo ""
-end_message
+        # php7系のインストール
+        echo "phpをインストールします"
+        echo ""
+        start_message
+        yum -y install --enablerepo=remi,remi-php72 php php-mbstring php-xml php-xmlrpc php-gd php-pdo php-pecl-mcrypt php-mysqlnd php-pecl-mysql
+        echo "phpのバージョン確認"
+        echo ""
+        php -v
+        echo ""
+        end_message
 
-#php.iniの設定変更
-start_message
-echo "phpのバージョンを非表示にします"
-echo "sed -i -e s|expose_php = On|expose_php = Off| /etc/php.ini"
-sed -i -e "s|expose_php = On|expose_php = Off|" /etc/php.ini
-echo "phpのタイムゾーンを変更"
-echo "sed -i -e s|;date.timezone =|date.timezone = Asia/Tokyo| /etc/php.ini"
-sed -i -e "s|;date.timezone =|date.timezone = Asia/Tokyo|" /etc/php.ini
-end_message
-
-
-# phpinfoの作成
-start_message
-touch /var/www/html/info.php
-echo '<?php phpinfo(); ?>' >> /var/www/html/info.php
-cat /var/www/html/info.php
-end_message
+        #php.iniの設定変更
+        start_message
+        echo "phpのバージョンを非表示にします"
+        echo "sed -i -e s|expose_php = On|expose_php = Off| /etc/php.ini"
+        sed -i -e "s|expose_php = On|expose_php = Off|" /etc/php.ini
+        echo "phpのタイムゾーンを変更"
+        echo "sed -i -e s|;date.timezone =|date.timezone = Asia/Tokyo| /etc/php.ini"
+        sed -i -e "s|;date.timezone =|date.timezone = Asia/Tokyo|" /etc/php.ini
+        end_message
 
 
-#ユーザー作成
-start_message
-echo "centosユーザーを作成します"
-USERNAME='centos'
-PASSWORD=$(more /dev/urandom  | tr -d -c '[:alnum:]' | fold -w 10 | head -1)
+        # phpinfoの作成
+        start_message
+        touch /var/www/html/info.php
+        echo '<?php phpinfo(); ?>' >> /var/www/html/info.php
+        cat /var/www/html/info.php
+        end_message
 
-useradd -m -G apache -s /bin/bash "${USERNAME}"
-echo "${PASSWORD}" | passwd --stdin "${USERNAME}"
-echo "パスワードは"${PASSWORD}"です。"
 
-#所属グループ表示
-echo "所属グループを表示します"
-getent group nginx
-end_message
+        #ユーザー作成
+        start_message
+        echo "centosユーザーを作成します"
+        USERNAME='centos'
+        PASSWORD=$(more /dev/urandom  | tr -d -c '[:alnum:]' | fold -w 10 | head -1)
 
-#所有者の変更
-start_message
-echo "ドキュメントルートの所有者をcentos、グループをapacheにします"
-chown -R centos:apache /var/www/html
-end_message
+        useradd -m -G apache -s /bin/bash "${USERNAME}"
+        echo "${PASSWORD}" | passwd --stdin "${USERNAME}"
+        echo "パスワードは"${PASSWORD}"です。"
 
-#apacheの起動
-start_message
-echo "apacheの起動"
-echo ""
-systemctl start httpd
-systemctl status httpd
-end_message
+        #所属グループ表示
+        echo "所属グループを表示します"
+        getent group nginx
+        end_message
 
-#nginxの起動
-start_message
-echo "nginxの起動"
-echo ""
-systemctl start nginx
-systemctl status nginx
-end_message
+        #所有者の変更
+        start_message
+        echo "ドキュメントルートの所有者をcentos、グループをapacheにします"
+        chown -R centos:apache /var/www/html
+        end_message
 
-#自動起動の設定
-start_message
-systemctl enable nginx
-systemctl enable httpd
-systemctl list-unit-files --type=service | grep nginx
-systemctl list-unit-files --type=service | grep httpd
-end_message
+        #apacheの起動
+        start_message
+        echo "apacheの起動"
+        echo ""
+        systemctl start httpd
+        systemctl status httpd
+        end_message
 
-#firewallのポート許可
-echo "http(80番)とhttps(443番)の許可をしてます"
-start_message
-firewall-cmd --permanent --add-service=http
-firewall-cmd --permanent --add-service=https
-echo ""
-echo "保存して有効化"
-echo ""
-firewall-cmd --reload
+        #nginxの起動
+        start_message
+        echo "nginxの起動"
+        echo ""
+        systemctl start nginx
+        systemctl status nginx
+        end_message
 
-echo ""
-echo "設定を表示"
-echo ""
-firewall-cmd --list-all
-end_message
+        #自動起動の設定
+        start_message
+        systemctl enable nginx
+        systemctl enable httpd
+        systemctl list-unit-files --type=service | grep nginx
+        systemctl list-unit-files --type=service | grep httpd
+        end_message
 
-umask 0002
+        #firewallのポート許可
+        echo "http(80番)とhttps(443番)の許可をしてます"
+        start_message
+        firewall-cmd --permanent --add-service=http
+        firewall-cmd --permanent --add-service=https
+        echo ""
+        echo "保存して有効化"
+        echo ""
+        firewall-cmd --reload
 
-cat <<EOF
-http://IPアドレス
-https://IPアドレス
-で確認してみてください
+        echo ""
+        echo "設定を表示"
+        echo ""
+        firewall-cmd --list-all
+        end_message
 
-ドキュメントルート(DR)は
-/usr/share/nginx/html;
-となります。
+        umask 0002
 
----------------------------------------
-httpsリダイレクトについて
-/etc/nginx/conf.d/default.conf
-#return 301 https://$http_host$request_uri;
-↑
-コメントを外せばそのままリダイレクトになります。
----------------------------------------
+        cat <<EOF
+        http://IPアドレス
+        https://IPアドレス
+        で確認してみてください
 
-ドキュメントルートの所有者：centos
-グループ：nginx
-になっているため、ユーザー名とグループの変更が必要な場合は変更してください
+        ドキュメントルート(DR)は
+        /usr/share/nginx/html;
+        となります。
+
+        ---------------------------------------
+        httpsリダイレクトについて
+        /etc/nginx/conf.d/default.conf
+        #return 301 https://$http_host$request_uri;
+        ↑
+        コメントを外せばそのままリダイレクトになります。
+        ---------------------------------------
+
+        ドキュメントルートの所有者：centos
+        グループ：nginx
+        になっているため、ユーザー名とグループの変更が必要な場合は変更してください
 EOF
 
-echo "centosユーザーのパスワードは"${PASSWORD}"です。"
+        echo "centosユーザーのパスワードは"${PASSWORD}"です。"
+      else
+        echo "CentOS7ではないため、このスクリプトは使えません。このスクリプトのインストール対象はCentOS7です。"
+      fi
+    fi
+
+else
+  echo "このスクリプトのインストール対象はCentOS7です。CentOS7以外は動きません。"
+  cat <<EOF
+  検証LinuxディストリビューションはDebian・Ubuntu・Fedora・Arch Linux（アーチ・リナックス）となります。
+EOF
+fi
+
 exec $SHELL -l
