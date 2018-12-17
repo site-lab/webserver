@@ -89,7 +89,6 @@ EOF
 
         echo "ファイルを変更"
         mv /etc/nginx/conf.d/default.conf /etc/nginx/conf.d/default.conf.bk
-<<COMMENT
         cat >/etc/nginx/conf.d/default.conf <<'EOF'
 server {
     listen       80;
@@ -209,7 +208,7 @@ server {
     #}
 }
 EOF
-COMMENT
+
         end_message
 
         #ユーザー作成
