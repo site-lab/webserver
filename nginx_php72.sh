@@ -282,7 +282,7 @@ EOF
 
         #php-fpmの起動
         start_message
-        echo "nginxの起動"
+        echo "php-fpmの起動"
         echo ""
         systemctl start php-fpm
         systemctl status php-fpm
