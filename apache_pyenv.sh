@@ -44,9 +44,9 @@ if [ -e /etc/redhat-release ]; then
         yum -y install epel-release
         end_message
 
-        #gitリポジトリのインストール
+        #必要なパッケージのインストール
         start_message
-        yum -y install git
+        yum -y install git zlib-devel bzip2 bzip2-devel readline-devel sqlite sqlite-devel openssl-devel
         end_message
 
 
@@ -460,6 +460,43 @@ BrowserMatch \bMSI[E] !no-gzip !gzip-only-text/html
 SetEnvIfNoCase Request_URI\.(?:gif|jpe?g|png)$ no-gzip dont-vary
 Header append Vary User-Agent env=!dont-var
 EOF
+
+        #pyenvの設定
+        start_message
+        echo "gitでpyenvをクーロンします"
+        git clone git://github.com/yyuu/pyenv.git /usr/local/pyenv
+        git clone git://github.com/yyuu/pyenv-virtualenv.git /usr/local/pyenv/plugins/pyenv-virtualenv
+        end_message
+
+        #pyenvのインストール
+        start_message
+        echo "起動時に読み込まれるようにします"
+        cat >/etc/profile.d/pyenv.sh <<'EOF'
+export PYENV_ROOT="/usr/local/pyenv"
+export PATH="${PYENV_ROOT}/bin:${PATH}"
+eval "$(pyenv init -)"
+EOF
+
+        source /etc/profile.d/pyenv.sh
+        end_message
+
+        #pythonの確認
+        start_message
+        echo "pythonのリスト確認"
+        pyenv install --list
+        echo "python3.6.7のインストール"
+        pyenv install 3.6.7
+        echo "pythonの設定を変更"
+        pyenv global 3.6.7
+        end_message
+
+        #pythonの確認
+        start_message
+        echo "pythonの位置を確認"
+        which python
+        echo "pythonのバージョン確認"
+        python --version
+        end_message
 
         #ユーザー作成
         start_message
