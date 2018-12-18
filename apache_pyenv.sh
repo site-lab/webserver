@@ -46,7 +46,7 @@ if [ -e /etc/redhat-release ]; then
 
         #必要なパッケージのインストール
         start_message
-        yum -y install git zlib-devel bzip2 bzip2-devel readline-devel sqlite sqlite-devel openssl-devel
+        yum -y install git zlib-devel bzip2 bzip2-devel readline-devel sqlite sqlite-devel openssl-devel gcc
         end_message
 
 
