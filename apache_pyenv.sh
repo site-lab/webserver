@@ -46,7 +46,7 @@ if [ -e /etc/redhat-release ]; then
 
         #必要なパッケージのインストール
         start_message
-        yum -y install git zlib-devel bzip2 bzip2-devel readline-devel sqlite sqlite-devel openssl-devel gcc
+        yum -y install git zlib-devel bzip2 bzip2-devel readline-devel sqlite sqlite-devel openssl-devel gcc python-devel
         end_message
 
 
@@ -432,6 +432,10 @@ ServerSignature off
 # Supplemental configuration
 #
 # Load config files in the "/etc/httpd/conf.d" directory, if any.
+
+LoadModule wsgi_module modules/mod_wsgi-py36.cpython-36m-x86_64-linux-gnu.so
+WSGIScriptAlias / /var/www/html/adapter.wsgi
+
 IncludeOptional conf.d/*.conf
 
 EOF
@@ -485,7 +489,7 @@ EOF
         echo "pythonのリスト確認"
         pyenv install --list
         echo "python3.6.7のインストール"
-        pyenv install 3.6.7
+        env PYTHON_CONFIGURE_OPTS="--enable-shared" pyenv install 3.6.7
         echo "pythonの設定を変更"
         pyenv global 3.6.7
         end_message
@@ -497,6 +501,34 @@ EOF
         echo "pythonのバージョン確認"
         python --version
         end_message
+
+        #pipのアップグレード
+        start_message
+        echo "pipのアップグレード"
+        pip install --upgrade pip
+        end_message
+
+        #mod_wsgiのインストール
+        start_message
+        echo "mod_wsgiのインストール"
+        pip install mod-wsgi
+        end_message
+
+        #インストール場所を調べる
+        start_message
+        echo "インストール場所を調べます"
+        pip show mod-wsgi
+        ls -all /usr/local/pyenv/versions/3.6.7/lib/python3.6/site-packages/mod_wsgi/server/
+        end_message
+
+        #ファイルのコピー
+        start_message
+        echo "ファイルをコピーします"
+        cp /usr/local/pyenv/versions/3.6.7/lib/python3.6/site-packages/mod_wsgi/server/mod_wsgi-py36.cpython-36m-x86_64-linux-gnu.so /etc/httpd/modules/
+        echo "ファイルの確認"
+        ls /etc/httpd/modules/
+        end_message
+
 
         #ユーザー作成
         start_message
