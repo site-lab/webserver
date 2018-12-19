@@ -529,6 +529,41 @@ EOF
         ls /etc/httpd/modules/
         end_message
 
+        #botleのインストール
+        start_message
+        echo "botleのインストール"
+        pip install bottle
+        cp /usr/local/pyenv/versions/3.6.7/lib/python3.6/site-packages/bottle.py /var/www/html/
+        end_message
+
+        #wsgiファイル
+        start_message
+        cat >/var/www/html/adapter.wsgi <<'EOF'
+import sys, os
+dirpath = os.path.dirname(os.path.abspath(__file__))
+sys.path.append(dirpath)
+os.chdir(dirpath)
+import bottle
+import index
+application = bottle.default_app()
+EOF
+        end_message
+
+        #pythonファイル
+        start_message
+        cat >/var/www/html/index.py <<'EOF'
+from bottle import route, run, template
+from bottle import TEMPLATE_PATH
+
+@route('/')
+def index():
+    return ("Apacheとbottleの連携成功！")
+
+if __name__ == '__main__':
+    run(host='0.0.0.0', port=8081, debug=True, reloader=True)
+EOF
+        end_message
+
 
         #ユーザー作成
         start_message
