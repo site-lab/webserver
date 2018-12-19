@@ -558,7 +558,7 @@ from bottle import TEMPLATE_PATH
 
 @route('/')
 def index():
-    return ("Apacheとbottleの連携成功！")
+    return ("環境構築スクリプトによりApacheとbottleの連携！")
 
 if __name__ == '__main__':
     run(host='0.0.0.0', port=8081, debug=True, reloader=True)
