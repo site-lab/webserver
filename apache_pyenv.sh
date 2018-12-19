@@ -14,6 +14,7 @@ URL：https://www.logw.jp/
 ・mod_sslのインストール
 ・centosユーザーの作成
 ・pyenvのインストール
+・bottleとの連携
 
 COMMENT
 
