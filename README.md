@@ -107,6 +107,14 @@ gzipは/etc/httpd/conf.d/gzip.conf　にて設定が記述されています
 PHP7は **FastCGI版** となります。
 データベースは自分でインストールしていただく形になります。データベースも含めてインストールしたい場合は[LAMP](https://github.com/site-lab/lamp)リポジトリからインストールしてください。
 
+## [apache_pyenv.sh](https://github.com/site-lab/apache/blob/master/apache_pyenv.sh)
+### 実行内容
+* apache2.4.6のインストール
+* mod_sslのインストール
+* python3.6.7のインストール
+* botleのインストール
+
+
 
 ## [nginx.sh](https://github.com/site-lab/apache/blob/master/nginx.sh)
 ### 実行内容
