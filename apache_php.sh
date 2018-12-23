@@ -556,28 +556,6 @@ firewall-cmd --list-all
 end_message
 
 cat <<EOF
-一度ログアウト後、再度ログインをして下記コマンドを実行してください。
-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-
-1　module load phpのバージョン
-module load php72
-php -v
-
-PHP 7.2.12 (cli) (built: Nov  6 2018 15:26:22) ( NTS )
-Copyright (c) 1997-2018 The PHP Group
-Zend Engine v3.2.0, Copyright (c) 1998-2018 Zend Technologies
-    with Zend OPcache v7.2.12, Copyright (c) 1999-2018, by Zend Technologies
-
-とでたらPHP7.2となります。
-
-切り替え方法
-2
-module unload php72
-php -v
-
--bash: php: コマンドが見つかりません
-
-とでたら、また1のコマンドを実行してください
-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-
 
 http://IPアドレス/info.php
 https://IPアドレス/info.php
