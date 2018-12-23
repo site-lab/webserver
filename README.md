@@ -34,6 +34,9 @@ wgetがない場合は **yum -y install wget** でインストールしてくだ
 * gzip圧縮の設定
 * centosユーザーの作成
 
+**centosユーザーのパスワードはランダム生成になります。構築完了後にパスワードが表示されるのでメモするか、rootで変更してください** centosユーザーで作成、アップロードするファイルは **644** 、ディレクトリは **775** となります
+
+
 ## [apache.sh](https://github.com/site-lab/apache/blob/master/apache.sh)
 ### 実行内容
 * apache2.4.6のインストール
@@ -42,8 +45,6 @@ Apacheはドキュメントルートのみhtaccessの有効化された状態と
 gzipは/etc/httpd/conf.d/gzip.conf　にて設定が記述されています
 HTTP2については、モジュールの有効可をしてあるため、各々でconfファイルに追記をしてください
 参考サイト：https://www.logw.jp/server/8359.html
-
-**centosユーザーのパスワードはランダム生成になります。構築完了後にパスワードが表示されるのでメモするか、rootで変更してください** centosユーザーで作成、アップロードするファイルは **644** 、ディレクトリは **775** となります
 
 Apacheのみのインストールとなります。HHVMを使いたいなどの場合はこれを選択してください
 
@@ -58,6 +59,20 @@ HTTP2については、モジュールの有効可をしてあるため、各々
 参考サイト：https://www.logw.jp/server/8359.html
 
 Apacheのみのインストールとなります。HHVMを使いたいなどの場合はこれを選択してください
+
+## [apache_php.sh](https://github.com/site-lab/apache/blob/master/apache_php.sh)
+### 実行内容
+* apache2.4.6のインストール
+* php7.2 or 7.3のインストール
+* php7.2 or 7.3の必要モジュールインストール
+
+Apacheはドキュメントルートのみhtaccessの有効化された状態となります。
+gzipは/etc/httpd/conf.d/gzip.conf　にて設定が記述されています
+PHP7は **モジュール版** となります。
+データベースは自分でインストールしていただく形になります。データベースも含めてインストールしたい場合は[LAMP](https://github.com/site-lab/lamp)リポジトリからインストールしてください。
+
+このスクリプトはインストールしたいPHPのバージョンを聞かれます。7.2か7.3かをキーボードで選択していただきます。
+
 
 ## [apache_php72.sh](https://github.com/site-lab/apache/blob/master/apache_php72.sh)
 ### 実行内容
