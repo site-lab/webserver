@@ -81,12 +81,11 @@ make libc-client
         # phpinfoの作成
         start_message
         echo "phpinfoを作成します"
+        touch /var/www/html/.hhconfig
         touch /var/www/html/info.php
         echo '<?hh phpinfo(); ?>' >> /var/www/html/info.php
         cat /var/www/html/info.php
         end_message
-
-
 
 
         #nginxの設定ファイルを作成
@@ -158,13 +157,13 @@ server {
 
     # pass the PHP scripts to FastCGI server listening on 127.0.0.1:9000
     #
-    #location ~ \.php$ {
-    #    root           html;
-    #    fastcgi_pass   127.0.0.1:9000;
-    #    fastcgi_index  index.php;
-    #    fastcgi_param  SCRIPT_FILENAME  /scripts$fastcgi_script_name;
-    #    include        fastcgi_params;
-    #}
+    location ~ \.php$ {
+        root           /usr/share/nginx/html;
+        fastcgi_pass   127.0.0.1:9000;
+        fastcgi_index  index.php;
+        fastcgi_param  SCRIPT_FILENAME  $document_root$fastcgi_script_name;
+        include        fastcgi_params;
+    }
 
     # deny access to .htaccess files, if Apache's document root
     # concurs with nginx's one
@@ -222,13 +221,13 @@ server {
 
     # pass the PHP scripts to FastCGI server listening on 127.0.0.1:9000
     #
-    #location ~ \.php$ {
-    #    root           html;
-    #    fastcgi_pass   127.0.0.1:9000;
-    #    fastcgi_index  index.php;
-    #    fastcgi_param  SCRIPT_FILENAME  /scripts$fastcgi_script_name;
-    #    include        fastcgi_params;
-    #}
+    location ~ \.php$ {
+        root   /usr/share/nginx/html;
+        fastcgi_pass   127.0.0.1:9000;
+        fastcgi_index  index.php;
+        fastcgi_param  SCRIPT_FILENAME  $document_root$fastcgi_script_name;
+        include        fastcgi_params;
+    }
 
     # deny access to .htaccess files, if Apache's document root
     # concurs with nginx's one
