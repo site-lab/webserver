@@ -591,9 +591,11 @@ EOF
         umask 0002
 
         cat <<EOF
-        http://IPアドレス
-        https://IPアドレス
+        http://IPアドレス/info.php
+        https://IPアドレス/info.php
         で確認してみてください
+        503エラーになるはずです。その場合はシステム再起動してください
+        shutdown -r now もしくはrebootで再起動できます。その後ページが見れるようになります
 
         ドキュメントルート(DR)は
         /var/www/html
