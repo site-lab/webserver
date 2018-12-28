@@ -71,6 +71,22 @@ make libc-client
         yum -y install hhvm
         hhvm --version
         end_message
+        exec $SHELL -l
+
+        #ディレクトリの作成
+        start_message
+        mkdir /var/www && mkdir /var/www/html
+        end_message
+
+        # phpinfoの作成
+        start_message
+        echo "phpinfoを作成します"
+        touch /var/www/html/info.php
+        echo '<?hh phpinfo(); ?>' >> /var/www/html/info.php
+        cat /var/www/html/info.php
+        end_message
+
+
 
 
         #nginxの設定ファイルを作成
