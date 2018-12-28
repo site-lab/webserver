@@ -135,6 +135,12 @@ PHP7は **FastCGI版** となります。
 ### 実行内容
 * nginxのインストール
 
+## [nginx_php.sh](https://github.com/site-lab/apache/blob/master/nginx_php.sh)
+### 実行内容
+* nginxのインストール
+* PHP7.2 or 7.3を選択してインストール
+
+
 ## [nginx_apache.sh](https://github.com/site-lab/apache/blob/master/nginx_apache.sh)
 ### 実行内容
 * nginxのインストール
