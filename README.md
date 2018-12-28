@@ -82,6 +82,20 @@ PHP7は **モジュール版** となります。
 
 このスクリプトはインストールしたいPHPのバージョンを聞かれます。7.2か7.3かをキーボードで選択していただきます。
 
+## [apache24u_php.sh](https://github.com/site-lab/apache/blob/master/apache24u_php.sh)
+### 実行内容
+* apache2.4.6のインストール
+* php7.2 or 7.3のインストール
+* php7.2 or 7.3の必要モジュールインストール
+
+Apacheはドキュメントルートのみhtaccessの有効化された状態となります。
+gzipは/etc/httpd/conf.d/gzip.conf　にて設定が記述されています
+PHP7は **モジュール版** となります。
+データベースは自分でインストールしていただく形になります。データベースも含めてインストールしたい場合は[LAMP](https://github.com/site-lab/lamp)リポジトリからインストールしてください。
+
+このスクリプトはインストールしたいPHPのバージョンを聞かれます。7.2か7.3かをキーボードで選択していただきます。
+
+
 
 ## [apache_php72.sh](https://github.com/site-lab/apache/blob/master/apache_php72.sh)
 ### 実行内容
