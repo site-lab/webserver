@@ -135,13 +135,13 @@ server {
 
     # pass the PHP scripts to FastCGI server listening on 127.0.0.1:9000
     #
-    #location ~ \.php$ {
-    #    root           html;
-    #    fastcgi_pass   127.0.0.1:9000;
-    #    fastcgi_index  index.php;
-    #    fastcgi_param  SCRIPT_FILENAME  /scripts$fastcgi_script_name;
-    #    include        fastcgi_params;
-    #}
+    location ~ \.php$ {
+        root           /usr/share/nginx/html;
+        fastcgi_pass   127.0.0.1:9000;
+        fastcgi_index  index.php;
+        fastcgi_param  SCRIPT_FILENAME  $document_root$fastcgi_script_name;
+        include        fastcgi_params;
+    }
 
     # deny access to .htaccess files, if Apache's document root
     # concurs with nginx's one
@@ -199,13 +199,13 @@ server {
 
     # pass the PHP scripts to FastCGI server listening on 127.0.0.1:9000
     #
-    #location ~ \.php$ {
-    #    root           html;
-    #    fastcgi_pass   127.0.0.1:9000;
-    #    fastcgi_index  index.php;
-    #    fastcgi_param  SCRIPT_FILENAME  /scripts$fastcgi_script_name;
-    #    include        fastcgi_params;
-    #}
+    location ~ \.php$ {
+        root   /usr/share/nginx/html;
+        fastcgi_pass   127.0.0.1:9000;
+        fastcgi_index  index.php;
+        fastcgi_param  SCRIPT_FILENAME  $document_root$fastcgi_script_name;
+        include        fastcgi_params;
+    }
 
     # deny access to .htaccess files, if Apache's document root
     # concurs with nginx's one
@@ -303,6 +303,14 @@ EOF
         chown -R centos:nginx /usr/share/nginx/html
         end_message
 
+        #php-fpmの起動
+        start_message
+        echo "php-fpmの起動"
+        echo ""
+        systemctl start php-fpm
+        systemctl status php-fpm
+        end_message
+
 
         #nginxの起動
         start_message
@@ -315,7 +323,9 @@ EOF
         #自動起動の設定
         start_message
         systemctl enable nginx
+        systemctl enable php-fpm
         systemctl list-unit-files --type=service | grep nginx
+        systemctl list-unit-files --type=service | grep php-fpm
         end_message
 
         #firewallのポート許可
