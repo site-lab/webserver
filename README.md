@@ -236,3 +236,13 @@ nginx+node.jsです。nginxでリバースプロキシをしてます。
 * HTTPSへのリダイレクト設定可（一部ファイル編集してください）
 
 nginx+node.jsです。nginxでリバースプロキシをしてます。ndenvで動かします
+
+
+## [nginx_go.sh](https://github.com/site-lab/apache/blob/master/nginx_go.sh)
+### 実行内容
+* nginxのインストール
+* go言語のインストール
+* Expressのインストール
+* HTTPSへのリダイレクト設定可（一部ファイル編集してください）
+
+nginx+go言語です。nginxでリバースプロキシをしてます。
