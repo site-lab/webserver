@@ -96,14 +96,14 @@ if [ -e /etc/redhat-release ]; then
         #所有者の変更
         start_message
         echo "ドキュメントルートの所有者をcentos、グループをnobodyにします"
-	mkdir /var/www && /var/www/html
+        mkdir /var/www && mkdir /var/www/html
         chown -R centos:nobody /var/www/html
         end_message
 
         # WEBサーバーの起動
         echo "openlitespeedを起動します"
         start_message
-	service lsws start
+        service lsws start
 
         echo "WEBサーバーのステータス確認"
         systemctl status lsws
