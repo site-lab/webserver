@@ -93,12 +93,6 @@ if [ -e /etc/redhat-release ]; then
         getent group nobody
         end_message
 
-        #所有者の変更
-        start_message
-        echo "ドキュメントルートの所有者をcentos、グループをnobodyにします"
-        mkdir /var/www && mkdir /var/www/html
-        chown -R centos:nobody /var/www/html
-        end_message
 
         # WEBサーバーの起動
         echo "openlitespeedを起動します"
@@ -136,50 +130,33 @@ if [ -e /etc/redhat-release ]; then
         umask 0002
 
         cat <<EOF
-        http://IPアドレス
-        https://IPアドレス
-        で確認してみてください
-
-        ドキュメントルート(DR)は
-        /var/www/html
-        となります。
-
-
-        有効化の確認
-
-        https://www.logw.jp/server/7452.html
-        vi /var/www/html/.htaccess
-        -----------------
-        AuthType Basic
-        AuthName hoge
-        Require valid-user
-        -----------------
-        ダイアログがでればhtaccessが有効かされた状態となります。
-
-
-        ●HTTP2について
-        SSLのconfファイルに｢Protocols h2 http/1.1｣と追記してください
-        https://www.logw.jp/server/8359.html
-
-        例）
-        <VirtualHost *:443>
-            ServerName logw.jp
-            ServerAlias www.logw.jp
-
-            Protocols h2 http/1.1　←追加
-            DocumentRoot /var/www/html
-
-
-        <Directory /var/www/html/>
-            AllowOverride All
-            Require all granted
-        </Directory>
-
-        </VirtualHost>
-
-        ドキュメントルートの所有者：centos
-        グループ：apache
-        になっているため、ユーザー名とグループの変更が必要な場合は変更してください
+        http://IPアドレス:7080
+        https://IPアドレス:7080
+        で確認してみてください。管理画面が表示されます
+        
+        ログインID：admin
+        パスワード：123456
+        
+        パスワードの変更などは初期設定を見るか、
+        ----------------------------
+        /usr/local/lsws/admin/misc/admpass.sh
+        （略）
+        User name [admin]: ＜推測されにくいユーザー名＞
+        （略）
+        Password: ＜強度の高いパスワード＞
+        Retype password:
+        ----------------------------
+        として変更して下さい
+        
+        ○初期設定
+        初期では8088がデフォルトのポートになっているため、変更が必要になります
+        https://www.logw.jp/cloudserver/8545.html
+        の管理画面でポート変更の手順でやってください
+        
+        ○OpenliteSpeedの設定について
+        LiteSpeedの設定については
+        https://www.logw.jp/tag/litespeed
+        を見て下さい
 EOF
 
         echo "centosユーザーのパスワードは"${PASSWORD}"です。"
