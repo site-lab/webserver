@@ -148,7 +148,6 @@ if [ -e /etc/redhat-release ]; then
         を見て下さい
 EOF
 
-        echo "centosユーザーのパスワードは"${PASSWORD}"です。"
       else
         echo "CentOS7ではないため、このスクリプトは使えません。このスクリプトのインストール対象はCentOS7です。"
       fi
