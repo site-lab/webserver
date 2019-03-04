@@ -133,6 +133,7 @@ if [ -e /etc/redhat-release ]; then
         http://IPアドレス:7080
         https://IPアドレス:7080
         で確認してみてください。管理画面が表示されます
+        ※conohaやAWS,GCPは管理画面から7080のポートを許可してください
         
         ログインID：admin
         パスワード：123456
