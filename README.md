@@ -56,6 +56,7 @@ Apacheのみのインストールとなります。HHVMを使いたいなどの�
 ### 実行内容
 * iusリポジトリインストール
 * apache2.4.xのインストール
+* HTTP2対応
 
 Apacheはドキュメントルートのみhtaccessの有効化された状態となります。
 gzipは/etc/httpd/conf.d/gzip.conf　にて設定が記述されています
@@ -88,7 +89,8 @@ PHP7は **モジュール版** となります。
 
 ## [apache24u_php.sh](https://github.com/site-lab/apache/blob/master/apache24u_php.sh)
 ### 実行内容
-* apache2.4.6のインストール
+* apache2.4.xのインストール
+* HTTP2対応
 * php7.2 or 7.3のインストール
 * php7.2 or 7.3の必要モジュールインストール
 
@@ -155,6 +157,19 @@ PHP7は **FastCGI版** となります。
 * mod_sslのインストール
 * python3.6.7のインストール
 * botleのインストール
+
+## [apache24u_php72_fcgid.sh](https://github.com/site-lab/apache/blob/master/apache24u_php72_fcgid.sh)
+### 実行内容
+* apache2.4.xのインストール
+* mod_sslのインストール
+* HTTP2対応
+* php7.2のインストール
+* php7.2の必要モジュールインストール
+
+Apacheはドキュメントルートのみhtaccessの有効化された状態となります。
+gzipは/etc/httpd/conf.d/gzip.conf　にて設定が記述されています
+PHP7は **FastCGI版** となります。
+データベースは自分でインストールしていただく形になります。データベースも含めてインストールしたい場合は[LAMP](https://github.com/site-lab/lamp)リポジトリからインストールしてください。
 
 
 
