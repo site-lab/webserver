@@ -102,11 +102,6 @@ EOF
         yum -y update
         end_message
 
-        #mod_fcgidのインストール
-        start_message
-        yum -y install mod_fcgid
-        end_message
-
         #Nghttp2のインストール
         start_message
         echo "Nghttp2のインストール"
@@ -523,6 +518,12 @@ BrowserMatch \bMSI[E] !no-gzip !gzip-only-text/html
 SetEnvIfNoCase Request_URI\.(?:gif|jpe?g|png)$ no-gzip dont-vary
 Header append Vary User-Agent env=!dont-var
 EOF
+
+        #mod_fcgidのインストール
+        start_message
+        yum -y install mod_fcgid
+        end_message
+
 
         # php7系のインストール
         echo "phpをインストールします"
