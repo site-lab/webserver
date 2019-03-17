@@ -62,6 +62,39 @@ if [ -e /etc/redhat-release ]; then
         echo "apacheをインストールします"
         echo ""
 
+        PS3="インストールしたいPHPのバージョンを選んでください > "
+        ITEM_LIST="apache2.4.6 apache2.4.x"
+
+        select selection in $ITEM_LIST
+
+        do
+          if [ $selection = "apache2.4.6" ]; then
+            # apache2.4.6のインストール
+            echo "apache2.4.6をインストールします"
+            echo ""
+            start_message
+            yum -y install httpd
+            yum -y install openldap-devel expat-devel
+            yum -y install httpd-devel mod_ssl
+            end_message
+            break
+          elif [ $selection = "apache2.4.x" ]; then
+            # php7系のインストール
+            echo "phpをインストールします"
+            echo ""
+            start_message
+            yum -y install --enablerepo=remi,remi-php73 php php-mbstring php-xml php-xmlrpc php-gd php-pdo php-pecl-mcrypt php-mysqlnd php-pecl-mysql
+            echo "phpのバージョン確認"
+            echo ""
+            php -v
+            echo ""
+            end_message
+            break
+          else
+            echo "どちらかを選択してください"
+          fi
+        done
+
         start_message
         yum -y install httpd
         yum -y install openldap-devel expat-devel
