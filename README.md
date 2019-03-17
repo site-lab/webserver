@@ -294,3 +294,10 @@ nginx+go言語です。nginxでリバースプロキシをしてます。
 * HTTPSへのリダイレクト設定可（一部ファイル編集してください）
 
 nginx+go言語です。nginxでリバースプロキシをしてます。こっちはgoenvでバージョン管理出来るタイプとなります。
+
+
+## [openlitespeed.sh](https://github.com/site-lab/webserver/blob/master/openlitespeed.sh)
+### 実行内容
+* openlitespeedのインストール
+* 初期設定：https://www.logw.jp/cloudserver/8545.html
+* openlitespeed関係の記事：https://www.logw.jp/tag/litespeed
