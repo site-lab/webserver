@@ -79,16 +79,67 @@ if [ -e /etc/redhat-release ]; then
             end_message
             break
           elif [ $selection = "apache2.4.x" ]; then
-            # php7系のインストール
-            echo "phpをインストールします"
-            echo ""
+            # 2.4.ｘのインストール
+            #IUSリポジトリのインストール
             start_message
-            yum -y install --enablerepo=remi,remi-php73 php php-mbstring php-xml php-xmlrpc php-gd php-pdo php-pecl-mcrypt php-mysqlnd php-pecl-mysql
-            echo "phpのバージョン確認"
-            echo ""
-            php -v
-            echo ""
+            echo "IUSリポジトリをインストールします"
+            yum -y install https://centos7.iuscommunity.org/ius-release.rpm
             end_message
+
+            #IUSリポジトリをデフォルトから外す
+            start_message
+            echo "IUSリポジトリをデフォルトから外します"
+            cat >/etc/yum.repos.d/ius.repo <<'EOF'
+[ius]
+name=IUS Community Packages for Enterprise Linux 7 - $basearch
+#baseurl=https://dl.iuscommunity.org/pub/ius/stable/CentOS/7/$basearch
+mirrorlist=https://mirrors.iuscommunity.org/mirrorlist?repo=ius-centos7&arch=$basearch&protocol=http
+failovermethod=priority
+enabled=0
+gpgcheck=1
+gpgkey=file:///etc/pki/rpm-gpg/IUS-COMMUNITY-GPG-KEY
+
+[ius-debuginfo]
+name=IUS Community Packages for Enterprise Linux 7 - $basearch - Debug
+#baseurl=https://dl.iuscommunity.org/pub/ius/stable/CentOS/7/$basearch/debuginfo
+mirrorlist=https://mirrors.iuscommunity.org/mirrorlist?repo=ius-centos7-debuginfo&arch=$basearch&protocol=http
+failovermethod=priority
+enabled=0
+gpgcheck=1
+gpgkey=file:///etc/pki/rpm-gpg/IUS-COMMUNITY-GPG-KEY
+
+[ius-source]
+name=IUS Community Packages for Enterprise Linux 7 - $basearch - Source
+#baseurl=https://dl.iuscommunity.org/pub/ius/stable/CentOS/7/SRPMS
+mirrorlist=https://mirrors.iuscommunity.org/mirrorlist?repo=ius-centos7-source&arch=source&protocol=http
+failovermethod=priority
+enabled=0
+gpgcheck=1
+gpgkey=file:///etc/pki/rpm-gpg/IUS-COMMUNITY-GPG-KEY
+EOF
+            end_message
+
+            #Nghttp2のインストール
+            start_message
+            echo "Nghttp2のインストール"
+            yum --enablerepo=epel -y install nghttp2
+            end_message
+
+            #mailcapのインストール
+            start_message
+            echo "mailcapのインストール"
+            yum -y install mailcap
+            end_message
+
+
+            # apacheのインストール
+            echo "apacheをインストールします"
+            echo ""
+
+            start_message
+            yum -y --enablerepo=ius install httpd24u
+            yum -y install openldap-devel expat-devel
+            yum -y --enablerepo=ius install httpd24u-devel httpd24u-mod_ssl
             break
           else
             echo "どちらかを選択してください"
@@ -96,9 +147,6 @@ if [ -e /etc/redhat-release ]; then
         done
 
         start_message
-        yum -y install httpd
-        yum -y install openldap-devel expat-devel
-        yum -y install httpd-devel mod_ssl
 
         echo "ファイルのバックアップ"
         echo ""
@@ -468,7 +516,7 @@ IncludeOptional conf.d/*.conf
 
 EOF
 
-        #SSLの設定変更（http2を有効化）
+        #SSLの設定変更（2.4.xの場合http2を有効化）
         echo "ファイルのバックアップ"
         echo ""
         cp /etc/httpd/conf.modules.d/00-mpm.conf /etc/httpd/conf.modules.d/00-mpm.conf.bk
