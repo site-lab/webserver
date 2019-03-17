@@ -285,3 +285,12 @@ nginx+node.jsです。nginxでリバースプロキシをしてます。ndenvで
 * HTTPSへのリダイレクト設定可（一部ファイル編集してください）
 
 nginx+go言語です。nginxでリバースプロキシをしてます。
+
+## [nginx_goenv.sh](https://github.com/site-lab/apache/blob/master/nginx_goenv.sh)
+### 実行内容
+* nginxのインストール
+* go言語のインストール
+* Expressのインストール
+* HTTPSへのリダイレクト設定可（一部ファイル編集してください）
+
+nginx+go言語です。nginxでリバースプロキシをしてます。こっちはgoenvでバージョン管理出来るタイプとなります。

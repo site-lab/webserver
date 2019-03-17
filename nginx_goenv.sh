@@ -73,23 +73,6 @@ EOF
         #ソース反映
         source /etc/profile.d/goenv.sh
 
-        end_message
-
-        #Go言語の設定変更
-        #start_message
-        #echo "Go言語のパスを通します"
-        #mkdir /usr/local/goenv
-        #mkdir /usr/local/goenv/{src,bin,pkg}
-        #touch /etc/profile.d/goenv.sh
-        #export GOROOT=/usr/lib/golang >> /etc/profile.d/golang.sh
-        #export GOPATH=/usr/local/gocode >> /etc/profile.d/golang.sh
-        #export PATH=$PATH:$GOROOT/bin:$GOPATH/bin >> /etc/profile.d/golang.sh
-
-        #設定の反映
-        #source /etc/profile.d/golang.sh
-        end_message
-
-
 
         #nginxの設定ファイルを作成
         start_message
@@ -105,21 +88,28 @@ EOF
 
         #go言語のインストール
         start_message
+        echo "Go言語のリストを表示"
         goenv install --list
+
+        echo "Go言語1.11.0をインストール"
         goenv install 1.11.0
 
+        echo "Go言語1.11.0を適用"
         goenv global 1.11.0
+
+        echo "Go言語のバージョン表示"
         go version
         end_message
 
         #nginxのインストール
         start_message
+        echo "nginxのインストール"
         yum  -y --enablerepo=nginx install nginx
         end_message
 
         #SSLの設定ファイルに変更
         start_message
-        echo "ファイルのコピー"
+        echo "SSLファイルのコピー"
         cp -p /etc/pki/tls/certs/localhost.crt /etc/nginx
         cp -p /etc/pki/tls/private/localhost.key /etc/nginx/
 
@@ -258,6 +248,7 @@ EOF
 
         #サンプルファイル作成
         start_message
+        echo "サンプルファイルの作成"
         cat > /usr/share/nginx/html/index.go <<'EOF'
 package main
 
@@ -275,6 +266,7 @@ func main() {
         http.ListenAndServe(":9000", nil)
 }
 EOF
+        cat /usr/share/nginx/html/index.go
         end_message
 
 
@@ -342,7 +334,7 @@ EOF
 
         #所有者の変更
         start_message
-        echo "ドキュメントルートの所有者をcentos、グループをapacheにします"
+        echo "ドキュメントルートの所有者をcentos、グループをnginxにします"
         chown -R centos:nginx /usr/share/nginx/html
         end_message
 
