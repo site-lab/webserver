@@ -166,7 +166,26 @@ EOF
         sed -i -e "350i #バージョン非表示" /etc/httpd/conf/httpd.conf
         sed -i -e "351i ServerTokens ProductOnly" /etc/httpd/conf/httpd.conf
         sed -i -e "352i ServerSignature off \n" /etc/httpd/conf/httpd.conf
-        #sed -i -e "353i \n" /etc/httpd/conf/httpd.conf
+
+        #バーチャルホストの設定
+        cat >/etc/httpd/conf.d/${domain}.conf <<'EOF'
+<VirtualHost *:80>
+        ServerName ${domain}
+        ServerAlias www.${domain}
+        DocumentRoot /var/www/html
+        ErrorLog /var/log/httpd/error_log
+        CustomLog /var/log/httpd/access_log combined env=!no_log
+
+<Directory "/var/www/html/">
+        AllowOverride All
+        Require all granted
+        #Options Includes ExecCGI FollowSymLinks
+        #AllowOverride Options=ExecCGI,IncludesNOEXEC
+</Directory>
+</VirtualHost>
+EOF
+　　　　#sed関数でドメインを挿入
+
 
         #SSLの設定変更（2.4.xの場合http2を有効化）
         echo "ファイルのバックアップ"
