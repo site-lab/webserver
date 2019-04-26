@@ -10,7 +10,7 @@ URL：https://www.logw.jp/
 注意点：conohaのポートは全て許可前提となります。もしくは80番、443番の許可をしておいてください。システムのfirewallはオン状態となります。centosユーザーのパスワードはランダム生成となります。最後に表示されます
 
 目的：システム更新+apache2.4系のインストール
-・apache2.4
+・apache2.4.6or2.4.x
 ・mod_sslのインストール
 ・centosユーザーの作成
 
@@ -37,6 +37,14 @@ if [ -e /etc/redhat-release ]; then
 
     if [ $DIST = "redhat" ];then
       if [ $DIST_VER = "7" ];then
+
+        #プロンプトをechoを使って表示
+        echo -n "ドメイン名を入力してください":
+        #入力を受付、その入力を「domain」に代入
+        read domain
+        #結果を表示
+        echo $domain
+
         #EPELリポジトリのインストール
         start_message
         yum remove -y epel-release
