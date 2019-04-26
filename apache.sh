@@ -170,8 +170,8 @@ EOF
         #バーチャルホストの設定
         cat >/etc/httpd/conf.d/${domain}.conf <<'EOF'
 <VirtualHost *:80>
-        ServerName ${domain}
-        ServerAlias www.${domain}
+        ServerName ドメイン名
+        ServerAlias www.ドメイン名
         DocumentRoot /var/www/html
         ErrorLog /var/log/httpd/error_log
         CustomLog /var/log/httpd/access_log combined env=!no_log
@@ -180,11 +180,14 @@ EOF
         AllowOverride All
         Require all granted
         #Options Includes ExecCGI FollowSymLinks
-        #AllowOverride Options=ExecCGI,IncludesNOEXEC
 </Directory>
 </VirtualHost>
 EOF
-　　　　#sed関数でドメインを挿入
+
+        #sed関数でドメインを挿入
+        sed -i -e "s|ServerName ドメイン名|ServerName ${domain}|" /etc/httpd/conf.d/${domain}.conf
+        sed -i -e "s|ServerAlias www.ドメイン名|ServerAlias www.${domain}|" /etc/httpd/conf.d/${domain}.conf
+
 
 
         #SSLの設定変更（2.4.xの場合http2を有効化）
