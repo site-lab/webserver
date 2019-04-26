@@ -158,9 +158,9 @@ EOF
 
         echo "ファイルのバックアップ"
         echo ""
-        mv /etc/httpd/conf/httpd.conf /etc/httpd/conf/httpd.conf.bk
+        cp /etc/httpd/conf/httpd.conf /etc/httpd/conf/httpd.conf.bk
 
-        echo "htaccess有効化した状態のconfファイルを作成します"
+        echo "バージョンの非表示など"
         echo ""
 
         cat >/etc/httpd/conf/httpd.conf <<'EOF'
