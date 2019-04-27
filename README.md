@@ -43,6 +43,7 @@ wgetがない場合は **yum -y install wget** でインストールしてくだ
 
 ## [apache.sh](https://github.com/site-lab/apache/blob/master/apache.sh)
 ### 実行内容
+* ドメイン名の入力
 * apache2.4.6 or 2.4.xのインストール
 
 2.4.xの場合はiusリポジトリからのインストールとなります。iusリポジトリの場合はHTTP2通信が可能となります。
