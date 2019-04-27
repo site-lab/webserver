@@ -271,9 +271,14 @@ EOF
         umask 0002
 
         cat <<EOF
-        http://IPアドレス
-        https://IPアドレス
+        http://IPアドレス or ドメイン名
+        https://IPアドレス or ドメイン名
         で確認してみてください
+
+        設定ファイルは
+        /etc/httpd/conf.d/ドメイン名.conf
+        となっています
+
 
         ドキュメントルート(DR)は
         /var/www/html
