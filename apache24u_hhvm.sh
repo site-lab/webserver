@@ -58,7 +58,6 @@ make libc-client mod_fcgid
         start_message
         echo "apacheを削除します"
         yum -y remove httod httpd-*
-        yum -y install mod_fcgid
         end_message
 
 
@@ -141,6 +140,7 @@ EOF
         yum -y --enablerepo=ius install httpd24u
         yum -y install openldap-devel expat-devel
         yum -y --enablerepo=ius install httpd24u-devel httpd24u-mod_ssl
+        yum -y install mod_fcgid
 
         echo "ファイルのバックアップ"
         echo ""
