@@ -157,7 +157,7 @@ PHP7は **FastCGI版** となります。
 ### 実行内容
 * apache2.4.6のインストール
 * mod_sslのインストール
-* python3.6.7のインストール
+* python3.7.3のインストール
 * botleのインストール
 
 ## [apache24u_php72.sh](https://github.com/site-lab/apache/blob/master/apache24u_php72.sh)
