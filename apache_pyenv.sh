@@ -47,7 +47,7 @@ if [ -e /etc/redhat-release ]; then
 
         #必要なパッケージのインストール
         start_message
-        yum -y install git zlib-devel bzip2 bzip2-devel readline-devel sqlite sqlite-devel openssl-devel gcc python-devel
+        yum -y install git zlib-devel bzip2 bzip2-devel readline-devel sqlite sqlite-devel openssl-devel gcc python-devel libffi-devel
         end_message
 
 
@@ -489,10 +489,10 @@ EOF
         start_message
         echo "pythonのリスト確認"
         pyenv install --list
-        echo "python3.6.7のインストール"
-        env PYTHON_CONFIGURE_OPTS="--enable-shared" pyenv install 3.6.7
+        echo "python3.7.3のインストール"
+        env PYTHON_CONFIGURE_OPTS="--enable-shared" pyenv install 3.7.3
         echo "pythonの設定を変更"
-        pyenv global 3.6.7
+        pyenv global 3.7.3
         end_message
 
         #pythonの確認
@@ -519,13 +519,13 @@ EOF
         start_message
         echo "インストール場所を調べます"
         pip show mod-wsgi
-        ls -all /usr/local/pyenv/versions/3.6.7/lib/python3.6/site-packages/mod_wsgi/server/
+        ls -all /usr/local/pyenv/versions/3.7.3/lib/python3.7/site-packages/mod_wsgi/server/
         end_message
 
         #ファイルのコピー
         start_message
         echo "ファイルをコピーします"
-        cp /usr/local/pyenv/versions/3.6.7/lib/python3.6/site-packages/mod_wsgi/server/mod_wsgi-py36.cpython-36m-x86_64-linux-gnu.so /etc/httpd/modules/
+        cp /usr/local/pyenv/versions/3.7.3/lib/python3.7/site-packages/mod_wsgi/server/mod_wsgi-py36.cpython-36m-x86_64-linux-gnu.so /etc/httpd/modules/
         echo "ファイルの確認"
         ls /etc/httpd/modules/
         end_message
@@ -534,7 +534,7 @@ EOF
         start_message
         echo "botleのインストール"
         pip install bottle
-        cp /usr/local/pyenv/versions/3.6.7/lib/python3.6/site-packages/bottle.py /var/www/html/
+        cp /usr/local/pyenv/versions/3.7.3/lib/python3.6/site-packages/bottle.py /var/www/html/
         end_message
 
         #wsgiファイル
