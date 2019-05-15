@@ -434,7 +434,7 @@ ServerSignature off
 #
 # Load config files in the "/etc/httpd/conf.d" directory, if any.
 
-LoadModule wsgi_module modules/mod_wsgi-py36.cpython-36m-x86_64-linux-gnu.so
+LoadModule wsgi_module modules/mod_wsgi-py37.cpython-37m-x86_64-linux-gnu.so
 WSGIScriptAlias / /var/www/html/adapter.wsgi
 
 IncludeOptional conf.d/*.conf
