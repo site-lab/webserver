@@ -525,7 +525,7 @@ EOF
         #ファイルのコピー
         start_message
         echo "ファイルをコピーします"
-        cp /usr/local/pyenv/versions/3.7.3/lib/python3.7/site-packages/mod_wsgi/server/mod_wsgi-py36.cpython-36m-x86_64-linux-gnu.so /etc/httpd/modules/
+        cp  /usr/local/pyenv/versions/3.7.3/lib/python3.7/site-packages/mod_wsgi/server/mod_wsgi-py37.cpython-37m-x86_64-linux-gnu.so /etc/httpd/modules/
         echo "ファイルの確認"
         ls /etc/httpd/modules/
         end_message
@@ -534,7 +534,7 @@ EOF
         start_message
         echo "botleのインストール"
         pip install bottle
-        cp /usr/local/pyenv/versions/3.7.3/lib/python3.6/site-packages/bottle.py /var/www/html/
+        cp /usr/local/pyenv/versions/3.7.3/lib/python3.7/site-packages/bottle.py /var/www/html/
         end_message
 
         #wsgiファイル
