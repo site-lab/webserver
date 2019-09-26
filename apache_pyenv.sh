@@ -79,6 +79,9 @@ if [ -e /etc/redhat-release ]; then
         sed -i -e "350i #バージョン非表示" /etc/httpd/conf/httpd.conf
         sed -i -e "351i ServerTokens ProductOnly" /etc/httpd/conf/httpd.conf
         sed -i -e "352i ServerSignature off \n" /etc/httpd/conf/httpd.conf
+        #モジュールの読み込み
+        sed -i -e "358i LoadModule wsgi_module modules/mod_wsgi-py36.cpython-36m-x86_64-linux-gnu.so \n" /etc/httpd/conf/httpd.conf
+        sed -i -e "359i WSGIScriptAlias / /var/www/html/adapter.wsgi \n" /etc/httpd/conf/httpd.conf
 
 
         ls /etc/httpd/conf/
