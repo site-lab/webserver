@@ -128,6 +128,19 @@ gzipは/etc/httpd/conf.d/gzip.conf　にて設定が記述されています
 PHP7は **モジュール版** となります。
 データベースは自分でインストールしていただく形になります。データベースも含めてインストールしたい場合は[LAMP](https://github.com/site-lab/lamp)リポジトリからインストールしてください。
 
+## [apache_php74.sh](https://github.com/site-lab/apache/blob/master/apache_php74.sh)
+### 実行内容
+* apache2.4.6のインストール
+* mod_sslのインストール
+* php7.4のインストール
+* php7.4の必要モジュールインストール
+
+Apacheはドキュメントルートのみhtaccessの有効化された状態となります。
+gzipは/etc/httpd/conf.d/gzip.conf　にて設定が記述されています
+PHP7は **モジュール版** となります。
+データベースは自分でインストールしていただく形になります。データベースも含めてインストールしたい場合は[LAMP](https://github.com/site-lab/lamp)リポジトリからインストールしてください。
+
+
 ## [apache_php72_fcgid.sh](https://github.com/site-lab/apache/blob/master/apache_php72_fcgid.sh)
 ### 実行内容
 * apache2.4.6のインストール
@@ -152,6 +165,20 @@ Apacheはドキュメントルートのみhtaccessの有効化された状態と
 gzipは/etc/httpd/conf.d/gzip.conf　にて設定が記述されています
 PHP7は **FastCGI版** となります。
 データベースは自分でインストールしていただく形になります。データベースも含めてインストールしたい場合は[LAMP](https://github.com/site-lab/lamp)リポジトリからインストールしてください。
+
+## [apache_php74_fcgid.sh](https://github.com/site-lab/apache/blob/master/apache_php74_fcgid.sh)
+### 実行内容
+* apache2.4.6のインストール
+* mod_sslのインストール
+* php7.4のインストール
+* php7.4の必要モジュールインストール
+
+
+Apacheはドキュメントルートのみhtaccessの有効化された状態となります。
+gzipは/etc/httpd/conf.d/gzip.conf　にて設定が記述されています
+PHP7は **FastCGI版** となります。
+データベースは自分でインストールしていただく形になります。データベースも含めてインストールしたい場合は[LAMP](https://github.com/site-lab/lamp)リポジトリからインストールしてください。
+
 
 ## [apache_pyenv.sh](https://github.com/site-lab/apache/blob/master/apache_pyenv.sh)
 ### 実行内容
@@ -197,6 +224,46 @@ PHP7は **FastCGI版** となります。
 Apacheはドキュメントルートのみhtaccessの有効化された状態となります。
 gzipは/etc/httpd/conf.d/gzip.conf　にて設定が記述されています
 PHP7は **モジュール版** となります。
+データベースは自分でインストールしていただく形になります。データベースも含めてインストールしたい場合は[LAMP](https://github.com/site-lab/lamp)リポジトリからインストールしてください。
+
+## [apache24u_php73_fcgid.sh](https://github.com/site-lab/apache/blob/master/apache24u_php73_fcgid.sh)
+### 実行内容
+* apache2.4.xのインストール
+* mod_sslのインストール
+* HTTP2対応
+* php7.3のインストール
+* php7.3の必要モジュールインストール
+
+Apacheはドキュメントルートのみhtaccessの有効化された状態となります。
+gzipは/etc/httpd/conf.d/gzip.conf　にて設定が記述されています
+PHP7は **FastCGI版** となります。
+データベースは自分でインストールしていただく形になります。データベースも含めてインストールしたい場合は[LAMP](https://github.com/site-lab/lamp)リポジトリからインストールしてください。
+
+
+## [apache24u_php74.sh](https://github.com/site-lab/apache/blob/master/apache24u_php74.sh)
+### 実行内容
+* apache2.4.6のインストール
+* HTTP2対応
+* mod_sslのインストール
+* php7.4のインストール
+* php7.4の必要モジュールインストール
+
+Apacheはドキュメントルートのみhtaccessの有効化された状態となります。
+gzipは/etc/httpd/conf.d/gzip.conf　にて設定が記述されています
+PHP7は **モジュール版** となります。
+データベースは自分でインストールしていただく形になります。データベースも含めてインストールしたい場合は[LAMP](https://github.com/site-lab/lamp)リポジトリからインストールしてください。
+
+## [apache24u_php74_fcgid.sh](https://github.com/site-lab/apache/blob/master/apache24u_php74_fcgid.sh)
+### 実行内容
+* apache2.4.xのインストール
+* mod_sslのインストール
+* HTTP2対応
+* php7.4のインストール
+* php7.4の必要モジュールインストール
+
+Apacheはドキュメントルートのみhtaccessの有効化された状態となります。
+gzipは/etc/httpd/conf.d/gzip.conf　にて設定が記述されています
+PHP7は **FastCGI版** となります。
 データベースは自分でインストールしていただく形になります。データベースも含めてインストールしたい場合は[LAMP](https://github.com/site-lab/lamp)リポジトリからインストールしてください。
 
 
@@ -258,6 +325,25 @@ PHP7は **FastCGI版** となります。
 PHP7は **FastCGI版** となります。
 データベースは自分でインストールしていただく形になります。データベースも含めてインストールしたい場合は[LAMP](https://github.com/site-lab/lamp)リポジトリからインストールしてください。
 
+## [nginx_php74.sh](https://github.com/site-lab/apache/blob/master/nginx_php74.sh)
+### 実行内容
+* nginxのインストール
+* php7.4のインストール
+* php7.4の必要モジュールインストール
+* HTTPSへのリダイレクト設定可（一部ファイル編集してください）
+
+PHP7は **FastCGI版** となります。
+データベースは自分でインストールしていただく形になります。データベースも含めてインストールしたい場合は[LAMP](https://github.com/site-lab/lamp)リポジトリからインストールしてください。
+
+## [nginx_php74_socket.sh](https://github.com/site-lab/apache/blob/master/nginx_php74_socket.sh)
+### 実行内容
+* nginxのインストール
+* php7.4のインストール
+* php7.4の必要モジュールインストール
+* HTTPSへのリダイレクト設定可（一部ファイル編集してください）
+
+PHP7は **FastCGI版** となります。
+データベースは自分でインストールしていただく形になります。データベースも含めてインストールしたい場合は[LAMP](https://github.com/site-lab/lamp)リポジトリからインストールしてください。
 
 
 ## [nginx_nodejs.sh](https://github.com/site-lab/apache/blob/master/nginx_nodejs.sh)
