@@ -76,9 +76,12 @@ cp /etc/httpd/conf/httpd.conf /etc/httpd/conf/httpd.conf.bk
 echo "htaccess有効化した状態のconfファイルを作成します"
 echo ""
 
+sed -i -e "151d" /etc/httpd/conf/httpd.conf
+sed -i -e "151i AllowOverride All" /etc/httpd/conf/httpd.conf
 sed -i -e "350i #バージョン非表示" /etc/httpd/conf/httpd.conf
 sed -i -e "351i ServerTokens ProductOnly" /etc/httpd/conf/httpd.conf
 sed -i -e "352i ServerSignature off \n" /etc/httpd/conf/httpd.conf
+
 
 #SSLの設定変更
 echo "ファイルのバックアップ"
@@ -151,6 +154,15 @@ do
   fi
 done
 
+#php.iniの設定変更
+start_message
+echo "phpのバージョンを非表示にします"
+echo "sed -i -e s|expose_php = On|expose_php = Off| /etc/php.ini"
+sed -i -e "s|expose_php = On|expose_php = Off|" /etc/php.ini
+echo "phpのタイムゾーンを変更"
+echo "sed -i -e s|;date.timezone =|date.timezone = Asia/Tokyo| /etc/php.ini"
+sed -i -e "s|;date.timezone =|date.timezone = Asia/Tokyo|" /etc/php.ini
+end_message
 
 # phpinfoの作成
 start_message
