@@ -80,7 +80,11 @@ cp /etc/httpd/conf/httpd.conf /etc/httpd/conf/httpd.conf.bk
 echo "htaccess有効化した状態のconfファイルを作成します"
 echo ""
 
-sed -i -e "s|#AddHandler fcgid-script .php|AddHandler fcgid-script .php|" /etc/httpd/conf/httpd.conf
+sed -i -e "s|#AllowOverride None|AllowOverride None|" /etc/httpd/conf/httpd.conf
+sed -i -e "145i #FastCGI追記" /etc/httpd/conf/httpd.conf
+sed -i -e "146i AddHandler fcgid-script .php" /etc/httpd/conf/httpd.conf
+sed -i -e "147i FCGIWrapper /usr/bin/php-cgi .php \n" /etc/httpd/conf/httpd.conf
+
 sed -i -e "350i #バージョン非表示" /etc/httpd/conf/httpd.conf
 sed -i -e "351i ServerTokens ProductOnly" /etc/httpd/conf/httpd.conf
 sed -i -e "352i ServerSignature off \n" /etc/httpd/conf/httpd.conf
