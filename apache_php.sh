@@ -212,6 +212,8 @@ echo ""
 firewall-cmd --list-all
 end_message
 
+umask 0002
+
 cat <<EOF
 
 http://IPアドレス/info.php
