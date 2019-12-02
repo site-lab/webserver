@@ -83,28 +83,7 @@ sed -i -e "352i ServerSignature off \n" /etc/httpd/conf/httpd.conf
 #SSLの設定変更
 echo "ファイルのバックアップ"
 echo ""
-mv /etc/httpd/conf.modules.d/00-mpm.conf /etc/httpd/conf.modules.d/00-mpm.conf.bk
-
-cat >/etc/httpd/conf.modules.d/00-mpm.conf <<'EOF'
-# Select the MPM module which should be used by uncommenting exactly
-# one of the following LoadModule lines:
-
-# prefork MPM: Implements a non-threaded, pre-forking web server
-# See: http://httpd.apache.org/docs/2.4/mod/prefork.html
-#LoadModule mpm_prefork_module modules/mod_mpm_prefork.so
-
-# worker MPM: Multi-Processing Module implementing a hybrid
-# multi-threaded multi-process web server
-# See: http://httpd.apache.org/docs/2.4/mod/worker.html
-#
-#LoadModule mpm_worker_module modules/mod_mpm_worker.so
-
-# event MPM: A variant of the worker MPM with the goal of consuming
-# threads only for connections with active processing
-# See: http://httpd.apache.org/docs/2.4/mod/event.html
-#
-LoadModule mpm_event_module modules/mod_mpm_event.so
-EOF
+cp /etc/httpd/conf.modules.d/00-mpm.conf /etc/httpd/conf.modules.d/00-mpm.conf.bk
 
 
 ls /etc/httpd/conf/
@@ -125,13 +104,13 @@ Header append Vary User-Agent env=!dont-var
 EOF
 
 PS3="インストールしたいPHPのバージョンを選んでください > "
-ITEM_LIST="PHP7.2 PHP7.3"
+ITEM_LIST="PHP7.2 PHP7.3 PHP7.4"
 
 select selection in $ITEM_LIST
 do
   if [ $selection = "PHP7.2" ]; then
     # php7系のインストール
-    echo "phpをインストールします"
+    echo "php7.2をインストールします"
     echo ""
     start_message
     yum -y install --enablerepo=remi,remi-php72 php php-mbstring php-xml php-xmlrpc php-gd php-pdo php-pecl-mcrypt php-mysqlnd php-pecl-mysql
@@ -143,7 +122,7 @@ do
     break
   elif [ $selection = "PHP7.3" ]; then
     # php7系のインストール
-    echo "phpをインストールします"
+    echo "php7.3をインストールします"
     echo ""
     start_message
     yum -y install --enablerepo=remi,remi-php73 php php-mbstring php-xml php-xmlrpc php-gd php-pdo php-pecl-mcrypt php-mysqlnd php-pecl-mysql
@@ -153,6 +132,20 @@ do
     echo ""
     end_message
     break
+
+  elif [ $selection = "PHP7.4" ]; then
+    # php7系のインストール
+    echo "php7.4をインストールします"
+    echo ""
+    start_message
+    yum -y install --enablerepo=remi,remi-php74 php php-mbstring php-xml php-xmlrpc php-gd php-pdo php-pecl-mcrypt php-mysqlnd php-pecl-mysql
+    echo "phpのバージョン確認"
+    echo ""
+    php -v
+    echo ""
+    end_message
+    break
+
   else
     echo "どちらかを選択してください"
   fi
@@ -164,6 +157,27 @@ start_message
 touch /var/www/html/info.php
 echo '<?php phpinfo(); ?>' >> /var/www/html/info.php
 cat /var/www/html/info.php
+end_message
+
+#ユーザー作成
+start_message
+echo "centosユーザーを作成します"
+USERNAME='centos'
+PASSWORD=$(more /dev/urandom  | tr -d -c '[:alnum:]' | fold -w 10 | head -1)
+
+useradd -m -G apache -s /bin/bash "${USERNAME}"
+echo "${PASSWORD}" | passwd --stdin "${USERNAME}"
+echo "パスワードは"${PASSWORD}"です。"
+
+#所属グループ表示
+echo "所属グループを表示します"
+getent group apache
+end_message
+
+#所有者の変更
+start_message
+echo "ドキュメントルートの所有者をcentos、グループをapacheにします"
+chown -R centos:apache /var/www/html
 end_message
 
 # apacheの起動
@@ -228,6 +242,8 @@ Require valid-user
 
 これにて終了です
 
-ドキュメントルートの所有者：グループは｢root｣になっているため、ユーザー名とグループを変更してください
+ドキュメントルートの所有者：centos
+グループ：apache
+になっているため、ユーザー名とグループの変更が必要な場合は変更してください
 EOF
 exec $SHELL -l
