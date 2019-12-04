@@ -60,7 +60,7 @@ mariadb mariadb-server make libc-client mod_fcgid
         echo ""
 
         start_message
-        #yum -y update
+        yum -y update
         end_message
 
         # hhvmのインストール
