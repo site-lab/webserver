@@ -60,7 +60,7 @@ mariadb mariadb-server make libc-client mod_fcgid
         echo ""
 
         start_message
-        yum -y update
+        #yum -y update
         end_message
 
         # hhvmのインストール
@@ -91,20 +91,22 @@ mariadb mariadb-server make libc-client mod_fcgid
         sed -i -e "s|Options Indexes FollowSymLinks|Options FollowSymLinks ExecCGI|" /etc/httpd/conf/httpd.conf
         sed -i -e "145i #FastCGI追記" /etc/httpd/conf/httpd.conf
         sed -i -e "146i AddHandler fcgid-script .php" /etc/httpd/conf/httpd.conf
-        sed -i -e "147i FCGIWrapper /usr/bin/php-cgi .php \n" /etc/httpd/conf/httpd.conf
-        sed -i -e "155d" /etc/httpd/conf/httpd.conf
-        sed -i -e "155i AllowOverride All" /etc/httpd/conf/httpd.conf
-        sed -i -e "350i #バージョン非表示" /etc/httpd/conf/httpd.conf
-        sed -i -e "351i ServerTokens ProductOnly" /etc/httpd/conf/httpd.conf
-        sed -i -e "352i ServerSignature off \n" /etc/httpd/conf/httpd.conf
+        sed -i -e "147i FcgidWrapper /usr/local/bin/php-wrapper .php \n" /etc/httpd/conf/httpd.conf
+        sed -i -e "147i FcgidWrapper /usr/local/bin/php-wrapper .php \n" /etc/httpd/conf/httpd.conf
+        sed -i -e "149i #追加" /etc/httpd/conf/httpd.conf
+        sed -i -e "150i <FilesMatch "\.php$">" /etc/httpd/conf/httpd.conf
+        sed -i -e "151i SetHandler "proxy:fcgi://127.0.0.1:9001/"" /etc/httpd/conf/httpd.conf
+        sed -i -e "152i </FilesMatch>" /etc/httpd/conf/httpd.conf
+        sed -i -e "158d" /etc/httpd/conf/httpd.conf
+        sed -i -e "158i AllowOverride All" /etc/httpd/conf/httpd.conf
+        sed -i -e "353i #バージョン非表示" /etc/httpd/conf/httpd.conf
+        sed -i -e "354i ServerTokens ProductOnly" /etc/httpd/conf/httpd.conf
+        sed -i -e "355i ServerSignature off \n" /etc/httpd/conf/httpd.conf
 
         #SSLの設定変更（http2を有効化）
         echo "ファイルのバックアップ"
         echo ""
         cp /etc/httpd/conf.modules.d/00-mpm.conf /etc/httpd/conf.modules.d/00-mpm.conf.bk
-
-        sed -i -e "s|LoadModule mpm_prefork_module modules/mod_mpm_prefork.so|#LoadModule mpm_prefork_module modules/mod_mpm_prefork.so|" /etc/httpd/conf.modules.d/00-mpm.conf
-        sed -i -e "s|#LoadModule mpm_event_module modules/mod_mpm_event.so|LoadModule mpm_event_module modules/mod_mpm_event.so|" /etc/httpd/conf.modules.d/00-mpm.conf
 
         ls /etc/httpd/conf/
         echo "Apacheのバージョン確認"
