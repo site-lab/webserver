@@ -218,7 +218,7 @@ EOF
         end_message
 
         PS3="インストールしたいPHPのバージョンを選んでください > "
-        ITEM_LIST="PHP7.2 PHP7.3"
+        ITEM_LIST="PHP7.2 PHP7.3 PHP7.4"
 
         select selection in $ITEM_LIST
         do
@@ -246,6 +246,19 @@ EOF
             echo ""
             end_message
             break
+          elif [ $selection = "PHP7.4" ]; then
+            # php7系のインストール
+            echo "php7.4をインストールします"
+            echo ""
+            start_message
+            yum -y install --enablerepo=remi,remi-php74 php php-mbstring php-xml php-xmlrpc php-gd php-pdo php-pecl-mcrypt php-mysqlnd php-pecl-mysql php-fpm
+            echo "phpのバージョン確認"
+            echo ""
+            php -v
+            echo ""
+            end_message
+            break
+
           else
             echo "どちらかを選択してください"
           fi
