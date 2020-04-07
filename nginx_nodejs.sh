@@ -45,7 +45,7 @@ if [ -e /etc/redhat-release ]; then
 
         #nodejsのリポジトリインストール
         start_message
-        curl -sL https://rpm.nodesource.com/setup_8.x | bash -
+        curl -sL https://rpm.nodesource.com/setup_10.x | bash -
         end_message
 
         #gitリポジトリのインストール
