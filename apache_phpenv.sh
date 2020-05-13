@@ -80,7 +80,7 @@ if [ -e /etc/redhat-release ]; then
         # apacheのインストール
         echo "apacheをインストールします"
         echo ""
-'''
+
         start_message
         yum -y install httpd
         yum -y install openldap-devel expat-devel
@@ -104,7 +104,7 @@ BrowserMatch \bMSI[E] !no-gzip !gzip-only-text/html
 SetEnvIfNoCase Request_URI\.(?:gif|jpe?g|png)$ no-gzip dont-vary
 Header append Vary User-Agent env=!dont-var
 EOF
-'''
+
 
         #phpenvのインストール
         start_message
@@ -120,8 +120,10 @@ EOF
         #phpenvの取得
         start_message
         echo "gitでphpenvをクーロンします"
+        echo "gcurl -L https://raw.github.com/CHH/phpenv/master/bin/phpenv-install.sh | bash"
         curl -L https://raw.github.com/CHH/phpenv/master/bin/phpenv-install.sh | bash
         echo "ディレクトリの作成"
+        echo "git clone https://github.com/php-build/php-build.git /usr/local/phpenv/plugins/php-build"
         git clone https://github.com/php-build/php-build.git /usr/local/phpenv/plugins/php-build
         end_message
 
@@ -130,6 +132,7 @@ EOF
         echo "環境変数を通す"
         echo 'eval "$(phpenv init -)"' >> /etc/profile.d/phpenv.sh
         echo "ソース環境を反映"
+        echo "source /etc/profile.d/phpenv.sh"
         source /etc/profile.d/phpenv.sh
         end_message
 
@@ -161,6 +164,13 @@ LoadModule php7_module /usr/lib64/httpd/modules/libphp7.so
 AddType application/x-httpd-php .php
 DirectoryIndex index.php
 EOF
+        end_message
+
+        # phpinfoの作成
+        start_message
+        touch /var/www/html/info.php
+        echo '<?php phpinfo(); ?>' >> /var/www/html/info.php
+        cat /var/www/html/info.php
         end_message
 
 
