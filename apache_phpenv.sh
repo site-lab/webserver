@@ -136,9 +136,9 @@ EOF
         #Apacheと連携できるように設定
         start_message
         echo "Apacheと連携できるようにします"
-        echo 'configure_option "--with-apxs2" "/usr/bin/apxs"' /usr/local/phpenv/plugins/php-build/share/php-build/definitions/7.3.17
-        echo "ソース環境を反映"
-        source /etc/profile.d/phpenv.sh
+        sed -i -e  '1configure_option "--with-apxs2" "/usr/bin/apxs"' /usr/local/phpenv/plugins/php-build/share/php-build/definitions/7.3.17
+        echo "設定確認"
+        cat /usr/local/phpenv/plugins/php-build/share/php-build/definitions/7.3.17
         end_message
 
 
@@ -152,6 +152,16 @@ EOF
         phpenv global 7.3.17
         end_message
 
+
+        #apacheと連携
+        start_message
+        cat >/etc/httpd/conf.d/php.conf <<'EOF'
+LoadModule php7_module /usr/lib64/httpd/modules/libphp7.so
+
+AddType application/x-httpd-php .php
+DirectoryIndex index.php
+EOF
+        end_message
 
 
         #ユーザー作成
