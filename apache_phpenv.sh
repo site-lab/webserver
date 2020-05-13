@@ -46,7 +46,8 @@ if [ -e /etc/redhat-release ]; then
 
         #必要なパッケージのインストール
         start_message
-        yum -y install git gcc make libxml2 libxml2-devel openssl openssl-devel libcurl libcurl-devel libjpeg-devel libpng-devel libmcrypt-devel readline-devel libtidy-devel libxslt-devel libicu-devel gcc-c++ patch re2c bzip2 bzip2-devel　libmcrypt libmcrypt-devel autoconf
+        yum -y install bzip2 bzip2-devel
+        yum -y install git gcc make libxml2 libxml2-devel openssl openssl-devel libcurl libcurl-devel libjpeg-devel libpng-devel libmcrypt-devel readline-devel libtidy-devel libxslt-devel libicu-devel gcc-c++ patch re2c　libmcrypt libmcrypt-devel autoconf
         end_message
 
 
@@ -79,7 +80,7 @@ if [ -e /etc/redhat-release ]; then
         # apacheのインストール
         echo "apacheをインストールします"
         echo ""
-
+'''
         start_message
         yum -y install httpd
         yum -y install openldap-devel expat-devel
@@ -103,7 +104,7 @@ BrowserMatch \bMSI[E] !no-gzip !gzip-only-text/html
 SetEnvIfNoCase Request_URI\.(?:gif|jpe?g|png)$ no-gzip dont-vary
 Header append Vary User-Agent env=!dont-var
 EOF
-
+'''
 
         #phpenvのインストール
         start_message
@@ -132,6 +133,14 @@ EOF
         source /etc/profile.d/phpenv.sh
         end_message
 
+        #Apacheと連携できるように設定
+        start_message
+        echo "Apacheと連携できるようにします"
+        echo 'configure_option "--with-apxs2" "/usr/bin/apxs"' /usr/local/phpenv/plugins/php-build/share/php-build/definitions/7.3.17
+        echo "ソース環境を反映"
+        source /etc/profile.d/phpenv.sh
+        end_message
+
 
         #phpの確認とインストール
         start_message
@@ -139,7 +148,8 @@ EOF
         phpenv install -l
         echo "php7.3.17のインストール"
         phpenv install 7.3.17
-        ndenv global 7.3.17
+        echo "php7.3.17をglobalに設定"
+        phpenv global 7.3.17
         end_message
 
 
