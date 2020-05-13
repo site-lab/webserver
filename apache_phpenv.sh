@@ -74,7 +74,8 @@ if [ -e /etc/redhat-release ]; then
 
         start_message
         echo "yum updateを実行します"
-        #yum -y update
+        echo "yum update"
+        yum -y update
         end_message
 
         # apacheのインストール
