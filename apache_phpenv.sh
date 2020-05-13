@@ -69,12 +69,9 @@ if [ -e /etc/redhat-release ]; then
         end_message
 
 
-        # yum updateを実行
-        echo "yum updateを実行します"
-        echo ""
-
         start_message
-        yum -y update
+        echo "yum updateを実行します"
+        #yum -y update
         end_message
 
         # apacheのインストール
@@ -498,28 +495,20 @@ EOF
 
         #環境変数を通す
         start_message
-        echo "gitでphpenvをクーロンします"
-        curl -L https://raw.github.com/CHH/phpenv/master/bin/phpenv-install.sh | bash
-        echo "ディレクトリの作成"
-        git clone https://github.com/php-build/php-build.git /usr/local/phpenv/plugins/php-build
+        echo "環境変数を通す"
+        echo 'eval "$(phpenv init -)"' >> /etc/profile.d/phpenv.sh
+        echo "ソース環境を反映"
+        source /etc/profile.d/phpenv.sh
         end_message
 
-
-        #phpenvのインストール
-        start_message
-        echo "phpenvのインストール"
-        anyenv install phpenv
-        source /etc/profile.d/anyenv.sh
-        anyenv versions
-        end_message
 
         #phpの確認とインストール
         start_message
         echo "phpenvのインストール phpenv install -l"
         phpenv install -l
-        echo "php7.3.2のインストール"
-        phpenv install 7.3.2
-        ndenv global 7.3.2
+        echo "php7.3.17のインストール"
+        phpenv install 7.3.17
+        ndenv global 7.3.17
         end_message
 
 
