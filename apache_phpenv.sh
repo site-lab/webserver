@@ -139,7 +139,7 @@ EOF
         #Apacheと連携できるように設定
         start_message
         echo "Apacheと連携できるようにします"
-        sed -i -e  '1configure_option "--with-apxs2" "/usr/bin/apxs"' /usr/local/phpenv/plugins/php-build/share/php-build/definitions/7.3.17
+        sed -i -e '1i configure_option "--with-apxs2" "/usr/bin/apxs"' /usr/local/phpenv/plugins/php-build/share/php-build/definitions/7.3.17
         echo "設定確認"
         cat /usr/local/phpenv/plugins/php-build/share/php-build/definitions/7.3.17
         end_message
