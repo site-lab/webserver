@@ -47,7 +47,7 @@ if [ -e /etc/redhat-release ]; then
         #必要なパッケージのインストール
         start_message
         yum -y install bzip2 bzip2-devel
-        yum -y install git gcc make libxml2 libxml2-devel openssl openssl-devel libcurl libcurl-devel libjpeg-devel libpng-devel libmcrypt-devel readline-devel libtidy-devel libxslt-devel libicu-devel gcc-c++ patch re2c　libmcrypt libmcrypt-devel autoconf
+        yum -y install git gcc make libxml2 libxml2-devel openssl openssl-devel libcurl libcurl-devel libjpeg-devel libpng-devel libmcrypt-devel readline-devel libtidy-devel libxslt-devel libicu-devel gcc-c++ patch re2c　libmcrypt libmcrypt-devel sqlite-devel oniguruma oniguruma-devel autoconf
         end_message
 
 
@@ -93,7 +93,7 @@ if [ -e /etc/redhat-release ]; then
 
         echo "htaccess有効化した状態のconfファイルを作成します"
         echo ""
-        
+
         sed -i -e "151d" /etc/httpd/conf/httpd.conf
         sed -i -e "151i AllowOverride All" /etc/httpd/conf/httpd.conf
         sed -i -e "350i #バージョン非表示" /etc/httpd/conf/httpd.conf
@@ -243,9 +243,11 @@ EOF
         umask 0002
 
         cat <<EOF
-        http://IPアドレス
-        https://IPアドレス
+        http://IPアドレス/info.php
+        https://IPアドレス/info.php
         で確認してみてください
+
+        PHP7.4にも対応しております。
 
         ドキュメントルート(DR)は
         /var/www/html
