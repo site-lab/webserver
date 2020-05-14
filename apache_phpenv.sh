@@ -87,6 +87,18 @@ if [ -e /etc/redhat-release ]; then
         yum -y install openldap-devel expat-devel
         yum -y install httpd-devel mod_ssl
 
+        echo "ファイルのバックアップ"
+        echo ""
+        cp /etc/httpd/conf/httpd.conf /etc/httpd/conf/httpd.conf.bk
+
+        echo "htaccess有効化した状態のconfファイルを作成します"
+        echo ""
+        
+        sed -i -e "151d" /etc/httpd/conf/httpd.conf
+        sed -i -e "151i AllowOverride All" /etc/httpd/conf/httpd.conf
+        sed -i -e "350i #バージョン非表示" /etc/httpd/conf/httpd.conf
+        sed -i -e "351i ServerTokens ProductOnly" /etc/httpd/conf/httpd.conf
+        sed -i -e "352i ServerSignature off \n" /etc/httpd/conf/httpd.conf
 
 
         ls /etc/httpd/conf/
