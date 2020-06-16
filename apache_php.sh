@@ -107,23 +107,11 @@ Header append Vary User-Agent env=!dont-var
 EOF
 
 PS3="インストールしたいPHPのバージョンを選んでください > "
-ITEM_LIST="PHP7.2 PHP7.3 PHP7.4"
+ITEM_LIST="PHP7.3 PHP7.4"
 
 select selection in $ITEM_LIST
 do
-  if [ $selection = "PHP7.2" ]; then
-    # php7系のインストール
-    echo "php7.2をインストールします"
-    echo ""
-    start_message
-    yum -y install --enablerepo=remi,remi-php72 php php-mbstring php-xml php-xmlrpc php-gd php-pdo php-pecl-mcrypt php-mysqlnd php-pecl-mysql
-    echo "phpのバージョン確認"
-    echo ""
-    php -v
-    echo ""
-    end_message
-    break
-  elif [ $selection = "PHP7.3" ]; then
+  if [ $selection = "PHP7.3" ]; then
     # php7系のインストール
     echo "php7.3をインストールします"
     echo ""
