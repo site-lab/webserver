@@ -83,7 +83,7 @@ make libc-client mod_fcgid
         #IUSリポジトリのインストール
         start_message
         echo "IUSリポジトリをインストールします"
-        yum -y install https://centos7.iuscommunity.org/ius-release.rpm
+        yum -y install https://repo.ius.io/ius-release-el7.rpm
         end_message
 
         #IUSリポジトリをデフォルトから外す
@@ -93,7 +93,7 @@ make libc-client mod_fcgid
 [ius]
 name = IUS for Enterprise Linux 7 - $basearch
 baseurl = https://repo.ius.io/7/$basearch/
-enabled = 0
+enabled = 1
 repo_gpgcheck = 0
 gpgcheck = 1
 gpgkey = file:///etc/pki/rpm-gpg/RPM-GPG-KEY-IUS-7
@@ -113,13 +113,6 @@ enabled = 0
 repo_gpgcheck = 0
 gpgcheck = 1
 gpgkey = file:///etc/pki/rpm-gpg/RPM-GPG-KEY-IUS-7
-name=IUS Community Packages for Enterprise Linux 7 - $basearch
-#baseurl=https://dl.iuscommunity.org/pub/ius/stable/CentOS/7/$basearch
-mirrorlist=https://mirrors.iuscommunity.org/mirrorlist?repo=ius-centos7&arch=$basearch&protocol=http
-failovermethod=priority
-enabled=0
-gpgcheck=1
-gpgkey=file:///etc/pki/rpm-gpg/IUS-COMMUNITY-GPG-KEY
 EOF
         end_message
 
