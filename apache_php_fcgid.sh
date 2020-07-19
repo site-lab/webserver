@@ -145,6 +145,12 @@ EOF
   fi
 done
 
+#mod_fcgidのインストール
+start_message
+yum -y install mod_fcgid
+end_message
+
+
 echo "ファイルのバックアップ"
 echo ""
 cp /etc/httpd/conf/httpd.conf /etc/httpd/conf/httpd.conf.bk
@@ -175,10 +181,6 @@ httpd -v
 echo ""
 end_message
 
-#mod_fcgidのインストール
-start_message
-yum -y install mod_fcgid
-end_message
 
 
 #gzip圧縮の設定
