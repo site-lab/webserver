@@ -57,7 +57,7 @@ echo "yum updateを実行します"
 echo ""
 
 start_message
-#yum -y update
+yum -y update
 end_message
 
 # apacheのインストール
