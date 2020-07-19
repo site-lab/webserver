@@ -105,16 +105,6 @@ PHP7は **モジュール版** となります。
 
 
 
-## [apache_php72.sh](https://github.com/site-lab/apache/blob/master/apache_php72.sh)
-### 実行内容
-* apache2.4.6のインストール
-* php7.2のインストール
-* php7.2の必要モジュールインストール
-
-Apacheはドキュメントルートのみhtaccessの有効化された状態となります。
-gzipは/etc/httpd/conf.d/gzip.conf　にて設定が記述されています
-PHP7は **モジュール版** となります。
-データベースは自分でインストールしていただく形になります。データベースも含めてインストールしたい場合は[LAMP](https://github.com/site-lab/lamp)リポジトリからインストールしてください。
 
 ## [apache_php73.sh](https://github.com/site-lab/apache/blob/master/apache_php73.sh)
 ### 実行内容
@@ -141,17 +131,6 @@ PHP7は **モジュール版** となります。
 データベースは自分でインストールしていただく形になります。データベースも含めてインストールしたい場合は[LAMP](https://github.com/site-lab/lamp)リポジトリからインストールしてください。
 
 
-## [apache_php72_fcgid.sh](https://github.com/site-lab/apache/blob/master/apache_php72_fcgid.sh)
-### 実行内容
-* apache2.4.6のインストール
-* mod_sslのインストール
-* php7.2のインストール
-* php7.2の必要モジュールインストール
-
-Apacheはドキュメントルートのみhtaccessの有効化された状態となります。
-gzipは/etc/httpd/conf.d/gzip.conf　にて設定が記述されています
-PHP7は **FastCGI版** となります。
-データベースは自分でインストールしていただく形になります。データベースも含めてインストールしたい場合は[LAMP](https://github.com/site-lab/lamp)リポジトリからインストールしてください。
 
 ## [apache_php73_fcgid.sh](https://github.com/site-lab/apache/blob/master/apache_php73_fcgid.sh)
 ### 実行内容
@@ -187,31 +166,7 @@ PHP7は **FastCGI版** となります。
 * python3.7.3のインストール
 * botleのインストール
 
-## [apache24u_php72.sh](https://github.com/site-lab/apache/blob/master/apache24u_php72.sh)
-### 実行内容
-* apache2.4.xのインストール
-* HTTP2対応
-* php7.2のインストール
-* php7.2の必要モジュールインストール
 
-Apacheはドキュメントルートのみhtaccessの有効化された状態となります。
-gzipは/etc/httpd/conf.d/gzip.conf　にて設定が記述されています
-PHP7は **モジュール版** となります。
-データベースは自分でインストールしていただく形になります。データベースも含めてインストールしたい場合は[LAMP](https://github.com/site-lab/lamp)リポジトリからインストールしてください。
-
-
-## [apache24u_php72_fcgid.sh](https://github.com/site-lab/apache/blob/master/apache24u_php72_fcgid.sh)
-### 実行内容
-* apache2.4.xのインストール
-* mod_sslのインストール
-* HTTP2対応
-* php7.2のインストール
-* php7.2の必要モジュールインストール
-
-Apacheはドキュメントルートのみhtaccessの有効化された状態となります。
-gzipは/etc/httpd/conf.d/gzip.conf　にて設定が記述されています
-PHP7は **FastCGI版** となります。
-データベースは自分でインストールしていただく形になります。データベースも含めてインストールしたい場合は[LAMP](https://github.com/site-lab/lamp)リポジトリからインストールしてください。
 
 ## [apache24u_php73.sh](https://github.com/site-lab/apache/blob/master/apache24u_php73.sh)
 ### 実行内容
@@ -285,24 +240,6 @@ PHP7は **FastCGI版** となります。
 * リバースプロキシ設定済み
 
 
-
-## [nginx_php72.sh](https://github.com/site-lab/apache/blob/master/nginx_php72.sh)
-### 実行内容
-* nginxのインストール
-* php7.2のインストール
-* php7.2の必要モジュールインストール
-
-PHP7は **FastCGI版** となります。
-データベースは自分でインストールしていただく形になります。データベースも含めてインストールしたい場合は[LAMP](https://github.com/site-lab/lamp)リポジトリからインストールしてください。
-
-## [nginx_php72_socket.sh](https://github.com/site-lab/apache/blob/master/nginx_php72_socket.sh)
-### 実行内容
-* nginxのインストール
-* php7.2の必要モジュールインストール
-* HTTPSへのリダイレクト設定可（一部ファイル編集してください）
-
-PHP7は **FastCGI版** となります。
-データベースは自分でインストールしていただく形になります。データベースも含めてインストールしたい場合は[LAMP](https://github.com/site-lab/lamp)リポジトリからインストールしてください。
 
 
 ## [nginx_php73.sh](https://github.com/site-lab/apache/blob/master/nginx_php73.sh)
