@@ -5,7 +5,7 @@
 <<COMMENT
 作成者：サイトラボ
 URL：https://www.site-lab.jp/
-URL：https://www.logw.jp/
+URL：https://buildree.com/
 
 注意点：conohaのポートは全て許可前提となります。もしくは80番、443番の許可をしておいてください。システムのfirewallはオン状態となります。centosユーザーのパスワードはランダム生成となります。最後に表示されます
 
@@ -218,23 +218,11 @@ EOF
         end_message
 
         PS3="インストールしたいPHPのバージョンを選んでください > "
-        ITEM_LIST="PHP7.2 PHP7.3 PHP7.4"
+        ITEM_LIST="PHP7.3 PHP7.4"
 
         select selection in $ITEM_LIST
         do
-          if [ $selection = "PHP7.2" ]; then
-            # php7系のインストール
-            echo "phpをインストールします"
-            echo ""
-            start_message
-            yum -y install --enablerepo=remi,remi-php72 php php-mbstring php-xml php-xmlrpc php-gd php-pdo php-pecl-mcrypt php-mysqlnd php-pecl-mysql php-fpm
-            echo "phpのバージョン確認"
-            echo ""
-            php -v
-            echo ""
-            end_message
-            break
-          elif [ $selection = "PHP7.3" ]; then
+          if [ $selection = "PHP7.3" ]; then
             # php7系のインストール
             echo "phpをインストールします"
             echo ""
