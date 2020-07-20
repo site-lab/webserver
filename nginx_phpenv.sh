@@ -70,7 +70,10 @@ if [ -e /etc/redhat-release ]; then
 
         end_message
 
-
+        #mod_sslのインストール
+        start_message
+        yum -y install mod_ssl
+        end_message
 
         start_message
         echo "yum updateを実行します"
@@ -292,9 +295,10 @@ EOF
 
         # phpinfoの作成
         start_message
-        touch /var/www/html/info.php
-        echo '<?php phpinfo(); ?>' >> /var/www/html/info.php
-        cat /var/www/html/info.php
+        echo "phpinfoを作成します"
+        touch /usr/share/nginx/html/info.php
+        echo '<?php phpinfo(); ?>' >> /usr/share/nginx/html/info.php
+        cat /usr/share/nginx/html/info.php
         end_message
 
 
@@ -310,28 +314,38 @@ EOF
 
         #所属グループ表示
         echo "所属グループを表示します"
-        getent group apache
+        getent group nginx
         end_message
 
         #所有者の変更
         start_message
-        echo "ドキュメントルートの所有者をcentos、グループをapacheにします"
-        chown -R centos:apache /var/www/html
+        echo "ドキュメントルートの所有者をcentos、グループをnginxにします"
+        chown -R centos:nginx /usr/share/nginx/html
         end_message
 
-        # apacheの起動
-        echo "apacheを起動します"
+        #php-fpmの起動
         start_message
-        systemctl start httpd.service
+        echo "php-fpmの起動"
+        echo ""
+        systemctl start php-fpm
+        systemctl status php-fpm
+        end_message
 
-        echo "apacheのステータス確認"
-        systemctl status httpd.service
+
+        #nginxの起動
+        start_message
+        echo "nginxの起動"
+        echo ""
+        systemctl start nginx
+        systemctl status nginx
         end_message
 
         #自動起動の設定
         start_message
-        systemctl enable httpd
-        systemctl list-unit-files --type=service | grep httpd
+        systemctl enable nginx
+        systemctl enable php-fpm
+        systemctl list-unit-files --type=service | grep nginx
+        systemctl list-unit-files --type=service | grep php-fpm
         end_message
 
 
