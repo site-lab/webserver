@@ -20,6 +20,11 @@ Apache+PHP、nginx+phpなどの環境構築シェルスクリプトです
 * CPU：1コア
 * SSD：20GB
 
+### IDCFクラウド
+* メモリ：1GB
+* CPU：1コア
+* SSD：20GB
+
 ### 実行方法
 SFTPなどでアップロードをして、rootユーザーもしくはsudo権限で実行
 wgetを使用する場合は[環境構築スクリプトを公開してます](https://www.logw.jp/cloudserver/8886.html)を閲覧してください。
@@ -149,58 +154,6 @@ PHP7は **FastCGI版** となります。
 
 
 
-## [apache24u_php73.sh](https://github.com/site-lab/apache/blob/master/apache24u_php73.sh)
-### 実行内容
-* apache2.4.6のインストール
-* HTTP2対応
-* mod_sslのインストール
-* php7.3のインストール
-* php7.3の必要モジュールインストール
-
-Apacheはドキュメントルートのみhtaccessの有効化された状態となります。
-gzipは/etc/httpd/conf.d/gzip.conf　にて設定が記述されています
-PHP7は **モジュール版** となります。
-データベースは自分でインストールしていただく形になります。データベースも含めてインストールしたい場合は[LAMP](https://github.com/site-lab/lamp)リポジトリからインストールしてください。
-
-## [apache24u_php73_fcgid.sh](https://github.com/site-lab/apache/blob/master/apache24u_php73_fcgid.sh)
-### 実行内容
-* apache2.4.xのインストール
-* mod_sslのインストール
-* HTTP2対応
-* php7.3のインストール
-* php7.3の必要モジュールインストール
-
-Apacheはドキュメントルートのみhtaccessの有効化された状態となります。
-gzipは/etc/httpd/conf.d/gzip.conf　にて設定が記述されています
-PHP7は **FastCGI版** となります。
-データベースは自分でインストールしていただく形になります。データベースも含めてインストールしたい場合は[LAMP](https://github.com/site-lab/lamp)リポジトリからインストールしてください。
-
-
-## [apache24u_php74.sh](https://github.com/site-lab/apache/blob/master/apache24u_php74.sh)
-### 実行内容
-* apache2.4.6のインストール
-* HTTP2対応
-* mod_sslのインストール
-* php7.4のインストール
-* php7.4の必要モジュールインストール
-
-Apacheはドキュメントルートのみhtaccessの有効化された状態となります。
-gzipは/etc/httpd/conf.d/gzip.conf　にて設定が記述されています
-PHP7は **モジュール版** となります。
-データベースは自分でインストールしていただく形になります。データベースも含めてインストールしたい場合は[LAMP](https://github.com/site-lab/lamp)リポジトリからインストールしてください。
-
-## [apache24u_php74_fcgid.sh](https://github.com/site-lab/apache/blob/master/apache24u_php74_fcgid.sh)
-### 実行内容
-* apache2.4.xのインストール
-* mod_sslのインストール
-* HTTP2対応
-* php7.4のインストール
-* php7.4の必要モジュールインストール
-
-Apacheはドキュメントルートのみhtaccessの有効化された状態となります。
-gzipは/etc/httpd/conf.d/gzip.conf　にて設定が記述されています
-PHP7は **FastCGI版** となります。
-データベースは自分でインストールしていただく形になります。データベースも含めてインストールしたい場合は[LAMP](https://github.com/site-lab/lamp)リポジトリからインストールしてください。
 
 
 ## [apache_pyenv.sh](https://github.com/site-lab/apache/blob/master/apache_pyenv.sh)
