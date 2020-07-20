@@ -5,12 +5,12 @@
 <<COMMENT
 作成者：サイトラボ
 URL：https://www.site-lab.jp/
-URL：https://www.logw.jp/
+URL：https://buildree.com/
 
 注意点：conohaのポートは全て許可前提となります。もしくは80番、443番の許可をしておいてください。システムのfirewallはオン状態となります。centosユーザーのパスワードはランダム生成となります。最後に表示されます
 
 目的：システム更新+apache2.4系+Rubyのインストール
-・apache2.4
+・apache2.4系
 ・mod_sslのインストール
 ・rbnveのインストール
 ・centosユーザーの作成
@@ -57,17 +57,94 @@ if [ -e /etc/redhat-release ]; then
         echo ""
 
         start_message
-        yum -y update
+        #yum -y update
         end_message
 
         # apacheのインストール
         echo "apacheをインストールします"
+        echo "apacheをインストールします"
         echo ""
 
-        start_message
-        yum -y install httpd
-        yum -y install openldap-devel expat-devel
-        yum -y install httpd-devel mod_ssl
+        PS3="インストールしたいapacheのバージョンを選んでください > "
+        ITEM_LIST="apache2.4.6 apache2.4.x"
+
+        select selection in $ITEM_LIST
+
+        do
+          if [ $selection = "apache2.4.6" ]; then
+            # apache2.4.6のインストール
+            echo "apache2.4.6をインストールします"
+            echo ""
+            start_message
+            yum -y install httpd
+            yum -y install openldap-devel expat-devel
+            yum -y install httpd-devel mod_ssl
+            end_message
+            break
+          elif [ $selection = "apache2.4.x" ]; then
+            # 2.4.ｘのインストール
+            #IUSリポジトリのインストール
+            start_message
+            echo "IUSリポジトリをインストールします"
+            yum -y install https://repo.ius.io/ius-release-el7.rpm
+            end_message
+
+            #IUSリポジトリをデフォルトから外す
+            start_message
+            echo "IUSリポジトリをデフォルトから外します"
+            cat >/etc/yum.repos.d/ius.repo <<'EOF'
+[ius]
+name = IUS for Enterprise Linux 7 - $basearch
+baseurl = https://repo.ius.io/7/$basearch/
+enabled = 1
+repo_gpgcheck = 0
+gpgcheck = 1
+gpgkey = file:///etc/pki/rpm-gpg/RPM-GPG-KEY-IUS-7
+
+[ius-debuginfo]
+name = IUS for Enterprise Linux 7 - $basearch - Debug
+baseurl = https://repo.ius.io/7/$basearch/debug/
+enabled = 0
+repo_gpgcheck = 0
+gpgcheck = 1
+gpgkey = file:///etc/pki/rpm-gpg/RPM-GPG-KEY-IUS-7
+
+[ius-source]
+name = IUS for Enterprise Linux 7 - Source
+baseurl = https://repo.ius.io/7/src/
+enabled = 0
+repo_gpgcheck = 0
+gpgcheck = 1
+gpgkey = file:///etc/pki/rpm-gpg/RPM-GPG-KEY-IUS-7
+EOF
+            end_message
+
+            #Nghttp2のインストール
+            start_message
+            echo "Nghttp2のインストール"
+            yum --enablerepo=epel -y install nghttp2
+            end_message
+
+            #mailcapのインストール
+            start_message
+            echo "mailcapのインストール"
+            yum -y install mailcap
+            end_message
+
+
+            # apacheのインストール
+            echo "apacheをインストールします"
+            echo ""
+
+            start_message
+            yum -y --enablerepo=ius install httpd24u
+            yum -y install openldap-devel expat-devel
+            yum -y --enablerepo=ius install httpd24u-devel httpd24u-mod_ssl
+            break
+          else
+            echo "どちらかを選択してください"
+          fi
+        done
 
         echo "ファイルのバックアップ"
         echo ""
@@ -121,8 +198,8 @@ EOF
         #Rubyのインストールと環境設定
         start_message
         echo "Rubyのインストール"
-        rbenv install 2.3.7
-        rbenv global 2.3.7
+        rbenv install 2.7.1
+        rbenv global 2.7.1
         ruby -v
         end_message
 
