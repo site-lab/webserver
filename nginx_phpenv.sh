@@ -277,7 +277,7 @@ EOF
         start_message
         echo "phpenvのインストール phpenv install -l"
         phpenv install -l
-        echo "php7.4.1のインストール"
+        echo "php7.4.7のインストール"
         phpenv install 7.4.7
         echo "php7.4.7をglobalに設定"
         phpenv global 7.4.7
@@ -285,10 +285,11 @@ EOF
 
         #php-fpmのファイル変更
         start_message
-        echo "www.confの書き換え"
+        echo "www.confの置き換え"
+        mkdir /etc/php-fpm.d
         cp /usr/local/phpenv/versions/7.4.7/etc/php-fpm.d/www.conf /etc/php-fpm.d/www.conf
-        sed -i -e "s|user = apache|user = nginx|" /etc/php-fpm.d/www.conf
-        sed -i -e "s|group = apache|group = nginx|" /etc/php-fpm.d/www.conf
+        sed -i -e "s|user = nobody|user = nginx|" /etc/php-fpm.d/www.conf
+        sed -i -e "s|group = nobody|group = nginx|" /etc/php-fpm.d/www.conf
         echo "バックアップとる"
 
         end_message
