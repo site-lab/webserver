@@ -78,10 +78,9 @@ if [ -e /etc/redhat-release ]; then
         start_message
         echo "yum updateを実行します"
         echo "yum update"
-        #yum -y update
+        yum -y update
         end_message
 
-        # apacheのインストール
         #nginxの設定ファイルを作成
         start_message
         echo "nginxのインストールファイルを作成します"
