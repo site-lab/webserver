@@ -277,17 +277,17 @@ EOF
         start_message
         echo "phpenvのインストール phpenv install -l"
         phpenv install -l
-        echo "php7.4.7のインストール"
-        phpenv install 7.4.7
-        echo "php7.4.7をglobalに設定"
-        phpenv global 7.4.7
+        echo "php7.3.19のインストール"
+        phpenv install 7.3.19
+        echo "php7.3.19をglobalに設定"
+        phpenv global 7.3.19
         end_message
 
         #php-fpmのファイル変更
         start_message
         echo "www.confの置き換え"
         mkdir /etc/php-fpm.d
-        cp /usr/local/phpenv/versions/7.4.7/etc/php-fpm.d/www.conf /etc/php-fpm.d/www.conf
+        cp /usr/local/phpenv/versions/7.3.19/etc/php-fpm.d/www.conf /etc/php-fpm.d/www.conf
         sed -i -e "s|user = nobody|user = nginx|" /etc/php-fpm.d/www.conf
         sed -i -e "s|group = nobody|group = nginx|" /etc/php-fpm.d/www.conf
         echo "バックアップとる"
@@ -328,7 +328,7 @@ EOF
         start_message
         echo "php-fpmの起動"
         echo ""
-        cp /tmp/php-build/source/7.4.7/sapi/fpm/php-fpm.service /etc/systemd/system/php-fpm.service
+        cp /tmp/php-build/source/7.3.19/sapi/fpm/php-fpm.service /etc/systemd/system/php-fpm.service
         systemctl start php-fpm
         systemctl status php-fpm
         end_message
