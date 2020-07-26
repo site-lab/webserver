@@ -1,6 +1,5 @@
 # WebServer
-WebServer関連のシェルスクリプト置き場、CentOS7専用となります。**centos7 minimal インストール** した状態で何もはいっていない状態で必要なファイルを実行してください
-Apache+PHP、nginx+phpなどの環境構築シェルスクリプトです
+apacheのシェルスクリプト置き場、CentOS7専用となります。**centos7 minimal インストール** した状態で何もはいっていない状態で必要なファイルを実行してください
 
 ※自己責任で実行してください
 
@@ -158,9 +157,6 @@ PHP7は **FastCGI版** となります。
 データベースは自分でインストールしていただく形になります。データベースも含めてインストールしたい場合は[LAMP](https://github.com/site-lab/lamp)リポジトリからインストールしてください。
 
 
-
-
-
 ## [apache_pyenv.sh](https://github.com/site-lab/apache/blob/master/apache_pyenv.sh)
 ### 実行内容
 * apache2.4.6のインストール
@@ -168,104 +164,6 @@ PHP7は **FastCGI版** となります。
 * python3.7.3のインストール
 * botleのインストール
 
-
-## [nginx.sh](https://github.com/site-lab/apache/blob/master/nginx.sh)
-### 実行内容
-* nginxのインストール
-
-## [nginx_php.sh](https://github.com/site-lab/apache/blob/master/nginx_php.sh)
-### 実行内容
-* nginxのインストール
-* PHP7.2 or 7.3を選択してインストール
-
-
-## [nginx_apache.sh](https://github.com/site-lab/apache/blob/master/nginx_apache.sh)
-### 実行内容
-* nginxのインストール
-* apache2.4.6のインストール
-* HTTPSへのリダイレクト設定可（一部ファイル編集してください）
-* リバースプロキシ設定済み
-
-
-
-
-## [nginx_php73.sh](https://github.com/site-lab/apache/blob/master/nginx_php73.sh)
-### 実行内容
-* nginxのインストール
-* php7.3のインストール
-* php7.3の必要モジュールインストール
-* HTTPSへのリダイレクト設定可（一部ファイル編集してください）
-
-PHP7は **FastCGI版** となります。
-データベースは自分でインストールしていただく形になります。データベースも含めてインストールしたい場合は[LAMP](https://github.com/site-lab/lamp)リポジトリからインストールしてください。
-
-## [nginx_php73_socket.sh](https://github.com/site-lab/apache/blob/master/nginx_php73_socket.sh)
-### 実行内容
-* nginxのインストール
-* php7.3のインストール
-* php7.3の必要モジュールインストール
-* HTTPSへのリダイレクト設定可（一部ファイル編集してください）
-
-PHP7は **FastCGI版** となります。
-データベースは自分でインストールしていただく形になります。データベースも含めてインストールしたい場合は[LAMP](https://github.com/site-lab/lamp)リポジトリからインストールしてください。
-
-## [nginx_php74.sh](https://github.com/site-lab/apache/blob/master/nginx_php74.sh)
-### 実行内容
-* nginxのインストール
-* php7.4のインストール
-* php7.4の必要モジュールインストール
-* HTTPSへのリダイレクト設定可（一部ファイル編集してください）
-
-PHP7は **FastCGI版** となります。
-データベースは自分でインストールしていただく形になります。データベースも含めてインストールしたい場合は[LAMP](https://github.com/site-lab/lamp)リポジトリからインストールしてください。
-
-## [nginx_php74_socket.sh](https://github.com/site-lab/apache/blob/master/nginx_php74_socket.sh)
-### 実行内容
-* nginxのインストール
-* php7.4のインストール
-* php7.4の必要モジュールインストール
-* HTTPSへのリダイレクト設定可（一部ファイル編集してください）
-
-PHP7は **FastCGI版** となります。
-データベースは自分でインストールしていただく形になります。データベースも含めてインストールしたい場合は[LAMP](https://github.com/site-lab/lamp)リポジトリからインストールしてください。
-
-
-## [nginx_nodejs.sh](https://github.com/site-lab/apache/blob/master/nginx_nodejs.sh)
-### 実行内容
-* nginxのインストール
-* node.jsのインストール
-* Expressのインストール
-* HTTPSへのリダイレクト設定可（一部ファイル編集してください）
-
-nginx+node.jsです。nginxでリバースプロキシをしてます。
-
-## [nginx_ndenv.sh](https://github.com/site-lab/apache/blob/master/nginx_ndenv.sh)
-### 実行内容
-* nginxのインストール
-* node.jsのインストール
-* Expressのインストール
-* HTTPSへのリダイレクト設定可（一部ファイル編集してください）
-
-nginx+node.jsです。nginxでリバースプロキシをしてます。ndenvで動かします
-
-
-## [nginx_go.sh](https://github.com/site-lab/apache/blob/master/nginx_go.sh)
-### 実行内容
-* nginxのインストール
-* go言語のインストール
-* Expressのインストール
-* HTTPSへのリダイレクト設定可（一部ファイル編集してください）
-
-nginx+go言語です。nginxでリバースプロキシをしてます。
-
-## [nginx_goenv.sh](https://github.com/site-lab/apache/blob/master/nginx_goenv.sh)
-### 実行内容
-* nginxのインストール
-* go言語のインストール
-* Expressのインストール
-* HTTPSへのリダイレクト設定可（一部ファイル編集してください）
-
-nginx+go言語です。nginxでリバースプロキシをしてます。こっちはgoenvでバージョン管理出来るタイプとなります。
 
 
 ## [openlitespeed.sh](https://github.com/site-lab/webserver/blob/master/openlitespeed.sh)
