@@ -75,7 +75,7 @@ if [ -e /etc/redhat-release ]; then
         start_message
         echo "yum updateを実行します"
         echo "yum update"
-        yum -y update
+        #yum -y update
         end_message
 
         # apacheのインストール
@@ -162,10 +162,10 @@ EOF
         start_message
         echo "phpenvのインストール phpenv install -l"
         phpenv install -l
-        echo "php7.3.17のインストール"
-        phpenv install 7.3.17
-        echo "php7.3.17をglobalに設定"
-        phpenv global 7.3.17
+        echo "php7.4.3のインストール"
+        phpenv install 7.4.3
+        echo "php7.4.3をglobalに設定"
+        phpenv global 7.4.3
         end_message
 
 
