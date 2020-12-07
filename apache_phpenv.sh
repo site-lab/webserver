@@ -75,17 +75,93 @@ if [ -e /etc/redhat-release ]; then
         start_message
         echo "yum updateを実行します"
         echo "yum update"
-        #yum -y update
+        yum -y update
         end_message
 
         # apacheのインストール
         echo "apacheをインストールします"
         echo ""
 
-        start_message
-        yum -y install httpd
-        yum -y install openldap-devel expat-devel
-        yum -y install httpd-devel mod_ssl
+        PS3="インストールしたいapacheのバージョンを選んでください > "
+        ITEM_LIST="apache2.4.6 apache2.4.x"
+
+        select selection in $ITEM_LIST
+
+        do
+          if [ $selection = "apache2.4.6" ]; then
+            # apache2.4.6のインストール
+            echo "apache2.4.6をインストールします"
+            echo ""
+            start_message
+            yum -y install httpd
+            yum -y install openldap-devel expat-devel
+            yum -y install httpd-devel mod_ssl
+            end_message
+            break
+          elif [ $selection = "apache2.4.x" ]; then
+            # 2.4.ｘのインストール
+            #IUSリポジトリのインストール
+            start_message
+            echo "IUSリポジトリをインストールします"
+            yum -y install https://repo.ius.io/ius-release-el7.rpm
+            end_message
+
+            #IUSリポジトリをデフォルトから外す
+            start_message
+            echo "IUSリポジトリをデフォルトから外します"
+            cat >/etc/yum.repos.d/ius.repo <<'EOF'
+[ius]
+name = IUS for Enterprise Linux 7 - $basearch
+baseurl = https://repo.ius.io/7/$basearch/
+enabled = 1
+repo_gpgcheck = 0
+gpgcheck = 1
+gpgkey = file:///etc/pki/rpm-gpg/RPM-GPG-KEY-IUS-7
+
+[ius-debuginfo]
+name = IUS for Enterprise Linux 7 - $basearch - Debug
+baseurl = https://repo.ius.io/7/$basearch/debug/
+enabled = 0
+repo_gpgcheck = 0
+gpgcheck = 1
+gpgkey = file:///etc/pki/rpm-gpg/RPM-GPG-KEY-IUS-7
+
+[ius-source]
+name = IUS for Enterprise Linux 7 - Source
+baseurl = https://repo.ius.io/7/src/
+enabled = 0
+repo_gpgcheck = 0
+gpgcheck = 1
+gpgkey = file:///etc/pki/rpm-gpg/RPM-GPG-KEY-IUS-7
+EOF
+            end_message
+
+            #Nghttp2のインストール
+            start_message
+            echo "Nghttp2のインストール"
+            yum --enablerepo=epel -y install nghttp2
+            end_message
+
+            #mailcapのインストール
+            start_message
+            echo "mailcapのインストール"
+            yum -y install mailcap
+            end_message
+
+
+            # apacheのインストール
+            echo "apacheをインストールします"
+            echo ""
+
+            start_message
+            yum -y --enablerepo=ius install httpd24u
+            yum -y install openldap-devel expat-devel
+            yum -y --enablerepo=ius install httpd24u-devel httpd24u-mod_ssl
+            break
+          else
+            echo "どちらかを選択してください"
+          fi
+        done
 
         echo "ファイルのバックアップ"
         echo ""
@@ -152,9 +228,9 @@ EOF
         #Apacheと連携できるように設定
         start_message
         echo "Apacheと連携できるようにします"
-        sed -i -e '1i configure_option "--with-apxs2" "/usr/bin/apxs"' /usr/local/phpenv/plugins/php-build/share/php-build/definitions/7.3.17
+        sed -i -e '1i configure_option "--with-apxs2" "/usr/bin/apxs"' /usr/local/phpenv/plugins/php-build/share/php-build/definitions/7.4.13
         echo "設定確認"
-        cat /usr/local/phpenv/plugins/php-build/share/php-build/definitions/7.3.17
+        cat /usr/local/phpenv/plugins/php-build/share/php-build/definitions/7.4.13
         end_message
 
 
@@ -162,10 +238,10 @@ EOF
         start_message
         echo "phpenvのインストール phpenv install -l"
         phpenv install -l
-        echo "php7.4.3のインストール"
-        phpenv install 7.4.3
-        echo "php7.4.3をglobalに設定"
-        phpenv global 7.4.3
+        echo "php7.4.13のインストール"
+        phpenv install 7.4.13
+        echo "php7.4.13をglobalに設定"
+        phpenv global 7.41.3
         end_message
 
 
