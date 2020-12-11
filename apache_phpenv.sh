@@ -177,6 +177,7 @@ EOF
         sed -i -e "352i ServerSignature off \n" /etc/httpd/conf/httpd.conf
 
 
+
         ls /etc/httpd/conf/
         echo "Apacheのバージョン確認"
         echo ""
@@ -241,7 +242,14 @@ EOF
         echo "php7.4.13のインストール"
         phpenv install 7.4.13
         echo "php7.4.13をglobalに設定"
-        phpenv global 7.41.3
+        phpenv global 7.4.13
+        end_message
+
+        #php.iniをコピー
+        start_message
+        echo "php.iniのコピー"
+        cp /usr/local/phpenv/versions/7.4.13/etc/php.ini /etc/
+        echo "cp /usr/local/phpenv/versions/7.4.13/etc/php.ini /etc/"
         end_message
 
 
@@ -323,7 +331,10 @@ EOF
         https://IPアドレス/info.php
         で確認してみてください
 
-        PHP7.4にも対応しております。
+        PHP7.4.13がインストールされております
+        php.iniは
+        /usr/local/phpenv/versions/7.4.13/etc/php.ini
+        です
 
         ドキュメントルート(DR)は
         /var/www/html
