@@ -183,7 +183,7 @@ Header append Vary User-Agent env=!dont-var
 EOF
 
 PS3="インストールしたいPHPのバージョンを選んでください > "
-ITEM_LIST="PHP7.3 PHP7.4"
+ITEM_LIST="PHP7.3 PHP7.4 PHP8.0"
 
 select selection in $ITEM_LIST
 do
@@ -206,6 +206,19 @@ do
     echo ""
     start_message
     yum -y install --enablerepo=remi,remi-php74 php php-mbstring php-xml php-xmlrpc php-gd php-pdo php-pecl-mcrypt php-mysqlnd php-pecl-mysql
+    echo "phpのバージョン確認"
+    echo ""
+    php -v
+    echo ""
+    end_message
+    break
+
+  elif [ $selection = "PHP8.0" ]; then
+    # php8系のインストール
+    echo "php8.0をインストールします"
+    echo ""
+    start_message
+    yum -y install --enablerepo=remi,remi-php80 php php-mbstring php-xml php-xmlrpc php-gd php-pdo php-pecl-mcrypt php-mysqlnd php-pecl-mysql
     echo "phpのバージョン確認"
     echo ""
     php -v
