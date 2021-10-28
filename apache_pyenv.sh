@@ -54,171 +54,22 @@ if [ -e /etc/redhat-release ]; then
 
         # yum updateを実行
         echo "yum updateを実行します"
-        echo ""
-
-        start_message
-        yum -y update
-        end_message
+        wget wget https://www.logw.jp/download/shell/common/system/update.sh
+        source ./update.sh
 
         # apacheのインストール
-        echo "apacheをインストールします"
-        echo ""
+        wget wget https://www.logw.jp/download/shell/common/system/apache.sh
+        source ./apache.sh
 
-        PS3="インストールしたいapacheのバージョンを選んでください > "
-        ITEM_LIST="apache2.4.6 apache2.4.x"
-
-        select selection in $ITEM_LIST
-
-        do
-          if [ $selection = "apache2.4.6" ]; then
-            # apache2.4.6のインストール
-            echo "apache2.4.6をインストールします"
-            echo ""
-            start_message
-            yum -y install httpd
-            yum -y install openldap-devel expat-devel
-            yum -y install httpd-devel mod_ssl
-            end_message
-            break
-          elif [ $selection = "apache2.4.x" ]; then
-            # 2.4.ｘのインストール
-            #IUSリポジトリのインストール
-            start_message
-            echo "IUSリポジトリをインストールします"
-            yum -y install https://repo.ius.io/ius-release-el7.rpm
-            end_message
-
-            #IUSリポジトリをデフォルトから外す
-            start_message
-            echo "IUSリポジトリをデフォルトから外します"
-            cat >/etc/yum.repos.d/ius.repo <<'EOF'
-[ius]
-name = IUS for Enterprise Linux 7 - $basearch
-baseurl = https://repo.ius.io/7/$basearch/
-enabled = 1
-repo_gpgcheck = 0
-gpgcheck = 1
-gpgkey = file:///etc/pki/rpm-gpg/RPM-GPG-KEY-IUS-7
-
-[ius-debuginfo]
-name = IUS for Enterprise Linux 7 - $basearch - Debug
-baseurl = https://repo.ius.io/7/$basearch/debug/
-enabled = 0
-repo_gpgcheck = 0
-gpgcheck = 1
-gpgkey = file:///etc/pki/rpm-gpg/RPM-GPG-KEY-IUS-7
-
-[ius-source]
-name = IUS for Enterprise Linux 7 - Source
-baseurl = https://repo.ius.io/7/src/
-enabled = 0
-repo_gpgcheck = 0
-gpgcheck = 1
-gpgkey = file:///etc/pki/rpm-gpg/RPM-GPG-KEY-IUS-7
-EOF
-            end_message
-
-            #Nghttp2のインストール
-            start_message
-            echo "Nghttp2のインストール"
-            yum --enablerepo=epel -y install nghttp2
-            end_message
-
-            #mailcapのインストール
-            start_message
-            echo "mailcapのインストール"
-            yum -y install mailcap
-            end_message
-
-
-            # apacheのインストール
-            echo "apacheをインストールします"
-            echo ""
-
-            start_message
-            yum -y --enablerepo=ius install httpd24u
-            yum -y install openldap-devel expat-devel
-            yum -y --enablerepo=ius install httpd24u-devel httpd24u-mod_ssl
-            break
-          else
-            echo "どちらかを選択してください"
-          fi
-        done
-
-        echo "ファイルのバックアップ"
-        echo ""
-        cp /etc/httpd/conf/httpd.conf /etc/httpd/conf/httpd.conf.bk
-
-        echo "htaccess有効化した状態のconfファイルを作成します"
-        echo ""
-
-        sed -i -e "350i #バージョン非表示" /etc/httpd/conf/httpd.conf
-        sed -i -e "351i ServerTokens ProductOnly" /etc/httpd/conf/httpd.conf
-        sed -i -e "352i ServerSignature off \n" /etc/httpd/conf/httpd.conf
         #モジュールの読み込み
-        sed -i -e "353i LoadModule wsgi_module modules/mod_wsgi-py37.cpython-37m-x86_64-linux-gnu.so \n" /etc/httpd/conf/httpd.conf
+        sed -i -e "353i LoadModule wsgi_module modules/mod_wsgi-py39.cpython-39-x86_64-linux-gnu.so \n" /etc/httpd/conf/httpd.conf
         sed -i -e "354i WSGIScriptAlias / /var/www/html/adapter.wsgi \n" /etc/httpd/conf/httpd.conf
 
 
-        ls /etc/httpd/conf/
-        echo "Apacheのバージョン確認"
-        echo ""
-        httpd -v
-        echo ""
-        end_message
-
-        #gzip圧縮の設定
-        cat >/etc/httpd/conf.d/gzip.conf <<'EOF'
-SetOutputFilter DEFLATE
-BrowserMatch ^Mozilla/4 gzip-only-text/html
-BrowserMatch ^Mozilla/4\.0[678] no-gzip
-BrowserMatch \bMSI[E] !no-gzip !gzip-only-text/html
-SetEnvIfNoCase Request_URI\.(?:gif|jpe?g|png)$ no-gzip dont-vary
-Header append Vary User-Agent env=!dont-var
-EOF
-
         #pyenvの設定
-        start_message
-        echo "gitでpyenvをクーロンします"
-        git clone git://github.com/yyuu/pyenv.git /usr/local/pyenv
-        git clone git://github.com/yyuu/pyenv-virtualenv.git /usr/local/pyenv/plugins/pyenv-virtualenv
-        end_message
-
-        #pyenvのインストール
-        start_message
-        echo "起動時に読み込まれるようにします"
-        cat >/etc/profile.d/pyenv.sh <<'EOF'
-export PYENV_ROOT="/usr/local/pyenv"
-export PATH="${PYENV_ROOT}/bin:${PATH}"
-eval "$(pyenv init -)"
-EOF
-
-        source /etc/profile.d/pyenv.sh
-        end_message
-
-        #pythonの確認
-        start_message
-        echo "pythonのリスト確認"
-        pyenv install --list
-        echo "python3.7.3のインストール"
-        env PYTHON_CONFIGURE_OPTS="--enable-shared" pyenv install 3.7.3
-        echo "pythonの設定を変更"
-        pyenv global 3.7.3
-        end_message
-
-        #pythonの確認
-        start_message
-        echo "pythonの位置を確認"
-        which python
-        echo "pythonのバージョン確認"
-        python --version
-        end_message
-
-        #pipのアップグレード
-        start_message
-        echo "pipのアップグレード"
-        pip install --upgrade pip
-        end_message
+        echo "pythonのインストールをします"
+        wget wget https://www.logw.jp/download/shell/common/system/pyenv.sh
+        source ./pyenv.sh
 
         #mod_wsgiのインストール
         start_message
@@ -230,13 +81,13 @@ EOF
         start_message
         echo "インストール場所を調べます"
         pip show mod-wsgi
-        ls -all /usr/local/pyenv/versions/3.7.3/lib/python3.7/site-packages/mod_wsgi/server/
+        ls -all /usr/local/pyenv/versions/3.9.5/lib/python3.9/site-packages/mod_wsgi/server/
         end_message
 
         #ファイルのコピー
         start_message
         echo "ファイルをコピーします"
-        cp  /usr/local/pyenv/versions/3.7.3/lib/python3.7/site-packages/mod_wsgi/server/mod_wsgi-py37.cpython-37m-x86_64-linux-gnu.so /etc/httpd/modules/
+        cp  /usr/local/pyenv/versions/3.9.5/lib/python3.9/site-packages/mod_wsgi/server/mod_wsgi-py39.cpython-39-x86_64-linux-gnu.so /etc/httpd/modules/
         echo "ファイルの確認"
         ls /etc/httpd/modules/
         end_message
@@ -245,7 +96,7 @@ EOF
         start_message
         echo "botleのインストール"
         pip install bottle
-        cp /usr/local/pyenv/versions/3.7.3/lib/python3.7/site-packages/bottle.py /var/www/html/
+        cp /usr/local/pyenv/versions/3.9.5/lib/python3.9/site-packages/bottle.py /var/www/html/
         end_message
 
         #wsgiファイル
@@ -278,20 +129,9 @@ EOF
 
 
         #ユーザー作成
-        start_message
-        echo "centosユーザーを作成します"
-        USERNAME='centos'
-        PASSWORD=$(more /dev/urandom  | tr -d -c '[:alnum:]' | fold -w 10 | head -1)
-
-        useradd -m -G apache -s /bin/bash "${USERNAME}"
-        echo "${PASSWORD}" | passwd --stdin "${USERNAME}"
-        echo "パスワードは"${PASSWORD}"です。"
-
-        #所属グループ表示
-        echo "所属グループを表示します"
-        getent group apache
-        end_message
-
+        wget wget https://www.logw.jp/download/shell/common/user/useradd.sh
+        source ./useradd.sh
+        
         #所有者の変更
         start_message
         echo "ドキュメントルートの所有者をcentos、グループをapacheにします"

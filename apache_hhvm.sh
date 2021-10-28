@@ -46,7 +46,7 @@ if [ -e /etc/redhat-release ]; then
 
         #必要ライブラリのインストール
         start_message
-        yum -y install cpp gcc-c++ cmake git psmisc {binutils,boost,jemalloc,numactl}-devel \
+        yum -y install geoip cpp gcc-c++ cmake git psmisc {binutils,boost,jemalloc,numactl}-devel \
 {ImageMagick,sqlite,tbb,bzip2,openldap,readline,elfutils-libelf,gmp,lz4,pcre}-devel \
 lib{xslt,event,yaml,vpx,png,zip,icu,mcrypt,memcached,cap,dwarf}-devel \
 {unixODBC,expat,mariadb}-devel lib{edit,curl,xml2,xslt}-devel \
@@ -56,12 +56,8 @@ make libc-client
 
 
         # yum updateを実行
-        echo "yum updateを実行します"
-        echo ""
-
-        start_message
-        yum -y update
-        end_message
+        wget wget https://www.logw.jp/download/shell/common/system/update.sh
+        source ./update.sh
 
         # hhvmのインストール
         start_message
@@ -259,19 +255,9 @@ EOF
 
 
         #ユーザー作成
-        start_message
-        echo "centosユーザーを作成します"
-        USERNAME='centos'
-        PASSWORD=$(more /dev/urandom  | tr -d -c '[:alnum:]' | fold -w 10 | head -1)
-
-        useradd -m -G apache -s /bin/bash "${USERNAME}"
-        echo "${PASSWORD}" | passwd --stdin "${USERNAME}"
-        echo "パスワードは"${PASSWORD}"です。"
-
-        #所属グループ表示
-        echo "所属グループを表示します"
-        getent group apache
-        end_message
+        #ユーザー作成
+        wget wget https://www.logw.jp/download/shell/common/user/useradd.sh
+        source ./useradd.sh
 
         #所有者の変更
         start_message
