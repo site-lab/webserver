@@ -12,7 +12,7 @@ URL：https://buildree.com/
 目的：システム更新+apache2.4系のインストール
 ・apache2.4.6or2.4.x
 ・mod_sslのインストール
-・userユーザーの作成
+・userの作成
 
 COMMENT
 
