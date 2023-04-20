@@ -7,12 +7,12 @@
 URL：https://www.site-lab.jp/
 URL：https://buildree.com/
 
-注意点：conohaのポートは全て許可前提となります。もしくは80番、443番の許可をしておいてください。システムのfirewallはオン状態となります。centosユーザーのパスワードはランダム生成となります。最後に表示されます
+注意点：conohaのポートは全て許可前提となります。もしくは80番、443番の許可をしておいてください。システムのfirewallはオン状態となります。userユーザーのパスワードはランダム生成となります。最後に表示されます
 
 目的：システム更新+apache2.4系のインストール
 ・apache2.4.6or2.4.x
 ・mod_sslのインストール
-・centosユーザーの作成
+・userユーザーの作成
 
 COMMENT
 
@@ -29,7 +29,7 @@ echo "======================完了======================"
 echo ""
 }
 
-#CentOS8系か確認
+#user8系か確認
 if [ -e /etc/redhat-release ]; then
     DIST="redhat"
     DIST_VER=`cat /etc/redhat-release | sed -e "s/.*\s\([0-9]\)\..*/\1/"`
@@ -99,8 +99,8 @@ EOF
 
         #所有者の変更
         start_message
-        echo "ドキュメントルートの所有者をcentos、グループをapacheにします"
-        chown -R centos:apache /var/www/html
+        echo "ドキュメントルートの所有者をuser、グループをapacheにします"
+        chown -R user:apache /var/www/html
         end_message
 
         # apacheの起動
@@ -185,19 +185,19 @@ EOF
 
         </VirtualHost>
 
-        ドキュメントルートの所有者：centos
+        ドキュメントルートの所有者：user
         グループ：apache
         になっているため、ユーザー名とグループの変更が必要な場合は変更してください
 EOF
 
-        echo "centosユーザーのパスワードは"${PASSWORD}"です。"
+        echo "userユーザーのパスワードは"${PASSWORD}"です。"
       else
-        echo "CentOS7ではないため、このスクリプトは使えません。このスクリプトのインストール対象はCentOS7です。"
+        echo "RedHat系ではないため、このスクリプトは使えません。このスクリプトのインストール対象はRedHat8，9系です。"
       fi
     fi
 
 else
-  echo "このスクリプトのインストール対象はCentOS7です。CentOS7以外は動きません。"
+  echo "このスクリプトのインストール対象はuser7です。user7以外は動きません。"
   cat <<EOF
   検証LinuxディストリビューションはDebian・Ubuntu・Fedora・Arch Linux（アーチ・リナックス）となります。
 EOF
