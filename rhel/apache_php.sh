@@ -73,6 +73,23 @@ if [ -e /etc/redhat-release ]; then
         dnf install -y php-cli php-fpm php-curl php-mysqlnd php-gd php-opcache php-zip php-intl php-common php-bcmath php-imagick php-xmlrpc php-json php-readline php-memcached php-redis php-mbstring php-apcu php-xml php-dom php-redis php-memcached php-memcache
         end_message
 
+        #php.iniの設定変更
+start_message
+echo "phpのバージョンを非表示にします"
+echo "sed -i -e s|expose_php = On|expose_php = Off| /etc/php.ini"
+sed -i -e "s|expose_php = On|expose_php = Off|" /etc/php.ini
+echo "phpのタイムゾーンを変更"
+echo "sed -i -e s|;date.timezone =|date.timezone = Asia/Tokyo| /etc/php.ini"
+sed -i -e "s|;date.timezone =|date.timezone = Asia/Tokyo|" /etc/php.ini
+end_message
+
+# phpinfoの作成
+start_message
+touch /var/www/html/info.php
+echo '<?php phpinfo(); ?>' >> /var/www/html/info.php
+cat /var/www/html/info.php
+end_message
+
 
 
         # dnf updateを実行
