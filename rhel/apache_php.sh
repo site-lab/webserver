@@ -12,6 +12,7 @@ URL：https://buildree.com/
 目的：システム更新+apache2.4系のインストール
 ・apache2.4.6or2.4.x
 ・mod_sslのインストール
+・PHP8系のインストール
 ・userの作成
 
 COMMENT
@@ -37,6 +38,18 @@ if [ -e /etc/redhat-release ]; then
 
     if [ $DIST = "redhat" ];then
       if [ $DIST_VER = "8" ] || [ $DIST_VER = "9" ];then
+
+      #SELinuxの確認
+SElinux=`which getenforce`
+if [ "`${SElinux}`" = "Disabled" ]; then
+  echo "SElinuxは無効なのでそのまま続けていきます"
+else
+  echo "SElinux有効のため、一時的に無効化します"
+  setenforce 0
+
+  getenforce
+  #exit 1
+fi
 
         #EPELリポジトリのインストール
         start_message
