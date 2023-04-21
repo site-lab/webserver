@@ -64,8 +64,16 @@ fi
 
         start_message
         if [ $DIST_VER = "8" ];then
-        echo "8"
+        
+        #remiリポジトリのインストール
+        dnf install -y dnf-utils http://rpms.remirepo.net/enterprise/remi-release-8.rpm
+        echo "PHP8.2を有効化"
+        dnf module enable -y php:remi-8.2
+
+        echo "PHP8.2のインストール"
+        dnf install -y php
         break #強制終了
+
         elif [ $DIST_VER = "9" ];then
         #Alma、Rockylinux9の時はこっちを実行
         echo "remiリポジトリのインストール"
