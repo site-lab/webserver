@@ -49,7 +49,7 @@ if [ -e /etc/redhat-release ]; then
         end_message
 
         #ユーザー作成
-        wget wget https://www.logw.jp/download/shell/common/user/useradd.sh
+        wget wget https://www.logw.jp/download/common/user/useradd.sh
         source ./useradd.sh
 
         #所属グループ表示

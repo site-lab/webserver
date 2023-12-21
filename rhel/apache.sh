@@ -85,7 +85,7 @@ EOF
         #ユーザー作成
         start_message
         echo "ユーザーを作成します"
-        USERNAME='user'
+        USERNAME='unicorn'
         PASSWORD=$(more /dev/urandom  | tr -d -c '[:alnum:]' | fold -w 10 | head -1)
 
         useradd -m -G apache -s /bin/bash "${USERNAME}"
@@ -99,8 +99,8 @@ EOF
 
         #所有者の変更
         start_message
-        echo "ドキュメントルートの所有者をuser、グループをapacheにします"
-        chown -R user:apache /var/www/html
+        echo "ドキュメントルートの所有者をunicorn、グループをapacheにします"
+        chown -R unicorn:apache /var/www/html
         end_message
 
         # apacheの起動
