@@ -71,22 +71,41 @@ if [ -e /etc/redhat-release ]; then
         #Reactのインストール
         start_message
         echo "Reactをインストールします"
-        npx create-react-app /var/www/html
+        npx -y create-react-app /var/www/html
         end_message
 
+        #forever のインストール
+        start_message
+        echo "npm install -g forever"
+        npm install -g forever
+        end_message
 
         # apacheのインストール
+        start_message
         echo "apacheをインストールします"
         dnf  install -y httpd mod_ssl
-
-
-
         ls /etc/httpd/conf/
         echo "Apacheのバージョン確認"
         echo ""
         httpd -v
         echo ""
         end_message
+
+        # apacheの設定変更
+        start_message
+        echo "apacheをインストールします"
+        sed -i -e "151d" /etc/httpd/conf/httpd.conf
+        sed -i -e "151i AllowOverride All" /etc/httpd/conf/httpd.conf
+        sed -i -e "350i #バージョン非表示" /etc/httpd/conf/httpd.conf
+        sed -i -e "351i ServerTokens ProductOnly" /etc/httpd/conf/httpd.conf
+        sed -i -e "352i ServerSignature off \n" /etc/httpd/conf/httpd.conf
+        sed -i -e "358i  ProxyRequests Off \n" /etc/httpd/conf/httpd.conf
+        sed -i -e "360i  <Location /> \n" /etc/httpd/conf/httpd.conf
+        sed -i -e "361i  ProxyPass http://localhost:3000/ \n" /etc/httpd/conf/httpd.conf
+        sed -i -e "362i  ProxyPassReverse http://localhost:3000/ \n" /etc/httpd/conf/httpd.conf
+        sed -i -e "363i  </Location> \n" /etc/httpd/conf/httpd.conf
+        end_message
+
 
         #gzip圧縮の設定
         cat >/etc/httpd/conf.d/gzip.conf <<'EOF'
@@ -123,9 +142,13 @@ EOF
         start_message
         systemctl start httpd.service
 
-        echo "apacheのステータス確認"
-        #systemctl status httpd.service
+        # foreverの設定変更
+        start_message
+        cd /var/www/html
+        echo "foreverで自動起動するようにします"
+        forever start -c "npm start" ./
         end_message
+
 
         #自動起動の設定
         start_message
