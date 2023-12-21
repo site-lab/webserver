@@ -50,6 +50,14 @@ if [ -e /etc/redhat-release ]; then
         dnf -y install git
         end_message
 
+        #SELinuxにHTTPの許可
+        start_message
+        echo "SELinuxにHTTPの許可をします"
+        echo "setsebool -P httpd_can_network_connect 1"
+        setsebool -P httpd_can_network_connect 1
+        end_message
+
+
         #nodejsのインストール
         start_message
         echo "nodejsの確認"
@@ -58,6 +66,12 @@ if [ -e /etc/redhat-release ]; then
         dnf module install -y nodejs:20
         echo "nodejsの確認"
         node -v
+        end_message
+
+        #Reactのインストール
+        start_message
+        echo "Reactをインストールします"
+        npx create-react-app /var/www/html
         end_message
 
 
@@ -110,7 +124,7 @@ EOF
         systemctl start httpd.service
 
         echo "apacheのステータス確認"
-        systemctl status httpd.service
+        #systemctl status httpd.service
         end_message
 
         #自動起動の設定
