@@ -146,7 +146,7 @@ EOF
         start_message
         cd /var/www/html
         echo "foreverで自動起動するようにします"
-        forever start -c "npm start" ./
+        /usr/local/lib/node_modules/forever/bin/forever start -c "npm start" ./
         end_message
 
 
