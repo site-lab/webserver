@@ -223,12 +223,15 @@ EOF
 
         </VirtualHost>
 
-        ドキュメントルートの所有者：user
+        ドキュメントルートの所有者：unicorn
         グループ：apache
         になっているため、ユーザー名とグループの変更が必要な場合は変更してください
+
+        503エラーの場合は一度更新をしてください。Reactの画面がでたら起動しております。
+        ドキュメントルートで実行する場合は　forever start -c "npm start" ./　となります
 EOF
 
-        echo "userユーザーのパスワードは"${PASSWORD}"です。"
+        echo "unicornユーザーのパスワードは"${PASSWORD}"です。"
       else
         echo "RedHat系ではないため、このスクリプトは使えません。このスクリプトのインストール対象はRedHat8，9系です。"
       fi
