@@ -10,9 +10,10 @@ URL：https://buildree.com/
 注意点：conohaのポートは全て許可前提となります。もしくは80番、443番の許可をしておいてください。システムのfirewallはオン状態となります。userユーザーのパスワードはランダム生成となります。最後に表示されます
 
 目的：システム更新+apache2.4系のインストール
-・apache2.4.6or2.4.x
+・2.4.x
 ・mod_sslのインストール
 ・userの作成
+・angularと連携
 
 COMMENT
 
@@ -49,28 +50,66 @@ if [ -e /etc/redhat-release ]; then
         dnf -y install git
         end_message
 
-
-
-        # dnf updateを実行
-        echo "dnf updateを実行します"
-        echo ""
-
+        #SELinuxにHTTPの許可
         start_message
-        dnf -y update
+        echo "SELinuxにHTTPの許可をします"
+        echo "setsebool -P httpd_can_network_connect 1"
+        setsebool -P httpd_can_network_connect 1
         end_message
 
+
+        #nodejsのインストール
+        start_message
+        echo "nodejsの確認"
+        dnf module list nodejs
+        echo "nodejsのインストール"
+        dnf module install -y nodejs:20
+        echo "nodejsの確認"
+        node -v
+        end_message
+
+        #angularのインストール
+        start_message
+        echo "angularをインストールします"
+        npm install -g @angular/cli
+        cd /var/www/
+        ng new html  --defaults
+        ng build  --base-href=/html/
+
+        end_message
+
+        #forever のインストール
+        #start_message
+        #echo "npm install -g forever"
+        #npm install -g forever
+        #end_message
+
         # apacheのインストール
+        start_message
         echo "apacheをインストールします"
         dnf  install -y httpd mod_ssl
-
-
-
         ls /etc/httpd/conf/
         echo "Apacheのバージョン確認"
         echo ""
         httpd -v
         echo ""
         end_message
+
+        # apacheの設定変更
+        start_message
+        echo "apacheをインストールします"
+        sed -i -e "151d" /etc/httpd/conf/httpd.conf
+        sed -i -e "151i AllowOverride All" /etc/httpd/conf/httpd.conf
+        sed -i -e "350i #バージョン非表示" /etc/httpd/conf/httpd.conf
+        sed -i -e "351i ServerTokens ProductOnly" /etc/httpd/conf/httpd.conf
+        sed -i -e "352i ServerSignature off \n" /etc/httpd/conf/httpd.conf
+        sed -i -e "358i  ProxyRequests Off \n" /etc/httpd/conf/httpd.conf
+        sed -i -e "360i  <Location /> \n" /etc/httpd/conf/httpd.conf
+        sed -i -e "361i  ProxyPass http://localhost:3000/ \n" /etc/httpd/conf/httpd.conf
+        sed -i -e "362i  ProxyPassReverse http://localhost:3000/ \n" /etc/httpd/conf/httpd.conf
+        sed -i -e "363i  </Location> \n" /etc/httpd/conf/httpd.conf
+        end_message
+
 
         #gzip圧縮の設定
         cat >/etc/httpd/conf.d/gzip.conf <<'EOF'
@@ -82,15 +121,14 @@ SetEnvIfNoCase Request_URI\.(?:gif|jpe?g|png)$ no-gzip dont-vary
 Header append Vary User-Agent env=!dont-var
 EOF
 
-        #ユーザー作成
-        start_message
-        echo "ユーザーを作成します"
-        USERNAME='unicorn'
-        PASSWORD=$(more /dev/urandom  | tr -d -c '[:alnum:]' | fold -w 10 | head -1)
+        echo "ユーザーの作成をします"
+        curl -OL https://buildree.com/download/common/user/centosonly.sh
+        source ./centosonly.sh
 
-        useradd -m -G apache -s /bin/bash "${USERNAME}"
-        echo "${PASSWORD}" | passwd --stdin "${USERNAME}"
-        echo "パスワードは"${PASSWORD}"です。"
+        #コピー作成
+        cp /root/pass.txt /home/unicorn/
+        chown -R unicorn:nobody /home/unicorn
+        end_message
 
         #所属グループ表示
         echo "所属グループを表示します"
@@ -107,8 +145,15 @@ EOF
         echo "apacheを起動します"
         start_message
         systemctl start httpd.service
-
         end_message
+
+        # foreverの設定変更
+        #start_message
+        #cd /var/www/html
+        #echo "foreverで自動起動するようにします"
+        #/usr/local/lib/node_modules/forever/bin/forever start -c "npm start" ./
+        #end_message
+
 
         #自動起動の設定
         start_message
@@ -183,12 +228,15 @@ EOF
 
         </VirtualHost>
 
-        ドキュメントルートの所有者：user
+        ドキュメントルートの所有者：unicorn
         グループ：apache
         になっているため、ユーザー名とグループの変更が必要な場合は変更してください
+
+        503エラーの場合は一度更新をしてください。angularの画面がでたら起動しております。
+        ドキュメントルートで実行する場合は　forever start -c "npm start" ./　となります
 EOF
 
-        echo "userユーザーのパスワードは"${PASSWORD}"です。"
+        echo "unicornユーザーのパスワードは"${PASSWORD}"です。"
       else
         echo "RedHat系ではないため、このスクリプトは使えません。このスクリプトのインストール対象はRedHat8，9系です。"
       fi
